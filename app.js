@@ -34,7 +34,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose.connect('mongodb://127.0.0.1:27017/jav4free', { useNewUrlParser: true, keepAlive: true, keepAliveInitialDelay: 300000, useUnifiedTopology: true }).then(() => {
-    app.listen(5000);
+    app.listen(3000);
 }).catch(err => {
     console.log(err)
 });
