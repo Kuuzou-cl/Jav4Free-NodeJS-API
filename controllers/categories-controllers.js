@@ -35,12 +35,7 @@ const createCategory = async (req, res, next) => {
         name
     });
 
-    try {
-        await newCategory.save();    
-    } catch (err) {
-        const error = new HttpError('Creating category failed',500)
-        return next(error);
-    }
+    
 
     res.status(201).json({category: newCategory})
 }

@@ -33,7 +33,7 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error ocurred!' })
 });
 
-mongoose.connect('mongodb://127.0.0.1:27017/jav4free', { useNewUrlParser: true, keepAlive: true, keepAliveInitialDelay: 300000 }).then(() => {
+mongoose.connect('mongodb://127.0.0.1:27017/jav4free', { useNewUrlParser: true, keepAlive: true, keepAliveInitialDelay: 300000, useUnifiedTopology: true }).then(() => {
     app.listen(5000);
 }).catch(err => {
     console.log(err)
