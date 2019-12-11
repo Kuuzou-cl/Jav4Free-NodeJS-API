@@ -33,7 +33,7 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error ocurred!' })
 });
 
-mongoose.connect('mongodb://jav4free:ene7242JAV@localhost:27017/jav4free?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
+mongoose.connect('mongodb://127.0.0.1:27017/jav4free').then(() => {
     app.listen(5000);
 }).catch(err=>{
     console.log(err)
