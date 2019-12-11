@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongooser');
+const mongoose = require('mongoose');
 
 const categoriesRoutes = require('./routes/categories-routes');
 const userRoutes = require('./routes/users-routes');
@@ -12,13 +12,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/users', userRoutes);
+//app.use('/api/users', userRoutes);
 
 app.use('/api/categories', categoriesRoutes);
 
-app.use('/api/idols', idolsRoutes);
+//app.use('/api/idols', idolsRoutes);
 
-app.use('/api/javs', javsRoutes);
+//app.use('/api/javs', javsRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);

@@ -13,7 +13,7 @@ const getCategoryById = async (req, res, next) => {
     let category;
     try {
         category = await Category.findById(categoryId);    
-    } catch (error) {   
+    } catch (err) {   
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
@@ -24,7 +24,7 @@ const getCategoryById = async (req, res, next) => {
     res.json({ category });
 }
 
-const createCategory = (req, res, next) => {
+const createCategory = async (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
         throw new HttpError('Invalid input', 422)
@@ -37,7 +37,7 @@ const createCategory = (req, res, next) => {
 
     try {
         await newCategory.save();    
-    } catch (error) {
+    } catch (err) {
         const error = new HttpError('Creating category failed',500)
         return next(error);
     }
