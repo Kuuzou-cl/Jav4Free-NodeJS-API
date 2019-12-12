@@ -31,9 +31,8 @@ const getCategoryById = async (req, res, next) => {
 }
 
 const createCategory = async (req, res, next) => {
-    const { category_id, name } = req.body;
+    const { name } = req.body;
     const newCategory = new Category({
-        category_id,
         name
     });
 
