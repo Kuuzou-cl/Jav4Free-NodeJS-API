@@ -1,5 +1,4 @@
 const express = require('express');
-const { check } = require('express-validator')
 
 const categoriesControllers = require('../controllers/categories-controllers')
 
@@ -11,7 +10,7 @@ router.get('/', categoriesControllers.getCategories);
 
 router.post('/newCategory', categoriesControllers.createCategory);
 
-router.patch('/:cid', check('name').not().isEmpty, categoriesControllers.updateCategory);
+router.patch('/:cid', categoriesControllers.updateCategory);
 
 router.delete('/:cid', categoriesControllers.deleteCategory);
 

@@ -1,5 +1,4 @@
 const HttpError = require('../models/http-error')
-const { validationResult } = require('express-validator')
 
 const Category = require('../models/category');
 
@@ -7,7 +6,7 @@ const Category = require('../models/category');
 const getCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}, 'name')
+        categories = await Category.find({}, 'name category_id -_id')
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -19,7 +18,7 @@ const getCategoryById = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.findById(categoryId);    
+        category = await Category.findById({category_id:categoryId}, 'name category_id -_id');    
     } catch (err) {   
         const error = new HttpError('Something went wrong', 500);
         return next(error);
