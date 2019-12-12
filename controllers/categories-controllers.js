@@ -69,16 +69,16 @@ const deleteCategory = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.find({category_id:categoryId}, 'name category_id');
+        category = await Category.find({category_id:categoryId});
     } catch (err) {
-        const error = new HttpError('Something went wrong', 500);
+        const error = new HttpError('Something went wrong, could not find category.', 500);
         return next(error);
     }
 
     try {
         await category.remove();
     } catch (err) {
-        const error = new HttpError('Something went wrong', 500);
+        const error = new HttpError('Something went wrong, could not remove category.', 500);
         return next(error);
     }
     res.status(200).json({message: 'Succesful delete action!'});
