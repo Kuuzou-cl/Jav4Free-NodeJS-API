@@ -18,7 +18,7 @@ app.use('/api/categories', categoriesRoutes);
 
 app.use('/api/idols', idolsRoutes);
 
-//app.use('/api/javs', javsRoutes);
+app.use('/api/javs', javsRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);

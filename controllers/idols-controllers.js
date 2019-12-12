@@ -15,7 +15,7 @@ const getIdols = async (req, res, next) => {
 }
 
 const getIdolById = async (req, res, next) => {
-    const idolId = req.params.Iid;
+    const idolId = req.params.iid;
     let idol;
     try {
         idol = await Idol.findById(idolId);    
@@ -31,10 +31,11 @@ const getIdolById = async (req, res, next) => {
 }
 
 const createIdol = async (req, res, next) => {
-    const { name, imageUrl } = req.body;
+    const { name, imageUrl, hidden } = req.body;
     const newIdol = new Idol({
         name,
-        imageUrl
+        imageUrl,
+        hidden
     });
 
     try {
@@ -48,13 +49,12 @@ const createIdol = async (req, res, next) => {
 }
 
 const updateIdol = async (req, res, next) => {
-    const newName = req.body.name;
-    const newImageUrl = req.body.imageUrl;
-    const idolId = req.params.cid;
+    const { newName, newImageUrl, newHidden } = req.body;
+    const idolId = req.params.iid;
 
     let idol;
     try {
-        idol = await Idol.findByIdAndUpdate(idolId, { name: newName, imageUrl: newImageUrl });    
+        idol = await Idol.findByIdAndUpdate(idolId, { name: newName, imageUrl: newImageUrl, hidden: newHidden });    
     } catch (err) {   
         const error = new HttpError('Something went wrong, could not update idol.', 500);
         return next(error);
@@ -64,7 +64,7 @@ const updateIdol = async (req, res, next) => {
 }
 
 const deleteIdol = async (req, res, next) => {
-    const idolId = req.params.cid;
+    const idolId = req.params.iid;
     let idol;
     try {
         idol = await Idol.findByIdAndDelete(idolId);
