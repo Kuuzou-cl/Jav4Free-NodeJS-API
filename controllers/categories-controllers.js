@@ -76,7 +76,7 @@ const deleteCategory = async (req, res, next) => {
     }
 
     try {
-        await category.remove();
+        await category.deleteOne();
     } catch (err) {
         const error = new HttpError('Something went wrong, could not remove category.', 500);
         return next(error);
