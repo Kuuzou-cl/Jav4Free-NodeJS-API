@@ -6,7 +6,7 @@ const Category = require('../models/category');
 const getCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}, 'name category_id -_id')
+        categories = await Category.find({}, 'name category_id')
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -18,7 +18,7 @@ const getCategoryById = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.findById({category_id:categoryId}, 'name category_id -_id');    
+        category = await Category.find({category_id:categoryId}, 'name category_id');    
     } catch (err) {   
         const error = new HttpError('Something went wrong', 500);
         return next(error);
