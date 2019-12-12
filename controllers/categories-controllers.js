@@ -62,13 +62,26 @@ const updateCategory = (req, res, next) => {
 
     DUMMY_PLACES[categoryIndex] = updatedCategory;
 
-    resizeTo.status(200).json({category: updatedCategory});
+    res.status(200).json({category: updatedCategory});
 }
 
-const deleteCategory = (req, res, next) => {
+const deleteCategory = async (req, res, next) => {
     const categoryId = req.params.cid;
-    DUMMY_PLACES = DUMMY_PLACES.filter(c => c.category_id !== categoryId);
-    resizeTo.status(200).json({message: 'Succesful delete action!'});
+    let category;
+    try {
+        category = await Category.find({category_id:categoryId}, 'name category_id');
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    try {
+        await category.remove();
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    res.status(200).json({message: 'Succesful delete action!'});
 }
 
 exports.getCategories = getCategories;
