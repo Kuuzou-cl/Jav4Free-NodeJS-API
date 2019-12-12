@@ -53,7 +53,7 @@ const updateCategory = async (req, res, next) => {
 
     let category;
     try {
-        category = await Category.find({category_id:categoryId}, 'name category_id');    
+        category = await Category.find({category_id:categoryId});    
     } catch (err) {   
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -61,12 +61,7 @@ const updateCategory = async (req, res, next) => {
     
     category.name = name;
 
-    try {
-        await category.save();    
-    } catch (err) {
-        const error = new HttpError('Updating failed',500)
-        return next(error);
-    }
+    
 
     res.status(200).json({category: category.toObject({getters:true})});
 }
