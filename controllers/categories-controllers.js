@@ -25,11 +25,17 @@ const getCategoryById = async (req, res, next) => {
 }
 
 const createCategory = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        throw new HttpError('Invalid input', 422)
+    }
     const { category_id, name } = req.body;
     const newCategory = new Category({
         category_id,
         name
     });
+
+    
 
     res.status(201).json({category: newCategory})
 }

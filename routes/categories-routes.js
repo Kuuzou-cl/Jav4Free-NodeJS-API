@@ -9,7 +9,7 @@ router.get('/:cid', categoriesControllers.getCategoryById);
 
 router.get('/', categoriesControllers.getCategories);
 
-router.post('/newCategory', categoriesControllers.createCategory);
+router.post('/newCategory', check('name').not().isEmpty, categoriesControllers.createCategory);
 
 router.patch('/:cid', check('name').not().isEmpty, categoriesControllers.updateCategory);
 
