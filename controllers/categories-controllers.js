@@ -18,7 +18,7 @@ const getCategoryById = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.find({category_id:categoryId}, 'name category_id');    
+        category = await Category.findById(categoryId);    
     } catch (err) {   
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -48,20 +48,16 @@ const createCategory = async (req, res, next) => {
 }
 
 const updateCategory = async (req, res, next) => {
-    const name = req.body.name;
+    const newName = req.body.name;
     const categoryId = req.params.cid;
 
     let category;
     try {
-        category = await Category.find({category_id:categoryId});    
+        category = await Category.findByIdAndUpdate(categoryId, { name: newName });    
     } catch (err) {   
-        const error = new HttpError('Something went wrong', 500);
+        const error = new HttpError('Something went wrong, could not update category.', 500);
         return next(error);
     }
-    
-    category.name = name;
-
-    
 
     res.status(200).json({category: category.toObject({getters:true})});
 }
@@ -70,15 +66,9 @@ const deleteCategory = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.find({category_id:categoryId});
+        category = await Category.findByIdAndDelete(categoryId);
     } catch (err) {
-        const error = new HttpError('Something went wrong, could not find category.', 500);
-        return next(error);
-    }
-    try {
-        await category.deleteOne();
-    } catch (err) {
-        const error = new HttpError('Something went wrong, could not remove category.', 500);
+        const error = new HttpError('Something went wrong, could not delete category.', 500);
         return next(error);
     }
     res.status(200).json({message: 'Succesful delete action!'});
