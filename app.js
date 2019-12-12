@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/api/categories', categoriesRoutes);
 
-//app.use('/api/idols', idolsRoutes);
+app.use('/api/idols', idolsRoutes);
 
 //app.use('/api/javs', javsRoutes);
 

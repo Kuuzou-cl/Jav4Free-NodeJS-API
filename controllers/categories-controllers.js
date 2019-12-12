@@ -6,7 +6,7 @@ const Category = require('../models/category');
 const getCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}, 'name category_id')
+        categories = await Category.find({}, 'name')
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
