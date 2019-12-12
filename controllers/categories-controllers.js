@@ -4,8 +4,15 @@ const { validationResult } = require('express-validator')
 const Category = require('../models/category');
 
 
-const getCategories = (req, res, next) => {
-    res.json({ DUMMY_PLACES });
+const getCategories = async (req, res, next) => {
+    let categories;
+    try {
+        categories = await Category.find({}, 'name')
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    res.json({ categories:categories.map(category => category.toObject({getters: true}))});
 }
 
 const getCategoryById = async (req, res, next) => {
