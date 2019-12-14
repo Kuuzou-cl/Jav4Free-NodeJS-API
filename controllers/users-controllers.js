@@ -1,11 +1,21 @@
 const HttpError = require('../models/http-error');
 
+const User = require('../models/user');
+
 const login = (req, res, next) => {
     const { email, password } = req.body;
 
-    const identifiedUser = ARRAY.find(u => u.email === email);
-    if (!identifiedUser || identifiedUser.password !== password) {
-        throw new HttpError('Could not identify user', 401)
+    let existingUser
+    try {
+        existingUser = await User.findOne({email:email});
+    } catch (err) {
+        const error = new HttpError('Login failed!',500);
+        return next(error);
+    }
+
+    if(!existingUser || existingUser.password !== password){
+        const error = new HttpError('Invalid email or password',401);
+        return next(error);
     }
 
     res.json({message: 'Logged in!'})
