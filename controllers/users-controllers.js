@@ -2,7 +2,7 @@ const HttpError = require('../models/http-error');
 
 const User = require('../models/user');
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     let existingUser
