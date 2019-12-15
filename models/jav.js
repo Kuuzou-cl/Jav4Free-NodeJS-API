@@ -10,8 +10,14 @@ const javSchema = new Schema({
     imageUrl:{ type:String, required: true },
     imageIndexUrl:{ type:String, required: true },
     hidden: { type: Boolean, default: false, required: true },
-    categories: [{type:mongoose.Types.ObjectId, required: true, ref:'jav4free-category'}],
-    idols: [{type:mongoose.Types.ObjectId, required: true, ref:'jav4free-idol',unique: true}]
+    categories: [
+        {type:mongoose.Types.ObjectId, required: true, ref:'jav4free-category'},
+        { type:String, required: true }
+    ],
+    idols: [
+        {type:mongoose.Types.ObjectId, required: true, ref:'jav4free-idol',unique: true},
+        { type:String, required: true }
+    ]
 })
 
 module.exports = mongoose.model('jav4free-jav',javSchema);
