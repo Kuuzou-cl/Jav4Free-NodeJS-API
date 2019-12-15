@@ -32,10 +32,10 @@ const getCategoryById = async (req, res, next) => {
 }
 
 const createCategory = async (req, res, next) => {
-    const { name } = req.body;
+    const { name, javs } = req.body;
     const newCategory = new Category({
         name,
-        javs: []
+        javs
     });
 
     try {
