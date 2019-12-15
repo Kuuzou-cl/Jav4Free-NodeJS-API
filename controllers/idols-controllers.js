@@ -7,7 +7,7 @@ const Jav = require('../models/jav');
 const getIdols = async (req, res, next) => {
     let idols;
     try {
-        idols = await Idol.find({}, 'name')
+        idols = await Idol.find({})
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
