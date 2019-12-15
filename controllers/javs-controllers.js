@@ -44,7 +44,20 @@ const getJavById = async (req, res, next) => {
         }
     }
 
-    res.json({ jav:jav, categories:categories });
+    let idols=[];
+    for (let i = 0; i < jav.idols.length; i++) {
+        let idolId = jav.idols[i]._id;
+        let newIdol;
+        try {
+            newIdol = await Idol.findById(idolId); 
+            idols.push(newIdol);
+        } catch (err) {   
+            const error = new HttpError('Something went wrong', 500);
+            return next(error);
+        }
+    }
+
+    res.json({ jav:jav, categories:categories, idols:idols });
 }
 
 const createJav = async (req, res, next) => {
