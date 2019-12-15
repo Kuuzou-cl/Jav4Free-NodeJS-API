@@ -1,6 +1,7 @@
 const HttpError = require('../models/http-error')
 
 const Idol = require('../models/idol');
+const Jav = require('../models/jav');
 
 
 const getIdols = async (req, res, next) => {

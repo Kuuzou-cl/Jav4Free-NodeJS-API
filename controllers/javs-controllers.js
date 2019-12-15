@@ -1,6 +1,8 @@
 const HttpError = require('../models/http-error')
 
 const Jav = require('../models/jav');
+const Category = require('../models/category');
+const Idol = require('../models/idol');
 
 
 const getJavs = async (req, res, next) => {
@@ -46,6 +48,19 @@ const createJav = async (req, res, next) => {
 
     try {
         await newJav.save();
+        categories.forEach(async categoryTemp => {
+            const categoryId = categoryTemp._id;
+            let category
+            try {
+                category = await Category.findById(categoryId);   
+                const javs = category.javs;
+                javs.push({"_id":newJav._id});
+                await Category.findByIdAndUpdate(categoryId, { "$set": { "name": name, "javs": javs } });
+            } catch (err) {
+                const error = new HttpError('Something went wrong, could not update category, while creating video.', 500);
+                return next(error);
+            }
+        });
     } catch (err) {
         const error = new HttpError('Creating Video failed', 500)
         return next(error);
