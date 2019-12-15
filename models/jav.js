@@ -9,9 +9,10 @@ const javSchema = new Schema({
     duration:{ type:String, required: true },
     imageUrl:{ type:String, required: true },
     imageIndexUrl:{ type:String, required: true },
-    hidden: { type: Boolean, default: false, required: true },
+    hidden: { type: Boolean, default: false, required: true },    
     categories: [{type:mongoose.Types.ObjectId, required: true, ref:'jav4free-category', unique: true}],
-    idols: [{type:mongoose.Types.ObjectId, required: true, ref:'jav4free-idol', unique: true}]
+    idols: [{type:mongoose.Types.ObjectId, required: true, ref:'jav4free-idol', unique: true}],
+    creation: { type : Date, default: Date.now }
 })
 
 module.exports = mongoose.model('jav4free-jav',javSchema);
