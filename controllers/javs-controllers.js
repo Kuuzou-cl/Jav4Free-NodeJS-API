@@ -58,9 +58,6 @@ const createJav = async (req, res, next) => {
         let category
         try {
             category = await Category.findById(categoryId);
-            const javs = category.javs;
-            javs.push({ "_id": newJav._id });
-            await Category.findByIdAndUpdate(categoryId, { "$set": { "javs": javs } });
         } catch (err) {
             const error = new HttpError('Something went wrong, could not update category, while creating video.', 500);
             return next(error);
