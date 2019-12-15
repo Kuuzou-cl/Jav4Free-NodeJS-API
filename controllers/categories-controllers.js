@@ -32,10 +32,10 @@ const getCategoryById = async (req, res, next) => {
 }
 
 const createCategory = async (req, res, next) => {
-    const { name, javs } = req.body;
+    const { name } = req.body;
     const newCategory = new Category({
         name,
-        javs
+        javs: []
     });
 
     try {
@@ -49,12 +49,12 @@ const createCategory = async (req, res, next) => {
 }
 
 const updateCategory = async (req, res, next) => {
-    const { name, javs } = req.body;
+    const { name } = req.body;
     const categoryId = req.params.cid;
 
     let category;
     try {
-        category = await Category.findByIdAndUpdate(categoryId, { "$set": {"name": name, "javs":javs} });    
+        category = await Category.findByIdAndUpdate(categoryId, { "$set": {"name": name} });    
     } catch (err) {   
         const error = new HttpError('Something went wrong, could not update category.', 500);
         return next(error);

@@ -56,10 +56,24 @@ const createJav = async (req, res, next) => {
     
     for (let i = 0; i < categories.length; i++) {
         let categoryId = categories[i]._id;
-        let javs = [];
+        let category = await Category.findById(categoryId);
+        let javs = category.javs;
         javs.push(categoryId);
         try {
             await Category.findByIdAndUpdate(categoryId, { "$set": { "javs": javs } });
+        } catch (err) {
+            const error = new HttpError('Something went wrong, could not update category.', 500);
+            return next(error);
+        }
+    }
+
+    for (let i = 0; i < idols.length; i++) {
+        let idolId = idols[i]._id;
+        let idol = await idolId.findById(idolId);
+        let javs = idol.javs;
+        javs.push(idolId);
+        try {
+            await Idol.findByIdAndUpdate(idolId, { "$set": { "javs": javs } });
         } catch (err) {
             const error = new HttpError('Something went wrong, could not update category.', 500);
             return next(error);

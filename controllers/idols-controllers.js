@@ -51,7 +51,7 @@ const createIdol = async (req, res, next) => {
 }
 
 const updateIdol = async (req, res, next) => {
-    const { name, imageUrl, hidden, javs } = req.body;
+    const { name, imageUrl, hidden } = req.body;
     const idolId = req.params.iid;
 
     let idol;
@@ -59,7 +59,7 @@ const updateIdol = async (req, res, next) => {
         idol = await Idol.findByIdAndUpdate(idolId,
             {
                 "$set": {
-                    "name": name, "imageUrl": imageUrl, "hidden": hidden, "javs": javs
+                    "name": name, "imageUrl": imageUrl, "hidden": hidden
                 }
             });
     } catch (err) {
