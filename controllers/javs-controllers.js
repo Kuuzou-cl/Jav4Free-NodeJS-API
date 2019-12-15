@@ -55,22 +55,22 @@ const createJav = async (req, res, next) => {
 }
 
 const updateJav = async (req, res, next) => {
-    const { newName, newCode, newUrl, newDuration, newImageUrl, newImageIndexUrl, newHidden, newCategories, newIdols } = req.body;
+    const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const javId = req.params.jid;
 
     let jav;
     try {
         jav = await Jav.findByIdAndUpdate(javId,
             {
-                name: newName,
-                code: newCode,
-                url: newUrl,
-                duration: newDuration,
-                imageUrl: newImageUrl,
-                imageIndexUrl: newImageIndexUrl,
-                hidden: newHidden,
-                categories: newCategories,
-                idols: newIdols
+                name: name,
+                code: code,
+                url: url,
+                duration: duration,
+                imageUrl: imageUrl,
+                imageIndexUrl: imageIndexUrl,
+                hidden: hidden,
+                categories: categories,
+                idols: idols
             });
     } catch (err) {
         const error = new HttpError('Something went wrong, could not update video.', 500);
