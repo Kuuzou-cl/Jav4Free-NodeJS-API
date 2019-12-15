@@ -53,21 +53,15 @@ const createJav = async (req, res, next) => {
         return next(error);
     }
 
-    const javs = [{"_id":"test"}]
+    const javs = [];
     for (let i = 0; i < categories.length; i++) {
         const categoryId = categories[i]._id;
-        let category;
-        try {
-            await Category.findByIdAndUpdate(categoryId, { "$set": {"javs":javs} });    
-        } catch (err) {
-            const error = new HttpError('Something went wrong', 500);
-            return next(error);
-        }
+        javs.push(categoryId);
     }
 
 
 
-    res.status(201).json({ jav: newJav})
+    res.status(201).json({ jav: newJav, array:javs})
 }
 
 const updateJav = async (req, res, next) => {
