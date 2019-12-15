@@ -32,7 +32,7 @@ const getJavById = async (req, res, next) => {
 
 const creatJav = async (req, res, next) => {
     const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
-    const newJav = new Idol({
+    const newJav = new Jav({
         name,
         code,
         url,
