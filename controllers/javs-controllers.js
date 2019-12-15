@@ -67,7 +67,7 @@ const createJav = async (req, res, next) => {
         }
     });
 
-    res.status(201).json({ jav: newJav })
+    res.status(201).json({ jav: newJav, id:categoryId, category:category })
 }
 
 const updateJav = async (req, res, next) => {
