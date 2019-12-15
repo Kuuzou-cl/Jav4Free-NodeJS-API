@@ -11,15 +11,15 @@ const getIdols = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ idols:idols.map(idol => idol.toObject({getters: true}))});
+    res.json({ idols: idols.map(idol => idol.toObject({ getters: true })) });
 }
 
 const getIdolById = async (req, res, next) => {
     const idolId = req.params.iid;
     let idol;
     try {
-        idol = await Idol.findById(idolId);    
-    } catch (err) {   
+        idol = await Idol.findById(idolId);
+    } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
@@ -40,28 +40,33 @@ const createIdol = async (req, res, next) => {
     });
 
     try {
-        await newIdol.save();    
+        await newIdol.save();
     } catch (err) {
-        const error = new HttpError('Creating idol failed',500)
+        const error = new HttpError('Creating idol failed', 500)
         return next(error);
     }
 
-    res.status(201).json({idol: newIdol})
+    res.status(201).json({ idol: newIdol })
 }
 
 const updateIdol = async (req, res, next) => {
-    const { newName, newImageUrl, newHidden } = req.body;
+    const { newName, newImageUrl, newHidden, newJavs } = req.body;
     const idolId = req.params.iid;
 
     let idol;
     try {
-        idol = await Idol.findByIdAndUpdate(idolId, { name: newName, imageUrl: newImageUrl, hidden: newHidden });    
-    } catch (err) {   
+        idol = await Idol.findByIdAndUpdate(idolId,
+            {
+                "$set": {
+                    "name": newName, "imageUrl": newImageUrl, "hidden": newHidden, "javs": newJavs
+                }
+            });
+    } catch (err) {
         const error = new HttpError('Something went wrong, could not update idol.', 500);
         return next(error);
     }
 
-    res.status(200).json({idol: idol.toObject({getters:true})});
+    res.status(200).json({ idol: idol.toObject({ getters: true }) });
 }
 
 const deleteIdol = async (req, res, next) => {
@@ -73,7 +78,7 @@ const deleteIdol = async (req, res, next) => {
         const error = new HttpError('Something went wrong, could not delete idol.', 500);
         return next(error);
     }
-    res.status(200).json({message: 'Succesful delete action!'});
+    res.status(200).json({ message: 'Succesful delete action!' });
 }
 
 exports.getIdols = getIdols;

@@ -30,7 +30,7 @@ const getJavById = async (req, res, next) => {
     res.json({ jav });
 }
 
-const creatJav = async (req, res, next) => {
+const createJav = async (req, res, next) => {
     const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const newJav = new Jav({
         name,
@@ -94,6 +94,6 @@ const deleteJav = async (req, res, next) => {
 
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
-exports.creatJav = creatJav;
+exports.createJav = createJav;
 exports.updateJav = updateJav;
 exports.deleteJav = deleteJav;

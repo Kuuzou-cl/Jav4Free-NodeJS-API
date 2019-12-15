@@ -8,7 +8,7 @@ router.get('/:jid', javsControllers.getJavById);
 
 router.get('/', javsControllers.getJavs);
 
-router.post('/newJav', javsControllers.creatJav);
+router.post('/newJav', javsControllers.createJav);
 
 router.patch('/:jid', javsControllers.updateJav);
 
