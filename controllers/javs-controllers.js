@@ -84,7 +84,7 @@ const deleteJav = async (req, res, next) => {
     const javId = req.params.jid;
     let jav;
     try {
-        jav = await Jav.findByIdAndDelete(idolId);
+        jav = await Jav.findByIdAndDelete(javId);
     } catch (err) {
         const error = new HttpError('Something went wrong, could not delete video.', 500);
         return next(error);
