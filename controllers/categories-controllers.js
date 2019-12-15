@@ -33,7 +33,8 @@ const getCategoryById = async (req, res, next) => {
 const createCategory = async (req, res, next) => {
     const { name } = req.body;
     const newCategory = new Category({
-        name
+        name,
+        javs: []
     });
 
     try {

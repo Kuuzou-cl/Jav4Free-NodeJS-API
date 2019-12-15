@@ -31,7 +31,7 @@ const getJavById = async (req, res, next) => {
 }
 
 const creatJav = async (req, res, next) => {
-    const { name, code, url, duration, imageUrl, imageIndexUrl, hidden } = req.body;
+    const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const newJav = new Idol({
         name,
         code,
@@ -39,7 +39,9 @@ const creatJav = async (req, res, next) => {
         duration,
         imageUrl,
         imageIndexUrl,
-        hidden
+        hidden,
+        categories,
+        idols
     });
 
     try {
@@ -53,12 +55,23 @@ const creatJav = async (req, res, next) => {
 }
 
 const updateJav = async (req, res, next) => {
-    const { newName, newCode, newUrl, newDuration, newImageUrl, newImageIndexUrl, newHidden } = req.body;
+    const { newName, newCode, newUrl, newDuration, newImageUrl, newImageIndexUrl, newHidden, newCategories, newIdols } = req.body;
     const javId = req.params.jid;
 
     let jav;
     try {
-        jav = await Jav.findByIdAndUpdate(javId, { name: newName, code: newCode, url: newUrl, duration: newDuration, imageUrl: newImageUrl, imageIndexUrl:newImageIndexUrl, hidden: newHidden });
+        jav = await Jav.findByIdAndUpdate(javId,
+            {
+                name: newName,
+                code: newCode,
+                url: newUrl,
+                duration: newDuration,
+                imageUrl: newImageUrl,
+                imageIndexUrl: newImageIndexUrl,
+                hidden: newHidden,
+                categories: newCategories,
+                idols: newIdols
+            });
     } catch (err) {
         const error = new HttpError('Something went wrong, could not update video.', 500);
         return next(error);
