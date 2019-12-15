@@ -69,7 +69,7 @@ const createJav = async (req, res, next) => {
 
     for (let i = 0; i < idols.length; i++) {
         let idolId = idols[i]._id;
-        let idol = await idolId.findById(idolId);
+        let idol = await Idol.findById(idolId);
         let javs = idol.javs;
         javs.push(idolId);
         try {
