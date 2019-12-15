@@ -29,7 +29,13 @@ const getJavById = async (req, res, next) => {
         const error = new HttpError('Could not find the Video you are looking for.', 404);;
         return next(error);
     }
-    res.json({ jav });
+    let categories;
+    for (let i = 0; i < jav.categories.length; i++) {
+        let categoryId = jav.categories[i]._id;
+        let newCategory = await Category.findById(categoryId);
+        categories.push(newCategory);
+    }
+    res.json({ jav:jav, categories:categories });
 }
 
 const createJav = async (req, res, next) => {
