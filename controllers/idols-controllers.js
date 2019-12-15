@@ -36,8 +36,7 @@ const createIdol = async (req, res, next) => {
     const newIdol = new Idol({
         name,
         imageUrl,
-        hidden,
-        javs: []
+        hidden
     });
 
     try {
