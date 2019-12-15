@@ -53,18 +53,21 @@ const createJav = async (req, res, next) => {
         return next(error);
     }
 
-    categories.forEach(async categoryTemp => {
-        const categoryId = categoryTemp._id;
-        let category
+    const javs = [{"_id":"test"}]
+    for (let i = 0; i < categories.length; i++) {
+        const categoryId = categories[i]._id;
+        let category;
         try {
-            category = await Category.findById(categoryId);
+            await Category.findByIdAndUpdate(categoryId, { "$set": {"javs":javs} });    
         } catch (err) {
-            const error = new HttpError('Something went wrong, could not update category, while creating video.', 500);
+            const error = new HttpError('Something went wrong', 500);
             return next(error);
         }
-    });
+    }
 
-    res.status(201).json({ jav: newJav, id:categoryId, category:category })
+
+
+    res.status(201).json({ jav: newJav})
 }
 
 const updateJav = async (req, res, next) => {
