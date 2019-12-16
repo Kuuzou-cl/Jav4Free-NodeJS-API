@@ -89,7 +89,7 @@ const getRandom4JavsCategory = async (req,res,next) => {
         return next(error);
     }
     let javs=[];
-    res.json({ categories });
+    res.json({ category });
 }
 
 exports.getCategories = getCategories;
