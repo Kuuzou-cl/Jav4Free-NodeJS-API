@@ -76,13 +76,7 @@ const deleteCategory = async (req, res, next) => {
 
 const getRandom4JavsCategory = async (req,res,next) => {
     let categories = await Category.find({});
-    const categoryIndex = Math.floor((Math.random() * categories.length) + 1);
-    let category = categories[categoryIndex];
-    if (!category) {
-        const error = new HttpError('Could not find the category you are looking for.', 404);;
-        return next(error);
-    }
-    let javs=[];
+    
     res.json({ categories });
 }
 
