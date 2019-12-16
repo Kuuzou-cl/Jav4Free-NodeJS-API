@@ -88,8 +88,14 @@ const getRandom4JavsCategory = async (req,res,next) => {
         const error = new HttpError('Could not find the category you are looking for.', 404);;
         return next(error);
     }
-    let javs=[];
-    res.json({ category });
+    let javs;
+    try {
+        javs = await Jav.find({categories: {$_id: category._id }}).sort({creation:-1});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    res.json({ category:category, javs:javs });
 }
 
 exports.getCategories = getCategories;
