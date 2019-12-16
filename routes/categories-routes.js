@@ -4,13 +4,13 @@ const categoriesControllers = require('../controllers/categories-controllers')
 
 const router = express.Router();
 
+router.get('/getRandomCategory', categoriesControllers.getRandom4JavsCategory);
+
 router.get('/:cid', categoriesControllers.getCategoryById);
 
 router.get('/', categoriesControllers.getCategories);
 
 router.post('/newCategory', categoriesControllers.createCategory);
-
-router.get('/getRandomCategory', categoriesControllers.getRandom4JavsCategory);
 
 router.patch('/:cid', categoriesControllers.updateCategory);
 
