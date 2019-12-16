@@ -81,8 +81,35 @@ const deleteIdol = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
+const getRandom4Idols = async (req,res,next) => {
+    let idolsData = [];
+
+    let idols;
+    try {
+        idols = await Idol.find({});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    const idolIndex1 = Math.floor((Math.random() * idols.length) + 1);
+    idolsData.push(idols[idolIndex1]);
+
+    const idolIndex2 = Math.floor((Math.random() * idols.length) + 1);
+    idolsData.push(idols[idolIndex2]);
+
+    const idolIndex3 = Math.floor((Math.random() * idols.length) + 1);
+    idolsData.push(idols[idolIndex3]);
+
+    const idolIndex4 = Math.floor((Math.random() * idols.length) + 1);
+    idolsData.push(idols[idolIndex4]);
+    
+    res.json({ idols:idolsData });
+}
+
 exports.getIdols = getIdols;
 exports.getIdolById = getIdolById;
 exports.createIdol = createIdol;
 exports.updateIdol = updateIdol;
 exports.deleteIdol = deleteIdol;
+exports.getRandom4Idols = getRandom4Idols;

@@ -4,6 +4,7 @@ const idolsControllers = require('../controllers/idols-controllers');
 
 const router = express.Router();
 
+router.get('/getRandomIdols', idolsControllers.getRandom4Idols);
 
 router.get('/:iid', idolsControllers.getIdolById);
 
