@@ -74,8 +74,27 @@ const deleteCategory = async (req, res, next) => {
     res.status(200).json({message: 'Succesful delete action!'});
 }
 
+const getRandom4JavsCategory = async (req,res,next) => {
+    let categories = await Category.find({});
+    const categoryId = Math.floor((Math.random() * categories.length) + 1);
+    let category;
+    try {
+        category = await Category.findById(categoryId);    
+    } catch (err) {   
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (!category) {
+        const error = new HttpError('Could not find the category you are looking for.', 404);;
+        return next(error);
+    }
+    let javs=[];
+    res.json({ category });
+}
+
 exports.getCategories = getCategories;
 exports.getCategoryById = getCategoryById;
 exports.createCategory = createCategory;
 exports.updateCategory = updateCategory;
 exports.deleteCategory = deleteCategory;
+exports.getRandom4JavsCategory = getRandom4JavsCategory;

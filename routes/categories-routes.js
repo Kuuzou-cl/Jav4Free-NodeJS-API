@@ -10,6 +10,8 @@ router.get('/', categoriesControllers.getCategories);
 
 router.post('/newCategory', categoriesControllers.createCategory);
 
+router.get('/getRandomCategory', categoriesControllers.getRandom4JavsCategory);
+
 router.patch('/:cid', categoriesControllers.updateCategory);
 
 router.delete('/:cid', categoriesControllers.deleteCategory);
