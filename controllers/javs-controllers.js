@@ -122,8 +122,21 @@ const deleteJav = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
+const getLatestJavs = async (req,res,next) => {
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({creation:-1});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let data = javs.slice(0,12)
+    res.status(201).json({ javs: data })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
 exports.updateJav = updateJav;
 exports.deleteJav = deleteJav;
+exports.getLatestJavs = getLatestJavs;
