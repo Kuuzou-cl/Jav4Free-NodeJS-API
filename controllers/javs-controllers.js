@@ -13,7 +13,7 @@ const getJavs = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ javs });
+    res.json(javs);
 }
 
 const getJavById = async (req, res, next) => {
