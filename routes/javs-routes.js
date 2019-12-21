@@ -10,6 +10,8 @@ router.get('/getJavByCategory/:page/:cid', javsControllers.getJavsByCategory);
 
 router.get('/getJavByIdol/:page/:iid', javsControllers.getJavsByIdol);
 
+router.get('/getJavsByPage/:page', javsControllers.getJavsByPage);
+
 router.get('/:jid', javsControllers.getJavById);
 
 router.get('/', javsControllers.getJavs);

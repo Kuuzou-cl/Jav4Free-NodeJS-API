@@ -192,6 +192,26 @@ const getJavsByCategory = async (req,res,next) => {
     res.status(201).json({ javs: dataPage })
 }
 
+const getJavsByPage = async (req,res,next) => {
+    const page = req.params.page;
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({creation:-1});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let start = (page * 1) - 1;
+    let end;
+    if (javs.length < (page * 20)) {
+        end = javs.length;
+    }else{
+        end = page * 20;
+    }
+    let dataPage = javs.slice(start,end);
+    res.status(201).json({ javs: dataPage })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
@@ -200,3 +220,4 @@ exports.deleteJav = deleteJav;
 exports.getLatestJavs = getLatestJavs;
 exports.getJavsByIdol = getJavsByIdol;
 exports.getJavsByCategory = getJavsByCategory;
+exports.getJavsByPage = getJavsByPage;
