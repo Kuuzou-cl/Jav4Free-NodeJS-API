@@ -135,6 +135,7 @@ const getLatestJavs = async (req,res,next) => {
 }
 
 const getJavsByIdol = async (req,res,next) => {
+    const page = req.params.page;
     const idolId = req.params.iid;
     let javs;
     try {
@@ -151,7 +152,15 @@ const getJavsByIdol = async (req,res,next) => {
             }
         });
     });
-    res.status(201).json({ javs: data })
+    let start = (page * 1) - 1;
+    let end;
+    if (data.length < (page * 8)) {
+        end = data.length;
+    }else{
+        end = page * 8;
+    }
+    let dataPage = data.slice(start,end);
+    res.status(201).json({ javs: dataPage })
 }
 
 const getJavsByCategory = async (req,res,next) => {

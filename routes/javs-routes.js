@@ -8,7 +8,7 @@ router.get('/getLatestJavs', javsControllers.getLatestJavs);
 
 router.get('/getJavByCategory/:page/:cid', javsControllers.getJavsByCategory);
 
-router.get('/getJavByIdol/:iid', javsControllers.getJavsByIdol);
+router.get('/getJavByIdol/:page/:iid', javsControllers.getJavsByIdol);
 
 router.get('/:jid', javsControllers.getJavById);
 
