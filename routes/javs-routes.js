@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/getLatestJavs', javsControllers.getLatestJavs);
 
+router.get('/getJavByIdol/:iid', javsControllers.getJavsByIdol);
+
 router.get('/:jid', javsControllers.getJavById);
 
 router.get('/', javsControllers.getJavs);
