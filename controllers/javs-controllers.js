@@ -154,6 +154,26 @@ const getJavsByIdol = async (req,res,next) => {
     res.status(201).json({ javs: data })
 }
 
+const getJavsByCategory = async (req,res,next) => {
+    const categoryId = req.params.cid;
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({creation:-1});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let data = [];
+    javs.forEach(jav => {
+        jav.categories.forEach(category => {
+            if (category == categoryId) {
+                data.push(jav);
+            }
+        });
+    });
+    res.status(201).json({ javs: data })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
@@ -161,3 +181,4 @@ exports.updateJav = updateJav;
 exports.deleteJav = deleteJav;
 exports.getLatestJavs = getLatestJavs;
 exports.getJavsByIdol = getJavsByIdol;
+exports.getJavsByCategory = getJavsByCategory;
