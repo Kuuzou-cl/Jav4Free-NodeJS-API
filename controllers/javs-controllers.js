@@ -152,7 +152,7 @@ const getJavsByIdol = async (req,res,next) => {
             }
         });
     });
-    let start = (page * 1) - 1;
+    let start = 20 * (page - 1);
     let end;
     if (data.length < (page * 8)) {
         end = data.length;
@@ -181,7 +181,7 @@ const getJavsByCategory = async (req,res,next) => {
             }
         });
     });
-    let start = (page * 1) - 1;
+    let start = 20 * (page - 1);
     let end;
     if (data.length < (page * 20)) {
         end = data.length;
@@ -201,7 +201,7 @@ const getJavsByPage = async (req,res,next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    let start = (page * 1) - 1;
+    let start = 20 * (page - 1);
     let end;
     if (javs.length < (page * 20)) {
         end = javs.length;
