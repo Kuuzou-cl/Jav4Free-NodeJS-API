@@ -107,9 +107,30 @@ const getRandom4Idols = async (req,res,next) => {
     res.json({ idols:idolsData });
 }
 
+const getIdolsByPage = async(req,res,next) => {
+    const page = req.params.page;
+    let idols;
+    try {
+        idols = await Idol.find({}).sort({creation:-1});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let start = 16 * (page - 1);
+    let end;
+    if (idols.length < (page * 16)) {
+        end = idols.length;
+    }else{
+        end = page * 16;
+    }
+    let dataPage = idols.slice(start,end);
+    res.status(201).json({ idols: dataPage })
+}
+
 exports.getIdols = getIdols;
 exports.getIdolById = getIdolById;
 exports.createIdol = createIdol;
 exports.updateIdol = updateIdol;
 exports.deleteIdol = deleteIdol;
 exports.getRandom4Idols = getRandom4Idols;
+exports. getIdolsByPage = getIdolsByPage;

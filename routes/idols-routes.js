@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/getRandomIdols', idolsControllers.getRandom4Idols);
 
+router.get('/getIdolsByPage/:page', idolsControllers.getIdolsByPage);
+
 router.get('/:iid', idolsControllers.getIdolById);
 
 router.get('/', idolsControllers.getIdols);
