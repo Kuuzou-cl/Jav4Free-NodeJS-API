@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/getLatestJavs', javsControllers.getLatestJavs);
 
-router.get('/getJavByCategory/:cid', javsControllers.getJavsByCategory);
+router.get('/getJavByCategory/:page/:cid', javsControllers.getJavsByCategory);
 
 router.get('/getJavByIdol/:iid', javsControllers.getJavsByIdol);
 

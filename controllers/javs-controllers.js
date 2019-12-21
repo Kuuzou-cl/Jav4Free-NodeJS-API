@@ -155,6 +155,7 @@ const getJavsByIdol = async (req,res,next) => {
 }
 
 const getJavsByCategory = async (req,res,next) => {
+    const page = req.params.page;
     const categoryId = req.params.cid;
     let javs;
     try {
@@ -171,7 +172,15 @@ const getJavsByCategory = async (req,res,next) => {
             }
         });
     });
-    res.status(201).json({ javs: data })
+    let start = (page * 1) - 1;
+    let end;
+    if (data.length < (page * 20)) {
+        end = data.length;
+    }else{
+        end = page * 20;
+    }
+    let dataPage = data.slice(start,end);
+    res.status(201).json({ javs: dataPage })
 }
 
 exports.getJavs = getJavs;
