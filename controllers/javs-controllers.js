@@ -63,35 +63,24 @@ const getJavById = async (req, res, next) => {
 const createJav = async (req, res, next) => {
     const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const newJav = new Jav({
-        name,
-        code,
-        url,
-        duration,
-        imageUrl,
-        imageIndexUrl,
-        hidden,
-        categories,
-        idols
+        name: name,
+        code: code,
+        url: url,
+        duration: duration,
+        imageUrl: imageUrl,
+        imageIndexUrl: imageIndexUrl,
+        hidden: hidden,
+        categories: categories,
+        idols: idols
     });
-    const test = new Jav({
-        name:"test",
-        code:"test",
-        url:"test",
-        duration:"test",
-        imageUrl:"test",
-        imageIndexUrl:"test",
-        hidden:false,
-        categories:[],
-        idols:[]
-    })
     try {
-        await test.save();
+        await newJav.save();
     } catch (err) {
         const error = new HttpError('Creating Video failed', 500)
         return next(error);
     }
 
-    res.status(201).json({ jav: test })
+    res.status(201).json({ jav: newJav })
 }
 
 const updateJav = async (req, res, next) => {
