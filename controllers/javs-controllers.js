@@ -73,7 +73,17 @@ const createJav = async (req, res, next) => {
         categories,
         idols
     });
-
+    const test = new Jav({
+        name:"test",
+        code:"test",
+        url:"test",
+        duration:"test",
+        imageUrl:"test",
+        imageIndexUrl:"test",
+        hidden:false,
+        categories:[],
+        idols:[]
+    })
     try {
         await newJav.save();
     } catch (err) {
