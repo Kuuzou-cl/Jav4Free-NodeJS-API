@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const javSchema = new Schema({
     name:{ type:String},
-    code:{ type:String, unique: true },
+    code:{ type:String},
     url:{ type:String},
     duration:{ type:String},
     imageUrl:{ type:String},
