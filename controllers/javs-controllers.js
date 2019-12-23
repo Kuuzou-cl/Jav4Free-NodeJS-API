@@ -63,15 +63,15 @@ const getJavById = async (req, res, next) => {
 const createJav = async (req, res, next) => {
     const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const newJav = new Jav({
-        name: name,
-        code: code,
-        url: url,
-        duration: duration,
-        imageUrl: imageUrl,
-        imageIndexUrl: imageIndexUrl,
-        hidden: hidden,
-        categories: categories,
-        idols: idols
+        name,
+        code,
+        url,
+        duration,
+        imageUrl,
+        imageIndexUrl,
+        hidden,
+        categories,
+        idols
     });
     try {
         await newJav.save();
