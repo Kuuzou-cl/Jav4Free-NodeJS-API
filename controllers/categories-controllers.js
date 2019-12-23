@@ -7,7 +7,7 @@ const Jav = require('../models/jav');
 const getCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}).sort({name:-1});
+        categories = await Category.find({}).sort({name: 'asc'});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
