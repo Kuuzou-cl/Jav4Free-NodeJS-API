@@ -85,13 +85,13 @@ const createJav = async (req, res, next) => {
         idols:[]
     })
     try {
-        await newJav.save();
+        await test.save();
     } catch (err) {
         const error = new HttpError('Creating Video failed', 500)
         return next(error);
     }
 
-    res.status(201).json({ jav: newJav })
+    res.status(201).json({ jav: test })
 }
 
 const updateJav = async (req, res, next) => {
