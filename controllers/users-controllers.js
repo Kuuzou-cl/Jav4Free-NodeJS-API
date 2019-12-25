@@ -47,7 +47,7 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({message: 'Logged in!'})
+    res.json({user: existingUser.email})
 };
 
 const deleteUser = async (req, res, next) => {
