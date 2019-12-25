@@ -5,7 +5,7 @@ const User = require('../models/user');
 const getUsers = async (req,res,next) => {
     let users;
     try {
-        users = await User.find({}).sort({creation:-1});
+        users = await User.find({});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -16,10 +16,10 @@ const getUsers = async (req,res,next) => {
 const signup = async (req,res,next) => {
     const { email, password } = req.body;
 
-    const newUser = new User{
+    const newUser = new User({
         email,
         password
-    }
+    });
 
     try {
         await newUser.save();
