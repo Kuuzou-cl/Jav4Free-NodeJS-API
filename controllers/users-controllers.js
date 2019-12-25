@@ -50,6 +50,19 @@ const login = async (req, res, next) => {
     res.json({message: 'Logged in!'})
 };
 
+const deleteUser = async (req, res, next) => {
+    const userId = req.params.uid;
+    let user;
+    try {
+        user = await User.findByIdAndDelete(userId);
+    } catch (err) {
+        const error = new HttpError('Something went wrong, could not delete user.', 500);
+        return next(error);
+    }
+    res.status(200).json({ message: 'Succesful delete action!' });
+}
+
 exports.login = login;
 exports.signup = signup;
 exports.getUsers = getUsers;
+exports.deleteUser = deleteUser;
