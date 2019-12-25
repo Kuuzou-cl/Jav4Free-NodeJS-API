@@ -15,7 +15,7 @@ app.use(cors())
 
 app.use(bodyParser.json());
 
-app.use('/api/users', userRoutes);
+app.use('/jav4free/user', userRoutes);
 
 app.use('/jav4free/categories', categoriesRoutes);
 
