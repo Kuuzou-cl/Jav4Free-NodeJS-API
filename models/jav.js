@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 
 const javSchema = new Schema({
     name: { type: String, unique: false },
-    code: { type: String },
+    code: { type: String, unique: false },
     url: { type: String },
     duration: { type: String },
     imageUrl: { type: String },
     imageIndexUrl: { type: String },
-    hidden: { type: Boolean, default: false, },
+    hidden: { type: Boolean, default: false, unique: false },
     categories: {
         type: [String], unique: false
     },
