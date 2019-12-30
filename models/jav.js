@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const javSchema = new Schema({
-    name:{ type:String, required: true},
-    code:{ type:String, required: true},
-    url:{ type:String, required: true},
-    duration:{ type:String, required: true},
-    imageUrl:{ type:String, required: true},
-    imageIndexUrl:{ type:String, required: true},
-    hidden: { type: Boolean, default: false, required: true},    
-    categories: [{type:mongoose.Types.ObjectId, ref:'jav4free-category', required: false}],
-    idols: [{type:mongoose.Types.ObjectId, ref:'jav4free-idol', required: false}],
+    name:{ type:String},
+    code:{ type:String},
+    url:{ type:String},
+    duration:{ type:String},
+    imageUrl:{ type:String},
+    imageIndexUrl:{ type:String},
+    hidden: { type: Boolean, default: false,},    
+    categories: [{type:mongoose.Types.ObjectId, ref:'jav4free-category'}],
+    idols: [{type:mongoose.Types.ObjectId, ref:'jav4free-idol'}],
     creation: { type : Date, default: Date.now }
 })
 
