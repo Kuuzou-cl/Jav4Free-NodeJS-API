@@ -33,7 +33,7 @@ const getJavById = async (req, res, next) => {
 
     let categories = [];
     for (let i = 0; i < jav.categories.length; i++) {
-        let categoryId = jav.categories[i]._id;
+        let categoryId = jav.categories[i];
         let newCategory;
         try {
             newCategory = await Category.findById(categoryId);
@@ -46,7 +46,7 @@ const getJavById = async (req, res, next) => {
 
     let idols = [];
     for (let i = 0; i < jav.idols.length; i++) {
-        let idolId = jav.idols[i]._id;
+        let idolId = jav.idols[i];
         let newIdol;
         try {
             newIdol = await Idol.findById(idolId);
