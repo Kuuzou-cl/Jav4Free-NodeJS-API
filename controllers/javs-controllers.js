@@ -69,9 +69,7 @@ const createJav = async (req, res, next) => {
         duration,
         imageUrl,
         imageIndexUrl,
-        hidden,
-        categories,
-        idols
+        hidden
     });
     try {
         await newJav.save();
