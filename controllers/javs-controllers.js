@@ -8,7 +8,7 @@ const Idol = require('../models/idol');
 const getJavs = async (req, res, next) => {
     let javs;
     try {
-        javs = await Jav.find({}).sort({creation:-1});
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -30,49 +30,81 @@ const getJavById = async (req, res, next) => {
         const error = new HttpError('Could not find the Video you are looking for.', 404);;
         return next(error);
     }
-    
-    let categories=[];
+
+    let categories = [];
     for (let i = 0; i < jav.categories.length; i++) {
         let categoryId = jav.categories[i]._id;
         let newCategory;
         try {
-            newCategory = await Category.findById(categoryId); 
+            newCategory = await Category.findById(categoryId);
             categories.push(newCategory);
-        } catch (err) {   
+        } catch (err) {
             const error = new HttpError('Something went wrong', 500);
             return next(error);
         }
     }
 
-    let idols=[];
+    let idols = [];
     for (let i = 0; i < jav.idols.length; i++) {
         let idolId = jav.idols[i]._id;
         let newIdol;
         try {
-            newIdol = await Idol.findById(idolId); 
+            newIdol = await Idol.findById(idolId);
             idols.push(newIdol);
-        } catch (err) {   
+        } catch (err) {
             const error = new HttpError('Something went wrong', 500);
             return next(error);
         }
     }
 
-    res.json({ jav:jav, categories:categories, idols:idols });
+    res.json({ jav: jav, categories: categories, idols: idols });
 }
 
 const createJav = async (req, res, next) => {
     const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
-    const newJav = new Jav({
-        name,
-        code,
-        url,
-        duration,
-        imageUrl,
-        imageIndexUrl,
-        hidden,
-        categories,
-        idols
-    });
+    let newJav;
+    if (categories == null && idols == null || categories.length == 0 && idols.length == 0) {
+        newJav = new Jav({
+            name,
+            code,
+            url,
+            duration,
+            imageUrl,
+            imageIndexUrl,
+            hidden,
+            categories,
+            idols
+        });
+    }else{
+        if (categories == null || categories.length == 0) {
+            newJav = new Jav({
+                name,
+                code,
+                url,
+                duration,
+                imageUrl,
+                imageIndexUrl,
+                hidden,
+                categories: [],
+                idols
+            });
+        }else{
+            if (idols == null || idols.length == 0) {
+                newJav = new Jav({
+                    name,
+                    code,
+                    url,
+                    duration,
+                    imageUrl,
+                    imageIndexUrl,
+                    hidden,
+                    categories,
+                    idols: []
+                });
+            }
+        }
+    }
+
     try {
         await newJav.save();
     } catch (err) {
@@ -121,24 +153,24 @@ const deleteJav = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
-const getLatestJavs = async (req,res,next) => {
+const getLatestJavs = async (req, res, next) => {
     let javs;
     try {
-        javs = await Jav.find({}).sort({creation:-1});
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    let data = javs.slice(0,12)
+    let data = javs.slice(0, 12)
     res.status(201).json({ javs: data })
 }
 
-const getJavsByIdol = async (req,res,next) => {
+const getJavsByIdol = async (req, res, next) => {
     const page = req.params.page;
     const idolId = req.params.iid;
     let javs;
     try {
-        javs = await Jav.find({}).sort({creation:-1});
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -155,19 +187,19 @@ const getJavsByIdol = async (req,res,next) => {
     let end;
     if (data.length < (page * 8)) {
         end = data.length;
-    }else{
+    } else {
         end = page * 8;
     }
-    let dataPage = data.slice(start,end);
+    let dataPage = data.slice(start, end);
     res.status(201).json({ javs: dataPage })
 }
 
-const getJavsByCategory = async (req,res,next) => {
+const getJavsByCategory = async (req, res, next) => {
     const page = req.params.page;
     const categoryId = req.params.cid;
     let javs;
     try {
-        javs = await Jav.find({}).sort({creation:-1});
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -184,18 +216,18 @@ const getJavsByCategory = async (req,res,next) => {
     let end;
     if (data.length < (page * 20)) {
         end = data.length;
-    }else{
+    } else {
         end = page * 20;
     }
-    let dataPage = data.slice(start,end);
+    let dataPage = data.slice(start, end);
     res.status(201).json({ javs: dataPage })
 }
 
-const getJavsByPage = async (req,res,next) => {
+const getJavsByPage = async (req, res, next) => {
     const page = req.params.page;
     let javs;
     try {
-        javs = await Jav.find({}).sort({creation:-1});
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -204,10 +236,10 @@ const getJavsByPage = async (req,res,next) => {
     let end;
     if (javs.length < (page * 20)) {
         end = javs.length;
-    }else{
+    } else {
         end = page * 20;
     }
-    let dataPage = javs.slice(start,end);
+    let dataPage = javs.slice(start, end);
     res.status(201).json({ javs: dataPage })
 }
 
