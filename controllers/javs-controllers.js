@@ -69,10 +69,13 @@ const createJav = async (req, res, next) => {
         duration,
         imageUrl,
         imageIndexUrl,
-        hidden
+        hidden,
+        categories,
+        idols
     });
     try {
         await newJav.save();
+
     } catch (err) {
         const error = new HttpError('Creating Video failed', 500)
         return next(error);
