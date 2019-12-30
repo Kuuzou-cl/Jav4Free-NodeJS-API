@@ -11,10 +11,10 @@ const javSchema = new Schema({
     imageIndexUrl: { type: String },
     hidden: { type: Boolean, default: false, },
     categories: [{
-        type: String
+        type: String, unique: false
     }],
     idols: [{
-        type: String
+        type: String, unique: false
     }],
     creation: { type: Date, default: Date.now }
 })
