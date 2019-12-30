@@ -10,8 +10,8 @@ const javSchema = new Schema({
     imageUrl:{ type:String},
     imageIndexUrl:{ type:String},
     hidden: { type: Boolean, default: false,},    
-    categories: [{type:String}],
-    idols: [{type:String}],
+    categories: [{type:mongoose.Types.ObjectId, ref:'jav4free-category'}],
+    idols: [{type:mongoose.Types.ObjectId, ref:'jav4free-idol'}],
     creation: { type : Date, default: Date.now }
 })
 
