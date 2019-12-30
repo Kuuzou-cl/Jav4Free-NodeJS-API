@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const javSchema = new Schema({
-    name: { type: String },
+    name: { type: String, unique: false },
     code: { type: String },
     url: { type: String },
     duration: { type: String },
