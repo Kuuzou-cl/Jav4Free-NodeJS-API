@@ -82,7 +82,7 @@ const getRandom4JavsCategory = async (req,res,next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    const categoryIndex = Math.floor((Math.random() * categories.length) + 1);
+    const categoryIndex = Math.floor((Math.random() * (categories.length - 0)) + 0);
     let category = categories[categoryIndex];
     if (!category) {
         const error = new HttpError('Could not find the category you are looking for.', 404);;
