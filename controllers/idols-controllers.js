@@ -119,11 +119,11 @@ const getIdolsByPage = async(req,res,next) => {
     }
     let start = 16 * (page - 1);
     let end;
-    if (idols.length < (page * 16)) {
-        nextPage = true;
+    if (idols.length <= (page * 16)) {
+        nextPage = false;
         end = idols.length;
     }else{
-        nextPage = false;
+        nextPage = true;
         end = page * 16;
     }
     let dataPage = idols.slice(start,end);
