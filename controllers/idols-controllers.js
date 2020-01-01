@@ -92,16 +92,16 @@ const getRandom4Idols = async (req,res,next) => {
         return next(error);
     }
 
-    const idolIndex1 = Math.floor((Math.random() * idols.length) + 1);
+    const idolIndex1 = Math.floor((Math.random() * (idols.length - 0)) + 0);
     idolsData.push(idols[idolIndex1]);
 
-    const idolIndex2 = Math.floor((Math.random() * idols.length) + 1);
+    const idolIndex2 = Math.floor((Math.random() * (idols.length - 0)) + 0);
     idolsData.push(idols[idolIndex2]);
 
-    const idolIndex3 = Math.floor((Math.random() * idols.length) + 1);
+    const idolIndex3 = Math.floor((Math.random() * (idols.length - 0)) + 0);
     idolsData.push(idols[idolIndex3]);
 
-    const idolIndex4 = Math.floor((Math.random() * idols.length) + 1);
+    const idolIndex4 = Math.floor((Math.random() * (idols.length - 0)) + 0);
     idolsData.push(idols[idolIndex4]);
     
     res.json({ idols:idolsData });
