@@ -109,7 +109,7 @@ const getRandom4Idols = async (req,res,next) => {
 
 const getIdolsByPage = async(req,res,next) => {
     const page = req.params.page;
-    let next;
+    let nextPage;
     let idols;
     try {
         idols = await Idol.find({}).sort({creation:-1});
@@ -120,14 +120,14 @@ const getIdolsByPage = async(req,res,next) => {
     let start = 16 * (page - 1);
     let end;
     if (idols.length < (page * 16)) {
-        next = true;
+        nextPage = true;
         end = idols.length;
     }else{
-        next = false;
+        nextPage = false;
         end = page * 16;
     }
     let dataPage = idols.slice(start,end);
-    res.status(201).json({ idols: dataPage, nextPage: next })
+    res.status(201).json({ idols: dataPage, nextPage: nextPage })
 }
 
 exports.getIdols = getIdols;
