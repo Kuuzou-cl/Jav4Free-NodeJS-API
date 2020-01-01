@@ -139,6 +139,7 @@ const getLatestJavs = async (req, res, next) => {
 const getJavsByIdol = async (req, res, next) => {
     const page = req.params.page;
     const idolId = req.params.iid;
+    let nextPage;
     let javs;
     try {
         javs = await Jav.find({}).sort({ creation: -1 });
@@ -156,19 +157,22 @@ const getJavsByIdol = async (req, res, next) => {
     });
     let start = 20 * (page - 1);
     let end;
-    if (data.length < (page * 8)) {
+    if (data.length <= (page * 8)) {
+        nextPage = false;
         end = data.length;
     } else {
+        nextPage = true;
         end = page * 8;
     }
     let dataPage = data.slice(start, end);
-    res.status(201).json({ javs: dataPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage })
 }
 
 const getJavsByCategory = async (req, res, next) => {
     const page = req.params.page;
     const categoryId = req.params.cid;
     let javs;
+    let nextPage;
     try {
         javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
@@ -185,18 +189,21 @@ const getJavsByCategory = async (req, res, next) => {
     });
     let start = 20 * (page - 1);
     let end;
-    if (data.length < (page * 20)) {
+    if (data.length <= (page * 20)) {
+        nextPage = false;
         end = data.length;
     } else {
+        nextPage = true;
         end = page * 20;
     }
     let dataPage = data.slice(start, end);
-    res.status(201).json({ javs: dataPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage })
 }
 
 const getJavsByPage = async (req, res, next) => {
     const page = req.params.page;
     let javs;
+    let nextPage;
     try {
         javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
@@ -205,13 +212,15 @@ const getJavsByPage = async (req, res, next) => {
     }
     let start = 20 * (page - 1);
     let end;
-    if (javs.length < (page * 20)) {
+    if (javs.length <= (page * 20)) {
         end = javs.length;
+        nextPage = false;
     } else {
+        nextPage = true;
         end = page * 20;
     }
     let dataPage = javs.slice(start, end);
-    res.status(201).json({ javs: dataPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage })
 }
 
 exports.getJavs = getJavs;
