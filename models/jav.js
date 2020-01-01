@@ -6,7 +6,7 @@ const javSchema = new Schema({
     name: { type: String, unique: false },
     code: { type: String, unique: false },
     url: { type: String },
-    duration: { type: String },
+    duration: { type: String, unique: false },
     imageUrl: { type: String },
     imageIndexUrl: { type: String },
     hidden: { type: Boolean, default: false, unique: false },
