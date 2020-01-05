@@ -298,8 +298,22 @@ const getRelatedJavs = async (req, res, next) => {
             });
         }
     }
+    
+    let related = [];
 
-    res.status(201).json({ relatedJavs: relatedJavs })
+    relatedJavs.forEach(javC => {
+        let exist = false;
+        related.forEach(javR => {
+            if (javC._id == javR._id) {
+                exist = true
+            }
+        });
+        if (!exist) {
+            related.push(javC);
+        }
+    });
+
+    res.status(201).json({ relatedJavs: related })
 }
 
 exports.getJavs = getJavs;
