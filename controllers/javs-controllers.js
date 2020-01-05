@@ -247,44 +247,56 @@ const getRelatedJavs = async (req, res, next) => {
 
     let relatedJavs = [];
 
+    if (jav.categories.length >= 3) {
+        while (relatedJavs.length < 3) {
+            javs.forEach(javN => {
+                javN.categories.forEach(category => {
+                    if (category == jav.categories[0]) {
+                        relatedJavs.push(javN);
+                    }
+                });
+            });
+        }
     
-    while (relatedJavs.length < 3) {
-        javs.forEach(javN => {
-            javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
-                }
+        while (relatedJavs.length < 5) {
+            javs.forEach(javN => {
+                javN.categories.forEach(category => {
+                    if (category == jav.categories[1]) {
+                        relatedJavs.push(javN);
+                    }
+                });
             });
-        });
-    }
-
-    while (relatedJavs.length < 3) {
-        javs.forEach(javN => {
-            javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
-                }
+        }
+    
+        while (relatedJavs.length < 7) {
+            javs.forEach(javN => {
+                javN.categories.forEach(category => {
+                    if (category == jav.categories[2]) {
+                        relatedJavs.push(javN);
+                    }
+                });
             });
-        });
-    }
-    while (relatedJavs.length < 5) {
-        javs.forEach(javN => {
-            javN.categories.forEach(category => {
-                if (category == jav.categories[1]) {
-                    relatedJavs.push(javN);
-                }
+        }
+    }else{
+        while (relatedJavs.length < 3) {
+            javs.forEach(javN => {
+                javN.categories.forEach(category => {
+                    if (category == jav.categories[0]) {
+                        relatedJavs.push(javN);
+                    }
+                });
             });
-        });
-    }
-
-    while (relatedJavs.length < 7) {
-        javs.forEach(javN => {
-            javN.categories.forEach(category => {
-                if (category == jav.categories[2]) {
-                    relatedJavs.push(javN);
-                }
+        }
+    
+        while (relatedJavs.length < 7) {
+            javs.forEach(javN => {
+                javN.categories.forEach(category => {
+                    if (category == jav.categories[1]) {
+                        relatedJavs.push(javN);
+                    }
+                });
             });
-        });
+        }
     }
 
     res.status(201).json({ relatedJavs: relatedJavs })
