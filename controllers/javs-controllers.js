@@ -246,11 +246,36 @@ const getRelatedJavs = async (req, res, next) => {
     }
 
     let relatedJavs = [];
-    while (relatedJavs.length < 2) {
+    while (relatedJavs.length < 3) {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
                     relatedJavs.push(javN);
+                }
+            });
+        });
+    }
+
+    while (relatedJavs.length < 3) {
+        javs.forEach(javN => {
+            javN.categories.forEach(category => {
+                if (category == jav.categories[0]) {
+                    const exist = relatedJavs.find(data => data == category)
+                    if (!exist) {
+                        relatedJavs.push(javN);    
+                    }
+                }
+            });
+        });
+    }
+    while (relatedJavs.length < 5) {
+        javs.forEach(javN => {
+            javN.categories.forEach(category => {
+                if (category == jav.categories[1]) {
+                    const exist = relatedJavs.find(data => data == category)
+                    if (!exist) {
+                        relatedJavs.push(javN);    
+                    }
                 }
             });
         });
