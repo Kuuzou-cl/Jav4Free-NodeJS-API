@@ -250,30 +250,54 @@ const getRelatedJavs = async (req, res, next) => {
     if (jav.categories.length >= 3) {
         while (relatedJavs.length < 3) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = await Jav.findById(random);
+            let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
 
         while (relatedJavs.length < 5) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = await Jav.findById(random);
+            let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[1]) {
-                    relatedJavs.push(javN);
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
 
         while (relatedJavs.length < 7) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = await Jav.findById(random);
+            let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[2]) {
-                    relatedJavs.push(javN);
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
