@@ -281,6 +281,19 @@ const getRelatedJavs = async (req, res, next) => {
         });
     }
 
+    while (relatedJavs.length < 7) {
+        javs.forEach(javN => {
+            javN.categories.forEach(category => {
+                if (category == jav.categories[2]) {
+                    const exist = relatedJavs.find(data => data == category)
+                    if (!exist) {
+                        relatedJavs.push(javN);    
+                    }
+                }
+            });
+        });
+    }
+
     res.status(201).json({ relatedJavs: relatedJavs })
 }
 
