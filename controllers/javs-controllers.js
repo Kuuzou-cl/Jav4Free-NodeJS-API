@@ -246,72 +246,62 @@ const getRelatedJavs = async (req, res, next) => {
     }
 
     let relatedJavs = [];
-    let related = [];
 
     if (jav.categories.length >= 3) {
-        while (related.length < 3) {
-            javs.forEach(javN => {
-                javN.categories.forEach(category => {
-                    if (category == jav.categories[0]) {
+        while (relatedJavs.length < 3) {
+            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+            let javN = await Jav.findById(random);
+            javN.categories.forEach(category => {
+                if (category == jav.categories[0]) {
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
                         relatedJavs.push(javN);
-                        relatedJavs.forEach(javC => {
-                            let exist = false;
-                            related.forEach(javR => {
-                                if (javC._id == javR._id) {
-                                    exist = true
-                                }
-                            });
-                            if (!exist) {
-                                related.push(javC);
-                            }
-                        });
                     }
-                });
+                }
             });
         }
-    
-        while (related.length < 5) {
-            javs.forEach(javN => {
-                javN.categories.forEach(category => {
-                    if (category == jav.categories[1]) {
+
+        while (relatedJavs.length < 5) {
+            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+            let javN = await Jav.findById(random);
+            javN.categories.forEach(category => {
+                if (category == jav.categories[0]) {
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
                         relatedJavs.push(javN);
-                        relatedJavs.forEach(javC => {
-                            let exist = false;
-                            related.forEach(javR => {
-                                if (javC._id == javR._id) {
-                                    exist = true
-                                }
-                            });
-                            if (!exist) {
-                                related.push(javC);
-                            }
-                        });
                     }
-                });
+                }
             });
         }
-    
-        while (related.length < 7) {
-            javs.forEach(javN => {
-                javN.categories.forEach(category => {
-                    if (category == jav.categories[2]) {
+
+        while (relatedJavs.length < 7) {
+            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+            let javN = await Jav.findById(random);
+            javN.categories.forEach(category => {
+                if (category == jav.categories[0]) {
+                    let exist = false;
+                    relatedJavs.forEach(javR => {
+                        if (javN._id == javR._id) {
+                            exist = true
+                        }
+                    });
+                    if (!exist) {
                         relatedJavs.push(javN);
-                        relatedJavs.forEach(javC => {
-                            let exist = false;
-                            related.forEach(javR => {
-                                if (javC._id == javR._id) {
-                                    exist = true
-                                }
-                            });
-                            if (!exist) {
-                                related.push(javC);
-                            }
-                        });
                     }
-                });
+                }
             });
         }
-    }else{
+    } else {
         while (relatedJavs.length < 3) {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
@@ -321,7 +311,7 @@ const getRelatedJavs = async (req, res, next) => {
                 });
             });
         }
-    
+
         while (relatedJavs.length < 7) {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
@@ -333,7 +323,7 @@ const getRelatedJavs = async (req, res, next) => {
         }
     }
 
-    res.status(201).json({ relatedJavs: related, rr: relatedJavs })
+    res.status(201).json({ relatedJavs: relatedJavs })
 }
 
 exports.getJavs = getJavs;
