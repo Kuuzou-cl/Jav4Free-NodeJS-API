@@ -250,7 +250,7 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    if (relatedJavs.some(e => e._id === javN._id)) { 
+                    if (relatedJavs.some(e => e._id == javN._id)) { 
                     }else{
                         relatedJavs.push(javN);
                     }
@@ -263,7 +263,7 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    if (relatedJavs.some(e => e._id === javN._id)) { 
+                    if (relatedJavs.some(e => e._id == javN._id)) { 
                     }else{
                         relatedJavs.push(javN);
                     }
@@ -275,7 +275,7 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[1]) {
-                    if (relatedJavs.some(e => e._id === javN._id)) { 
+                    if (relatedJavs.some(e => e._id == javN._id)) { 
                     }else{
                         relatedJavs.push(javN);
                     }
@@ -288,7 +288,7 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[2]) {
-                    if (relatedJavs.some(e => e._id === javN._id)) { 
+                    if (relatedJavs.some(e => e._id == javN._id)) { 
                     }else{
                         relatedJavs.push(javN);
                     }
