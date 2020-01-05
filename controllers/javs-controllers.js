@@ -252,18 +252,16 @@ const getRelatedJavs = async (req, res, next) => {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = await Jav.findById(random);
             javN.categories.forEach(category => {
-                if (relatedJavs.length > 0) {
+                if (category == jav.categories[0]) {
                     let exist = false;
                     relatedJavs.forEach(javR => {
                         if (javN._id == javR._id) {
                             exist = true
                         }
                     });
-                    if (category == jav.categories[0] && !exist) {
+                    if (!exist) {
                         relatedJavs.push(javN);
                     }
-                } else {
-                    relatedJavs.push(javN);
                 }
             });
         }
@@ -272,7 +270,7 @@ const getRelatedJavs = async (req, res, next) => {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = await Jav.findById(random);
             javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
+                if (category == jav.categories[1]) {
                     let exist = false;
                     relatedJavs.forEach(javR => {
                         if (javN._id == javR._id) {
@@ -290,7 +288,7 @@ const getRelatedJavs = async (req, res, next) => {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = await Jav.findById(random);
             javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
+                if (category == jav.categories[2]) {
                     let exist = false;
                     relatedJavs.forEach(javR => {
                         if (javN._id == javR._id) {
