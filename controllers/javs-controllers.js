@@ -245,16 +245,17 @@ const getRelatedJavs = async (req, res, next) => {
         return next(error);
     }
 
-    let relatedJavs
-    while (relatedJavs < 2) {
-        javs.forEach(jav => {
-            jav.categories.forEach(category => {
+    let relatedJavs = [];
+    while (relatedJavs.length < 2) {
+        javs.forEach(javN => {
+            javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    relatedJavs.push(jav);
+                    relatedJavs.push(javN);
                 }
             });
         });
     }
+
     res.status(201).json({ relatedJavs: relatedJavs })
 }
 
