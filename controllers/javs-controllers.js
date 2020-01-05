@@ -252,16 +252,18 @@ const getRelatedJavs = async (req, res, next) => {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = await Jav.findById(random);
             javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
+                if (relatedJavs.length > 0) {
                     let exist = false;
                     relatedJavs.forEach(javR => {
                         if (javN._id == javR._id) {
                             exist = true
                         }
                     });
-                    if (!exist) {
+                    if (category == jav.categories[0] && !exist) {
                         relatedJavs.push(javN);
                     }
+                } else {
+                    relatedJavs.push(javN);
                 }
             });
         }
