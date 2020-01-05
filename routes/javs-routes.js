@@ -4,6 +4,8 @@ const javsControllers = require('../controllers/javs-controllers');
 
 const router = express.Router();
 
+router.get('/getRelatedJavs', javsControllers.getRelatedJavs);
+
 router.get('/getLatestJavs', javsControllers.getLatestJavs);
 
 router.get('/getJavByCategory/:page/:cid', javsControllers.getJavsByCategory);

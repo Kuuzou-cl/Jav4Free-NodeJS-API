@@ -223,6 +223,41 @@ const getJavsByPage = async (req, res, next) => {
     res.status(201).json({ javs: dataPage, nextPage: nextPage })
 }
 
+const getRelatedJavs = async (req, res, next) => {
+    const javId = req.params.jid;
+    let jav;
+    try {
+        jav = await Jav.findById(javId);
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (!jav) {
+        const error = new HttpError('Could not find the Video you are looking for.', 404);;
+        return next(error);
+    }
+
+    let javs;
+    try {
+        javs = await Jav.find({});
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    let relatedJavs
+    while (relatedJavs < 2) {
+        javs.forEach(jav => {
+            jav.categories.forEach(category => {
+                if (category == jav.categories[0]) {
+                    relatedJavs.push(jav);
+                }
+            });
+        });
+    }
+    res.status(201).json({ relatedJavs: relatedJavs })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
@@ -232,3 +267,4 @@ exports.getLatestJavs = getLatestJavs;
 exports.getJavsByIdol = getJavsByIdol;
 exports.getJavsByCategory = getJavsByCategory;
 exports.getJavsByPage = getJavsByPage;
+exports.getRelatedJavs = getRelatedJavs;
