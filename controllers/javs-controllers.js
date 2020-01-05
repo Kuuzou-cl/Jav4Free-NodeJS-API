@@ -250,7 +250,15 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
+                    let exist = false;
+                    relatedJavs.forEach(javCheck => {
+                        if (javCheck._id == javN._id) {
+                            exist = true;
+                        }
+                    });
+                    if (!exist) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         });
@@ -260,9 +268,14 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    const exist = relatedJavs.find(data => data._id == javN._id)
+                    let exist = false;
+                    relatedJavs.forEach(javCheck => {
+                        if (javCheck._id == javN._id) {
+                            exist = true;
+                        }
+                    });
                     if (!exist) {
-                        relatedJavs.push(javN);    
+                        relatedJavs.push(javN);
                     }
                 }
             });
@@ -272,9 +285,14 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[1]) {
-                    const exist = relatedJavs.find(data => data._id == javN._id)
+                    let exist = false;
+                    relatedJavs.forEach(javCheck => {
+                        if (javCheck._id == javN._id) {
+                            exist = true;
+                        }
+                    });
                     if (!exist) {
-                        relatedJavs.push(javN);    
+                        relatedJavs.push(javN);
                     }
                 }
             });
@@ -285,9 +303,14 @@ const getRelatedJavs = async (req, res, next) => {
         javs.forEach(javN => {
             javN.categories.forEach(category => {
                 if (category == jav.categories[2]) {
-                    const exist = relatedJavs.find(data => data._id == javN._id)
+                    let exist = false;
+                    relatedJavs.forEach(javCheck => {
+                        if (javCheck._id == javN._id) {
+                            exist = true;
+                        }
+                    });
                     if (!exist) {
-                        relatedJavs.push(javN);    
+                        relatedJavs.push(javN);
                     }
                 }
             });
