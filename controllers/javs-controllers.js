@@ -313,7 +313,7 @@ const getRelatedJavs = async (req, res, next) => {
         }
     });
 
-    res.status(201).json({ relatedJavs: related })
+    res.status(201).json({ relatedJavs: related, rr: relatedJavs })
 }
 
 exports.getJavs = getJavs;
