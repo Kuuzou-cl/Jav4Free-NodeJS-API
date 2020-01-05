@@ -251,17 +251,9 @@ const getRelatedJavs = async (req, res, next) => {
         while (relatedJavs.length < 3) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = javs[random];
-            let exist = false;
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    relatedJavs.forEach(javR => {
-                        if (javN._id == javR._id) {
-                            exist = true
-                        }
-                    });
-                    if (!exist) {
-                        relatedJavs.push(javN);
-                    }
+                    relatedJavs.push(javN);
                 }
             });
         }
@@ -269,17 +261,9 @@ const getRelatedJavs = async (req, res, next) => {
         while (relatedJavs.length < 5) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = javs[random];
-            let exist = false;
             javN.categories.forEach(category => {
                 if (category == jav.categories[1]) {
-                    relatedJavs.forEach(javR => {
-                        if (javN._id == javR._id) {
-                            exist = true
-                        }
-                    });
-                    if (!exist) {
-                        relatedJavs.push(javN);
-                    }
+                    relatedJavs.push(javN);
                 }
             });
         }
@@ -287,17 +271,9 @@ const getRelatedJavs = async (req, res, next) => {
         while (relatedJavs.length < 7) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = javs[random];
-            let exist = false;
             javN.categories.forEach(category => {
                 if (category == jav.categories[2]) {
-                    relatedJavs.forEach(javR => {
-                        if (javN._id == javR._id) {
-                            exist = true
-                        }
-                    });
-                    if (!exist) {
-                        relatedJavs.push(javN);
-                    }
+                    relatedJavs.push(javN);
                 }
             });
         }
