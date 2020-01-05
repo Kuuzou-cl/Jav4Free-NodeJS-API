@@ -91,11 +91,12 @@ const getRandom4JavsCategory = async (req,res,next) => {
     let javs;
     try {
         javs = await Jav.find({categories: category.id }).sort({creation:-1});
+        javs = javs.slice(0,4);
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ category:category, javs:javs });
+    res.json({ category:category, javs:javs});
 }
 
 exports.getCategories = getCategories;
