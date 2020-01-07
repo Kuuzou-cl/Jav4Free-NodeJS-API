@@ -155,14 +155,14 @@ const getJavsByIdol = async (req, res, next) => {
             }
         });
     });
-    let start = 8 * (page - 1);
+    let start = 20 * (page - 1);
     let end;
-    if (data.length <= (page * 8)) {
+    if (data.length <= (page * 20)) {
         nextPage = false;
         end = data.length;
     } else {
         nextPage = true;
-        end = page * 8;
+        end = page * 20;
     }
     let dataPage = data.slice(start, end);
     res.status(201).json({ javs: dataPage, nextPage: nextPage })
