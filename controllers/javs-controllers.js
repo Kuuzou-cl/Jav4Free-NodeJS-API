@@ -155,7 +155,7 @@ const getJavsByIdol = async (req, res, next) => {
             }
         });
     });
-    let start = 20 * (page - 1);
+    let start = 8 * (page - 1);
     let end;
     if (data.length <= (page * 8)) {
         nextPage = false;
