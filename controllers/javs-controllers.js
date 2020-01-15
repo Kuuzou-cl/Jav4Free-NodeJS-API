@@ -14,12 +14,7 @@ const getJavs = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    if (quantity == 0) {
-        res.json({ javs: javs });    
-    }else{
-        let javsQ = javs.slice(0, quantity)
-        res.json({ javs: javsQ });
-    }
+    res.json({ javs: javs });
     
 }
 
