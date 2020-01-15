@@ -6,7 +6,6 @@ const Idol = require('../models/idol');
 
 
 const getJavs = async (req, res, next) => {
-    const quantity = req.get('quantity');
     let javs;
     try {
         javs = await Jav.find({}).sort({ creation: -1 });
@@ -14,8 +13,7 @@ const getJavs = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ javs: javs });
-    
+    res.json({ javs: javs });    
 }
 
 const getJavById = async (req, res, next) => {
