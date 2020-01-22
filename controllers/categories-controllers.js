@@ -99,9 +99,30 @@ const getRandom4JavsCategory = async (req,res,next) => {
     res.json({ category:category, javs:javs});
 }
 
+const getCountJavs = async (req,res,next) => {
+    const categoryId = req.params.cid;
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let data = [];
+    javs.forEach(jav => {
+        jav.categories.forEach(category => {
+            if (category == categoryId) {
+                data.push(jav);
+            }
+        });
+    });
+    res.status(201).json({ javs: data })
+}
+
 exports.getCategories = getCategories;
 exports.getCategoryById = getCategoryById;
 exports.createCategory = createCategory;
 exports.updateCategory = updateCategory;
 exports.deleteCategory = deleteCategory;
 exports.getRandom4JavsCategory = getRandom4JavsCategory;
+exports.getCountJavs = getCountJavs;

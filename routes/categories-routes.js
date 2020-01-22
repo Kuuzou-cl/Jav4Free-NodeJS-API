@@ -4,6 +4,8 @@ const categoriesControllers = require('../controllers/categories-controllers')
 
 const router = express.Router();
 
+router.get('/countJavs/:cid', categoriesControllers.getCountJavs);
+
 router.get('/getRandomCategory', categoriesControllers.getRandom4JavsCategory);
 
 router.get('/:cid', categoriesControllers.getCategoryById);
