@@ -116,7 +116,8 @@ const getCountJavs = async (req,res,next) => {
             }
         });
     });
-    res.status(201).json({ javs: data })
+    let length = data.length();
+    res.status(201).json( {length: length} )
 }
 
 exports.getCategories = getCategories;
