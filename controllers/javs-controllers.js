@@ -374,8 +374,8 @@ const searchJav = async (req, res, next) => {
     let nextPage;
     let start = 20 * (page - 1);
     let end;
-    if (javs.length <= (page * 20)) {
-        end = javs.length;
+    if (results.length <= (page * 20)) {
+        end = results.length;
         nextPage = false;
     } else {
         nextPage = true;
@@ -383,7 +383,7 @@ const searchJav = async (req, res, next) => {
     }
     let dataPage = results.slice(start, end);
 
-    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage })
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length})
 }
 
 exports.getJavs = getJavs;
