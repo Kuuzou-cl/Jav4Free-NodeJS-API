@@ -323,16 +323,6 @@ const searchJav = async (req, res, next) => {
             } else if (jav.code.toUpperCase().includes(query.toUpperCase())) {
                 resultsRaw.push(jav);
             }
-            jav.categories.forEach(category => {
-                if (category.toUpperCase().includes(query.toUpperCase())) {
-                    resultsRaw.push(jav);
-                }
-            );
-            jav.idols.forEach(idol => {
-                if (idol.toUpperCase().includes(query.toUpperCase())) {
-                    resultsRaw.push(jav);
-                }
-            });
         });
     });
 
