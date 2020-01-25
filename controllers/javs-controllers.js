@@ -371,7 +371,19 @@ const searchJav = async (req, res, next) => {
         }
     });
 
-    res.status(201).json({ results: results, lengthResults: results.length })
+    let nextPage;
+    let start = 20 * (page - 1);
+    let end;
+    if (javs.length <= (page * 20)) {
+        end = javs.length;
+        nextPage = false;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+    let dataPage = results.slice(start, end);
+
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage })
 }
 
 exports.getJavs = getJavs;
