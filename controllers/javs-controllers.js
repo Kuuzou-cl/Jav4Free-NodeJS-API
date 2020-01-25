@@ -15,11 +15,11 @@ const getJavs = async (req, res, next) => {
         return next(error);
     }
     if (quantity == 0) {
-        res.json({ javs: javs });    
-    }else{
+        res.json({ javs: javs });
+    } else {
         let javsQ = javs.slice(0, quantity)
         res.json({ javs: javsQ });
-    }    
+    }
 }
 
 const getJavById = async (req, res, next) => {
@@ -308,6 +308,35 @@ const getRelatedJavs = async (req, res, next) => {
     res.status(201).json({ relatedJavs: relatedJavs })
 }
 
+const searchJav = async (req, res, next) => {
+    const page = req.params.page;
+    const queryString = req.params.jid;
+    var queries = queryString.split("&");
+
+    let resultsRaw = [];
+    let javs = await Jav.find({}).sort({ creation: -1 });;
+
+    queries.forEach(query => {
+        javs.forEach(jav => {
+            if (jav.name.toUpperCase().includes(query.toUpperCase())) {
+                resultsRaw.push(jav);
+            } else if (jav.code.toUpperCase().includes(query.toUpperCase())) {
+                resultsRaw.push(jav);
+            }
+        });
+    });
+
+    let results = [];
+
+    resultsRaw.forEach(r => {
+        if (!results.some(item => item.code === r.code)) {
+            results.push(r);
+        }
+    });
+
+    res.status(201).json({ results: results })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
@@ -318,3 +347,4 @@ exports.getJavsByIdol = getJavsByIdol;
 exports.getJavsByCategory = getJavsByCategory;
 exports.getJavsByPage = getJavsByPage;
 exports.getRelatedJavs = getRelatedJavs;
+exports.searchJav = searchJav;
