@@ -357,7 +357,7 @@ const searchJav = async (req, res, next) => {
 
     javs.forEach(jav => {
         jav.idols.forEach(ji => {
-            if (filteredIdols.some(item => item.code === jc.code)) {
+            if (filteredIdols.some(item => item.code === ji.code)) {
                 resultsRaw.push(jav);
             }
         });
