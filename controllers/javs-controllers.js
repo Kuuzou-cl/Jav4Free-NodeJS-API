@@ -314,13 +314,50 @@ const searchJav = async (req, res, next) => {
     var queries = queryString.split("&");
 
     let resultsRaw = [];
-    let javs = await Jav.find({}).sort({ creation: -1 });;
+    let javs = await Jav.find({}).sort({ creation: -1 });
+
+    let idols = await Idol.find({}).sort({name:1});
+    let filteredIdols = [];
+    let categories = await Category.find({}).sort({name: 'asc'});
+    let filteredCategories = [];
 
     queries.forEach(query => {
         javs.forEach(jav => {
             if (jav.name.toUpperCase().includes(query.toUpperCase())) {
                 resultsRaw.push(jav);
             } else if (jav.code.toUpperCase().includes(query.toUpperCase())) {
+                resultsRaw.push(jav);
+            }
+        });
+    });
+
+    queries.forEach(query => {
+        idols.forEach(idol => {
+            if (idol.name.toUpperCase().includes(query.toUpperCase())) {
+                filteredIdols.push(idol);
+            }
+        });
+    });
+
+    queries.forEach(query => {
+        categories.forEach(category => {
+            if (category.name.toUpperCase().includes(query.toUpperCase())) {
+                filteredCategories.push(category);
+            }
+        });
+    });
+
+    javs.forEach(jav => {
+        jav.categories.forEach(jc => {
+            if (!filteredCategories.some(item => item.code === jc.code)) {
+                resultsRaw.push(jav);
+            }
+        });
+    });
+
+    javs.forEach(jav => {
+        jav.idols.forEach(ji => {
+            if (!filteredIdols.some(item => item.code === jc.code)) {
                 resultsRaw.push(jav);
             }
         });
