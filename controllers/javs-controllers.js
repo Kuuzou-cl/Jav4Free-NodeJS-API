@@ -371,7 +371,7 @@ const searchJav = async (req, res, next) => {
         }
     });
 
-    res.status(201).json({ results: results })
+    res.status(201).json({ results: results, lengthResults: results.length })
 }
 
 exports.getJavs = getJavs;
