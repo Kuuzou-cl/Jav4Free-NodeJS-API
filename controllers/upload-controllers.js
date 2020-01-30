@@ -16,22 +16,21 @@ const upload = multer({
         s3: s3,
         bucket: "javdata",
         acl: "public-read",
-        key: function(request, file, cb) {
+        key: function (request, file, cb) {
             cb(null, file.originalname);
-          }
+        }
     })
 }).array("upload", 1);
 
-module.exports = {
-    index(req, res) {
-        console.log("backend hit");
-        upload(req, res, function (error) {
-            if (error) {
-                console.log(error);
-                return res.redirect("/error");
-            }
-            console.log("File uploaded successfully.");
-            res.redirect("/success");
-        });
-    }
-};
+const uploadFile = async (req, res, next) => {
+    console.log("backend hit");
+    upload(req, res, function (error) {
+        if (error) {
+            const err = new HttpError('Something went wrong', 500);
+            return next(err);
+        }
+        res.status(200).json({ message: 'Succesful upload action!' });
+    });
+}
+
+exports.uploadFile = uploadFile;
