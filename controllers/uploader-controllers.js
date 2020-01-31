@@ -22,16 +22,16 @@ const upload = multer({
     })
 }).array("upload", 1);
 
-const postFile = async (req, res) => {
-    upload(req, res, function (error) {
-        if (error) {
-            console.log(error);
-            return res.redirect("/error");
-        }
-        console.log("File uploaded successfully.");
-        res.redirect("/success");
-    });
-
-}
-
-exports.postFile = postFile;
+module.exports = {
+    index(req, res) {
+        console.log("backend hit");
+        upload(req, res, function (error) {
+            if (error) {
+                console.log(error);
+                return res.redirect("/error");
+            }
+            console.log("File uploaded successfully.");
+            res.redirect("/success");
+        });
+    }
+};
