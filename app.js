@@ -7,6 +7,7 @@ const categoriesRoutes = require('./routes/categories-routes');
 const userRoutes = require('./routes/users-routes');
 const idolsRoutes = require('./routes/idols-routes');
 const javsRoutes = require('./routes/javs-routes');
+const uploaderRoutes = require('./routes/uploader-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -22,6 +23,8 @@ app.use('/jav4free/categories', categoriesRoutes);
 app.use('/jav4free/idols', idolsRoutes);
 
 app.use('/jav4free/javs', javsRoutes);
+
+app.use('/jav4free/uploader', uploaderRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
