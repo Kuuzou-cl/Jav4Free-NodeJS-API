@@ -51,6 +51,7 @@ app.post('/jav4free/upload', function (request, response, next) {
     upload(request, response, function (error) {
       if (error) {
         console.log(error);
+        res.status(201).json({ error: error })
       }
       console.log('File uploaded successfully.');
     });
