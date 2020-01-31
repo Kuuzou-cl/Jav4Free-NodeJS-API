@@ -83,7 +83,7 @@ var uploadCover = multer({
     })
 })
 
-router.post('/upJav', uploadJav.array('file',20), function (req, res, next) {
+router.post('/upJav', uploadJav.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -91,7 +91,7 @@ router.post('/upJav', uploadJav.array('file',20), function (req, res, next) {
     }
 })
 
-router.post('/upIdol', uploadIdol.single('file'), function (req, res, next) {
+router.post('/upIdol', uploadIdol.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -99,7 +99,7 @@ router.post('/upIdol', uploadIdol.single('file'), function (req, res, next) {
     }
 })
 
-router.post('/upVtt', uploadVtt.single('file'), function (req, res, next) {
+router.post('/upVtt', uploadVtt.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -107,7 +107,7 @@ router.post('/upVtt', uploadVtt.single('file'), function (req, res, next) {
     }
 })
 
-router.post('/upSprite', uploadSprite.single('file'), function (req, res, next) {
+router.post('/upSprite', uploadSprite.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -115,7 +115,7 @@ router.post('/upSprite', uploadSprite.single('file'), function (req, res, next) 
     }
 })
 
-router.post('/upCover', uploadCover.single('file'), function (req, res, next) {
+router.post('/upCover', uploadCover.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
