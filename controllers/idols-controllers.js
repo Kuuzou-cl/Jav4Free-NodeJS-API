@@ -23,6 +23,7 @@ const getIdols = async (req, res, next) => {
                 // }
             });
         });
+        idol["javQ"] = 0;
     });
     res.json({ idols: idols });
 }
