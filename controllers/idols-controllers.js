@@ -43,8 +43,7 @@ const getIdolById = async (req, res, next) => {
             }
         });
     });
-    idol["javs"] = data.length;
-    res.json({ idol });
+    res.json({ idol: idol, javsQ: data.length });
 }
 
 const createIdol = async (req, res, next) => {
