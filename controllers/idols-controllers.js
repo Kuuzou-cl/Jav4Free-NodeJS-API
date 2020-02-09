@@ -19,7 +19,7 @@ const getIdols = async (req, res, next) => {
         let dataQ = 0;
         javs.forEach(jav => {
             jav.idols.forEach(idIdol => {
-                if (idIdol === idol._id) {
+                if (idIdol == idol._id) {
                     dataQ += 1;
                 }
             });
