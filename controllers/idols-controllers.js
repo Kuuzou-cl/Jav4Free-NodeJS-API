@@ -12,7 +12,25 @@ const getIdols = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ idols: idols.map(idol => idol.toObject({ getters: true })) });
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    idols.forEach(idol => {
+        let dataQ = 0;
+        javs.forEach(jav => {
+            jav.idols.forEach(idIdol => {
+                if (idIdol == idol._id) {
+                    dataq += 1;
+                }
+            });
+        });
+        idol.set('javsQ',dataQ);
+    });
+    res.json({ idols: idols });
 }
 
 const getIdolById = async (req, res, next) => {
