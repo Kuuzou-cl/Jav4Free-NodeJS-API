@@ -7,7 +7,7 @@ const Jav = require('../models/jav');
 const getIdols = async (req, res, next) => {
     let idols;
     try {
-        idols = await Idol.find({}).sort({name:1});
+        idols = await Idol.find({}).sort({ name: 1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -28,6 +28,22 @@ const getIdolById = async (req, res, next) => {
         const error = new HttpError('Could not find the Idol you are looking for.', 404);;
         return next(error);
     }
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let data = [];
+    javs.forEach(jav => {
+        jav.idols.forEach(idol => {
+            if (idol == idolId) {
+                data.push(jav);
+            }
+        });
+    });
+    idol["javs"] = data.length;
     res.json({ idol });
 }
 
@@ -81,7 +97,7 @@ const deleteIdol = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
-const getRandom4Idols = async (req,res,next) => {
+const getRandom4Idols = async (req, res, next) => {
     let idolsData = [];
 
     let idols;
@@ -103,16 +119,16 @@ const getRandom4Idols = async (req,res,next) => {
 
     const idolIndex4 = Math.floor((Math.random() * (idols.length - 0)) + 0);
     idolsData.push(idols[idolIndex4]);
-    
-    res.json({ idols:idolsData });
+
+    res.json({ idols: idolsData });
 }
 
-const getIdolsByPage = async(req,res,next) => {
+const getIdolsByPage = async (req, res, next) => {
     const page = req.params.page;
     let nextPage;
     let idols;
     try {
-        idols = await Idol.find({}).sort({name:1});
+        idols = await Idol.find({}).sort({ name: 1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -122,11 +138,11 @@ const getIdolsByPage = async(req,res,next) => {
     if (idols.length <= (page * 16)) {
         nextPage = false;
         end = idols.length;
-    }else{
+    } else {
         nextPage = true;
         end = page * 16;
     }
-    let dataPage = idols.slice(start,end);
+    let dataPage = idols.slice(start, end);
     res.status(201).json({ idols: dataPage, nextPage: nextPage })
 }
 
@@ -136,4 +152,4 @@ exports.createIdol = createIdol;
 exports.updateIdol = updateIdol;
 exports.deleteIdol = deleteIdol;
 exports.getRandom4Idols = getRandom4Idols;
-exports. getIdolsByPage = getIdolsByPage;
+exports.getIdolsByPage = getIdolsByPage;
