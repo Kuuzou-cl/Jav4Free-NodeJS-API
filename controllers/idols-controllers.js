@@ -17,11 +17,11 @@ const getIdols = async (req, res, next) => {
     idols.forEach(idol => {
         let dataQ = 0;
         javs.forEach(jav => {
-            // jav.idols.forEach(idIdol => {
-            //     if (idIdol == idol._id) {
-            //         dataq += 1;
-            //     }
-            // });
+            jav.idols.forEach(idIdol => {
+                // if (idIdol == idol._id) {
+                //     dataq += 1;
+                // }
+            });
         });
     });
     res.json({ idols: idols });
