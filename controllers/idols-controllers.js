@@ -6,12 +6,24 @@ const Jav = require('../models/jav');
 
 const getIdols = async (req, res, next) => {
     let idols;
+    let javs;
     try {
         idols = await Idol.find({}).sort({ name: 1 });
+        javs = await Jav.find({}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
+    idols.forEach(idol => {
+        let dataQ = 0;
+        javs.forEach(jav => {
+            // jav.idols.forEach(idIdol => {
+            //     if (idIdol == idol._id) {
+            //         dataq += 1;
+            //     }
+            // });
+        });
+    });
     res.json({ idols: idols });
 }
 
