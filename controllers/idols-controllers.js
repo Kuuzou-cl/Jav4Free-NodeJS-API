@@ -14,6 +14,7 @@ const getIdols = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
+    let idolsData = [];
     idols.forEach(idol => {
         let dataQ = 0;
         javs.forEach(jav => {
@@ -23,9 +24,9 @@ const getIdols = async (req, res, next) => {
                 // }
             });
         });
-        idol["javQ"] = 0;
+        idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, javsQ: 0, creation: idol.creation })
     });
-    res.json({ idols: idols });
+    res.json({ idols: idolsData });
 }
 
 const getIdolById = async (req, res, next) => {
