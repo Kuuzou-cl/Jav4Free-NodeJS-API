@@ -19,12 +19,12 @@ const getIdols = async (req, res, next) => {
         let dataQ = 0;
         javs.forEach(jav => {
             jav.idols.forEach(idIdol => {
-                // if (idIdol == idol._id) {
-                //     dataq += 1;
-                // }
+                if (idIdol == idol._id) {
+                    dataq += 1;
+                }
             });
         });
-        idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, javsQ: 0, creation: idol.creation })
+        idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, javsQ: dataQ, creation: idol.creation })
     });
     res.json({ idols: idolsData });
 }
