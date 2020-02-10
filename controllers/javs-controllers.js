@@ -274,7 +274,7 @@ const getRelatedJavs = async (req, res, next) => {
             });
         }
 
-        while (relatedJavs.length < 7) {
+        while (relatedJavs.length < 8) {
             let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
             let javN = javs[random];
             javN.categories.forEach(category => {
@@ -284,7 +284,7 @@ const getRelatedJavs = async (req, res, next) => {
             });
         }
     } else {
-        while (relatedJavs.length < 3) {
+        while (relatedJavs.length < 4) {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
                     if (category == jav.categories[0]) {
@@ -294,7 +294,7 @@ const getRelatedJavs = async (req, res, next) => {
             });
         }
 
-        while (relatedJavs.length < 7) {
+        while (relatedJavs.length < 8) {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
                     if (category == jav.categories[1]) {
