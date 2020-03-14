@@ -62,7 +62,23 @@ const deleteUser = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
+const updateUser = async (req, res, next) => {
+    const { email, password, admin } = req.body;
+    const userId = req.params.uid;
+
+    let user;
+    try {
+        user = await User.findByIdAndUpdate(userId, { "$set": {"email": email, "password": password, "admin":admin} });    
+    } catch (err) {   
+        const error = new HttpError('Something went wrong, could not update category.', 500);
+        return next(error);
+    }
+
+    res.status(200).json({user: user});
+}
+
 exports.login = login;
 exports.signup = signup;
 exports.getUsers = getUsers;
 exports.deleteUser = deleteUser;
+exports.updateUser = updateUser;
