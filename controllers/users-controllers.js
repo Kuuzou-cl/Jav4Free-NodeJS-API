@@ -47,7 +47,7 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({user: existingUser.email})
+    res.json({user: existingUser.email, userState: existingUser.admin})
 };
 
 const deleteUser = async (req, res, next) => {
