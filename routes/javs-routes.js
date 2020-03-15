@@ -20,6 +20,8 @@ router.get('/:jid', javsControllers.getJavById);
 
 router.get('/', javsControllers.getJavs);
 
+router.post('/getJavsByBatch', javsControllers.getJavsByBatch);
+
 router.post('/newJav', javsControllers.createJav);
 
 router.patch('/:jid', javsControllers.updateJav);

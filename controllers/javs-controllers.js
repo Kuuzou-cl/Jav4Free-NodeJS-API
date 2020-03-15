@@ -22,6 +22,22 @@ const getJavs = async (req, res, next) => {
     }
 }
 
+const getJavsByBatch = async (req, res, next) => {
+    const { javsBatch } = req.body;
+    let javsHistory = [];
+    javsBatch.forEach(async javBatch => {
+        let jav;
+        try {
+            jav = await Jav.findById(javBatch);
+        } catch (err) {
+            const error = new HttpError('Something went wrong', 500);
+            return next(error);
+        }
+        javsHistory.push(jav);
+    });
+    res.status(200).json({ history: javsHistory });
+}
+
 const getJavById = async (req, res, next) => {
     const javId = req.params.jid;
     let jav;
@@ -387,6 +403,7 @@ const searchJav = async (req, res, next) => {
 }
 
 exports.getJavs = getJavs;
+exports.getJavsByBatch = getJavsByBatch;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
 exports.updateJav = updateJav;
