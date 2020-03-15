@@ -25,12 +25,10 @@ const getJavs = async (req, res, next) => {
 const getJavsByBatch = async (req, res, next) => {
     const { javsBatch } = req.body;
     let javsHistory = [];
-    javsBatch.forEach(async javBatch => {
-        let jav = await Jav.findById(javBatch);
-        if (jav) {
-            javsHistory.push(jav);    
-        }
-    });
+    for (let index = 0; index < javsBatch.length; index++) {
+        let jav = await Jav.findById(javBatch[index]);
+        javsHistory.push(jav);
+    }
     res.status(200).json({ history: javsHistory, data: javsBatch });
 }
 
