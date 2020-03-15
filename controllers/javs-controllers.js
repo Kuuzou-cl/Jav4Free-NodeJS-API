@@ -23,13 +23,31 @@ const getJavs = async (req, res, next) => {
 }
 
 const getJavsByBatch = async (req, res, next) => {
+    const page = req.params.page;
     const { javsBatch } = req.body;
+    
+    let nextPage;
+    let start = 20 * (page - 1);
+    let end;
     let javsHistory = [];
+
     for (let index = 0; index < javsBatch.length; index++) {
         let jav = await Jav.findById(javsBatch[index]);
-        javsHistory.push(jav);
+        javsHistory.unshift(jav);
     }
-    res.status(200).json({ history: javsHistory, data: javsBatch });
+
+    if (javsHistory.length <= (page * 20)) {
+        end = javsHistory.length;
+        nextPage = false;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+
+    let dataPage = javsHistory.slice(start, end);
+
+    res.status(200).json({ history: dataPage, nextPage: nextPage });
+     
 }
 
 const getJavById = async (req, res, next) => {
