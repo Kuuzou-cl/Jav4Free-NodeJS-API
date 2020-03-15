@@ -26,7 +26,7 @@ const getJavsByBatch = async (req, res, next) => {
     const { javsBatch } = req.body;
     let javsHistory = [];
     for (let index = 0; index < javsBatch.length; index++) {
-        let jav = await Jav.findById(javBatch[index]);
+        let jav = await Jav.findById(javsBatch[index]);
         javsHistory.push(jav);
     }
     res.status(200).json({ history: javsHistory, data: javsBatch });
