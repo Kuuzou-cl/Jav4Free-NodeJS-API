@@ -232,7 +232,7 @@ const getJavsByCategory = async (req, res, next) => {
     }
     let lastPage = 1;
     if ((data.length % 20) > 0) {
-        lastPage = (data.length / 20);
+        lastPage = Math.trunc(data.length / 20) + 1;
     }else{
         lastPage = (data.length / 20);
     }
