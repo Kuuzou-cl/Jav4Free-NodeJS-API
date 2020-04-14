@@ -230,8 +230,14 @@ const getJavsByCategory = async (req, res, next) => {
         nextPage = true;
         end = page * 20;
     }
+    let lastPage = 1;
+    if ((data % 20) > 0) {
+        lastPage = (data / 20) - (data % 20) + 1;
+    }else{
+        lastPage = (data / 20);
+    }
     let dataPage = data.slice(start, end);
-    res.status(201).json({ javs: dataPage, nextPage: nextPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
 const getJavsByPage = async (req, res, next) => {
