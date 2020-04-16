@@ -155,8 +155,14 @@ const getIdolsByPage = async (req, res, next) => {
         nextPage = true;
         end = page * 16;
     }
+    let lastPage = 1;
+    if ((idols.length % 20) > 0) {
+        lastPage = Math.trunc(idols.length / 20) + 1;
+    }else{
+        lastPage = (idols.length / 20);
+    }
     let dataPage = idols.slice(start, end);
-    res.status(201).json({ idols: dataPage, nextPage: nextPage })
+    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage:lastPage })
 }
 
 exports.getIdols = getIdols;
