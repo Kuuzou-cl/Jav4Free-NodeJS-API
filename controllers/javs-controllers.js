@@ -43,10 +43,15 @@ const getJavsByBatch = async (req, res, next) => {
         nextPage = true;
         end = page * 20;
     }
-
+    let lastPage = 1;
+    if ((javsHistory.length % 20) > 0) {
+        lastPage = Math.trunc(javsHistory.length / 20) + 1;
+    }else{
+        lastPage = (javsHistory.length / 20);
+    }
     let dataPage = javsHistory.slice(start, end);
 
-    res.status(200).json({ history: dataPage, nextPage: nextPage });
+    res.status(200).json({ history: dataPage, nextPage: nextPage, lastPage: lastPage });
      
 }
 
@@ -198,8 +203,14 @@ const getJavsByIdol = async (req, res, next) => {
         nextPage = true;
         end = page * 20;
     }
+    let lastPage = 1;
+    if ((data.length % 20) > 0) {
+        lastPage = Math.trunc(data.length / 20) + 1;
+    }else{
+        lastPage = (data.length / 20);
+    }
     let dataPage = data.slice(start, end);
-    res.status(201).json({ javs: dataPage, nextPage: nextPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
 const getJavsByCategory = async (req, res, next) => {
@@ -259,8 +270,14 @@ const getJavsByPage = async (req, res, next) => {
         nextPage = true;
         end = page * 20;
     }
+    let lastPage = 1;
+    if ((javs.length % 20) > 0) {
+        lastPage = Math.trunc(javs.length / 20) + 1;
+    }else{
+        lastPage = (javs.length / 20);
+    }
     let dataPage = javs.slice(start, end);
-    res.status(201).json({ javs: dataPage, nextPage: nextPage })
+    res.status(201).json({ javs: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
 const getRelatedJavs = async (req, res, next) => {
@@ -415,9 +432,14 @@ const searchJav = async (req, res, next) => {
         nextPage = true;
         end = page * 20;
     }
+    let lastPage = 1;
+    if ((results.length % 20) > 0) {
+        lastPage = Math.trunc(results.length / 20) + 1;
+    }else{
+        lastPage = (results.length / 20);
+    }
     let dataPage = results.slice(start, end);
-
-    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length})
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length, lastPage: lastPage})
 }
 
 exports.getJavs = getJavs;
