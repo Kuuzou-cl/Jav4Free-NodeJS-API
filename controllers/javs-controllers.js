@@ -385,7 +385,7 @@ const searchJav = async (req, res, next) => {
     queries.forEach(query => {
         idols.forEach(idol => {
             if (idol.name.toUpperCase().includes(query.toUpperCase())) {
-                if (filteredIdols.some(item => item.name === idol.name)) {
+                if (!filteredIdols.some(item => item.name === idol.name)) {
                     filteredIdols.push(idol);
                 }
             }
@@ -395,7 +395,7 @@ const searchJav = async (req, res, next) => {
     queries.forEach(query => {
         categories.forEach(category => {
             if (category.name.toUpperCase().includes(query.toUpperCase())) {
-                if (filteredCategories.some(item => item.name === category.name)) {
+                if (!filteredCategories.some(item => item.name === category.name)) {
                     filteredCategories.push(category);
                 }
             }
