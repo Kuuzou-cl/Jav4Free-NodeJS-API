@@ -422,6 +422,9 @@ const searchJav = async (req, res, next) => {
         }
     });
 
+    
+
+
     let nextPage;
     let start = 20 * (page - 1);
     let end;
@@ -439,7 +442,7 @@ const searchJav = async (req, res, next) => {
         lastPage = (results.length / 20);
     }
     let dataPage = results.slice(start, end);
-    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length, lastPage: lastPage})
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols, categories: filteredCategories })
 }
 
 exports.getJavs = getJavs;
