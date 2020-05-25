@@ -307,11 +307,9 @@ const getRelatedJavs = async (req, res, next) => {
     for (let index = 0; index < 4; index++) {
         let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
         let javN = javs[random];
-        javN.categories.forEach(category => {
-            if (category == jav.categories[0] && !relatedJavs.some(item => item.code === javN.code)) {
-                relatedJavs.push(javN);
-            }
-        });
+        if (javN.categories.some(item => item.name === jav.categories[0].name) && !relatedJavs.some(item => item.code === javN.code)) {
+            relatedJavs.push(javN);
+        }
     }
 
     for (let index = 3; index < 8; index++) {
