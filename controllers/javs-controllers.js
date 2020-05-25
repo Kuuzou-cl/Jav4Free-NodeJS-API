@@ -304,56 +304,34 @@ const getRelatedJavs = async (req, res, next) => {
 
     let relatedJavs = [];
 
-    if (jav.categories.length >= 3) {
-        while (relatedJavs.length < 3) {
-            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = javs[random];
-            javN.categories.forEach(category => {
-                if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
-                }
-            });
-        }
+    for (let index = 0; index < 3; index++) {
+        let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+        let javN = javs[random];
+        javN.categories.forEach(category => {
+            if (category == jav.categories[0] && !relatedJavs.some(item => item.code === javN.code)) {
+                relatedJavs.push(javN);
+            }
+        });
+    }
 
-        while (relatedJavs.length < 8) {
-            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = javs[random];
-            javN.categories.forEach(category => {
-                if (category == jav.categories[1]) {
-                    relatedJavs.push(javN);
-                }
-            });
-        }
+    for (let index = 0; index < 8; index++) {
+        let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+        let javN = javs[random];
+        javN.categories.forEach(category => {
+            if (category == jav.categories[1] && !relatedJavs.some(item => item.code === javN.code)) {
+                relatedJavs.push(javN);
+            }
+        });
+    }
 
-        while (relatedJavs.length < 12) {
-            let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
-            let javN = javs[random];
-            javN.categories.forEach(category => {
-                if (category == jav.categories[2]) {
-                    relatedJavs.push(javN);
-                }
-            });
-        }
-    } else {
-        while (relatedJavs.length < 6) {
-            javs.forEach(javN => {
-                javN.categories.forEach(category => {
-                    if (category == jav.categories[0]) {
-                        relatedJavs.push(javN);
-                    }
-                });
-            });
-        }
-
-        while (relatedJavs.length < 12) {
-            javs.forEach(javN => {
-                javN.categories.forEach(category => {
-                    if (category == jav.categories[1]) {
-                        relatedJavs.push(javN);
-                    }
-                });
-            });
-        }
+    for (let index = 0; index < 12; index++) {
+        let random = Math.floor((Math.random() * (javs.length - 0)) + 0);
+        let javN = javs[random];
+        javN.categories.forEach(category => {
+            if (category == jav.categories[2] && !relatedJavs.some(item => item.code === javN.code)) {
+                relatedJavs.push(javN);
+            }
+        });
     }
 
     res.status(201).json({ relatedJavs: relatedJavs })
