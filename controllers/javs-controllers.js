@@ -25,7 +25,7 @@ const getJavs = async (req, res, next) => {
 const getJavsByBatch = async (req, res, next) => {
     const page = req.params.page;
     const { javsBatch } = req.body;
-    
+
     let nextPage;
     let start = 20 * (page - 1);
     let end;
@@ -46,13 +46,13 @@ const getJavsByBatch = async (req, res, next) => {
     let lastPage = 1;
     if ((javsHistory.length % 20) > 0) {
         lastPage = Math.trunc(javsHistory.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (javsHistory.length / 20);
     }
     let dataPage = javsHistory.slice(start, end);
 
     res.status(200).json({ history: dataPage, nextPage: nextPage, lastPage: lastPage });
-     
+
 }
 
 const getJavById = async (req, res, next) => {
@@ -206,7 +206,7 @@ const getJavsByIdol = async (req, res, next) => {
     let lastPage = 1;
     if ((data.length % 20) > 0) {
         lastPage = Math.trunc(data.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (data.length / 20);
     }
     let dataPage = data.slice(start, end);
@@ -244,7 +244,7 @@ const getJavsByCategory = async (req, res, next) => {
     let lastPage = 1;
     if ((data.length % 20) > 0) {
         lastPage = Math.trunc(data.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (data.length / 20);
     }
     let dataPage = data.slice(start, end);
@@ -273,7 +273,7 @@ const getJavsByPage = async (req, res, next) => {
     let lastPage = 1;
     if ((javs.length % 20) > 0) {
         lastPage = Math.trunc(javs.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (javs.length / 20);
     }
     let dataPage = javs.slice(start, end);
@@ -310,7 +310,9 @@ const getRelatedJavs = async (req, res, next) => {
             let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[0]) {
-                    relatedJavs.push(javN);
+                    if (!relatedJavs.some(item => item.name === javN.name)) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
@@ -320,7 +322,9 @@ const getRelatedJavs = async (req, res, next) => {
             let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[1]) {
-                    relatedJavs.push(javN);
+                    if (!relatedJavs.some(item => item.name === javN.name)) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
@@ -330,7 +334,9 @@ const getRelatedJavs = async (req, res, next) => {
             let javN = javs[random];
             javN.categories.forEach(category => {
                 if (category == jav.categories[2]) {
-                    relatedJavs.push(javN);
+                    if (!relatedJavs.some(item => item.name === javN.name)) {
+                        relatedJavs.push(javN);
+                    }
                 }
             });
         }
@@ -339,7 +345,9 @@ const getRelatedJavs = async (req, res, next) => {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
                     if (category == jav.categories[0]) {
-                        relatedJavs.push(javN);
+                        if (!relatedJavs.some(item => item.name === javN.name)) {
+                            relatedJavs.push(javN);
+                        }
                     }
                 });
             });
@@ -349,7 +357,9 @@ const getRelatedJavs = async (req, res, next) => {
             javs.forEach(javN => {
                 javN.categories.forEach(category => {
                     if (category == jav.categories[1]) {
-                        relatedJavs.push(javN);
+                        if (!relatedJavs.some(item => item.name === javN.name)) {
+                            relatedJavs.push(javN);
+                        }
                     }
                 });
             });
@@ -367,9 +377,9 @@ const searchJav = async (req, res, next) => {
     let resultsRaw = [];
     let javs = await Jav.find({}).sort({ creation: -1 });
 
-    let idols = await Idol.find({}).sort({name:1});
+    let idols = await Idol.find({}).sort({ name: 1 });
     let filteredIdols = [];
-    let categories = await Category.find({}).sort({name: 'asc'});
+    let categories = await Category.find({}).sort({ name: 'asc' });
     let filteredCategories = [];
 
     queries.forEach(query => {
@@ -439,11 +449,11 @@ const searchJav = async (req, res, next) => {
     let lastPage = 1;
     if ((results.length % 20) > 0) {
         lastPage = Math.trunc(results.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (results.length / 20);
     }
     let dataPage = results.slice(start, end);
-    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols, categories: filteredCategories })
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols, categories: filteredCategories })
 }
 
 exports.getJavs = getJavs;
