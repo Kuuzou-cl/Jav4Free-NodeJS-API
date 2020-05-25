@@ -310,8 +310,6 @@ const getRelatedJavs = async (req, res, next) => {
         javN.categories.forEach(category => {
             if (category == jav.categories[0] && !relatedJavs.some(item => item.code === javN.code)) {
                 relatedJavs.push(javN);
-            }else{
-                index--;
             }
         });
     }
