@@ -35,12 +35,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     let existingUser;
-    const payload = {
-        check: true
-    };
-    const token = jwt.sign(payload, app.get('key'), {
-        expiresIn: 1440
-    });
+
     try {
         existingUser = await User.findOne({ email: email });
     } catch (err) {
@@ -51,8 +46,15 @@ const login = async (req, res, next) => {
     if (!existingUser || existingUser.password !== password) {
         const error = new HttpError('Invalid email or password', 401);
         return next(error);
+    } else {
+        const payload = {
+            check: true
+        };
+        const token = jwt.sign(payload, app.get('key'), {
+            expiresIn: 1440
+        });
+        res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
     }
-    res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
 };
 
 const deleteUser = async (req, res, next) => {
