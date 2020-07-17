@@ -1,5 +1,6 @@
 const HttpError = require('../models/http-error');
 const jwt = require('jsonwebtoken');
+const config = require('./config/config');
 const User = require('../models/user');
 
 const getUsers = async (req, res, next) => {
@@ -47,7 +48,7 @@ const login = async (req, res, next) => {
         const error = new HttpError('Invalid email or password', 401);
         return next(error);
     } else {
-        const token = jwt.sign({ email: existingUser.email }, app.get('key'), {
+        const token = jwt.sign({ email: existingUser.email }, config.key, {
             expiresIn: 1440
         });
         res.json({ user: existingUser.email, userState: existingUser.admin, token: token })

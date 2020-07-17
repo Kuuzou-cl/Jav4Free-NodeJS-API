@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors")
 const mongoose = require('mongoose');
-const config = require('./config/config');
 const jwt = require('jsonwebtoken');
 
 const categoriesRoutes = require('./routes/categories-routes');
@@ -14,8 +13,6 @@ const uploadsRoutes = require('./routes/uploads-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
-
-app.set('key', config.key);
 
 app.use(cors())
 
