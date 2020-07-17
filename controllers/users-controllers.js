@@ -38,7 +38,7 @@ const login = async (req, res, next) => {
     let token;
     try {
         existingUser = await User.findOne({ email: email });
-        token = jwt.sign(payload, app.get('llave'), {
+        token = jwt.sign(payload, app.get('key'), {
             expiresIn: 1440
         });
     } catch (err) {
