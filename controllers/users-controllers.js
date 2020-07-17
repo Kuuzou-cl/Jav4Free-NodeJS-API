@@ -35,12 +35,8 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     let existingUser;
-    let token;
     try {
         existingUser = await User.findOne({ email: email });
-        token = jwt.sign(payload, app.get('key'), {
-            expiresIn: 1440
-        });
     } catch (err) {
         const error = new HttpError('Login failed!', 500);
         return next(error);
@@ -51,7 +47,7 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
+    res.json({ user: existingUser.email, userState: existingUser.admin })
 };
 
 const deleteUser = async (req, res, next) => {
