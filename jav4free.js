@@ -12,6 +12,10 @@ const HttpError = require('./models/http-error');
 
 const app = express();
 
+if (!config.get("myprivatekey")) {
+    console.error("FATAL ERROR: myprivatekey is not defined.");
+    process.exit(1);
+}
 
 app.use(cors())
 
