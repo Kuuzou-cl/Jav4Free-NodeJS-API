@@ -19,6 +19,8 @@ app.set('key', config.key);
 
 app.use(cors())
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(bodyParser.json());
 
 app.use('/jav4free/user', userRoutes);
