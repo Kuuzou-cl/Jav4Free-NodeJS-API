@@ -49,7 +49,7 @@ const login = async (req, res, next) => {
         return next(error);
     } else {
 
-        res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
+        res.json({ user: existingUser.email, userState: existingUser.admin })
     }
 };
 
