@@ -5,6 +5,4 @@ const bcrypt = require("bcrypt");
 const { User, validate } = require("../models/user");
 const router = express.Router();
 
-
-
 module.exports = router;
