@@ -32,4 +32,8 @@ router.post("/", async (req, res) => {
     });
 });
 
+router.get('/', usersControllers.getUsers);
+
+router.delete('/:uid', usersControllers.deleteUser);
+
 module.exports = router;
