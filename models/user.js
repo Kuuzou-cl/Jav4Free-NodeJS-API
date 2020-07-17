@@ -22,7 +22,7 @@ const userSchema = new Schema({
         minlength: 3,
         maxlength: 255
     },
-    admin: { type: Boolean, default: false }
+    isAdmin: Boolean
 })
 
 module.exports = mongoose.model('User', userSchema);
