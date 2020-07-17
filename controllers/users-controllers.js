@@ -49,7 +49,7 @@ const login = async (req, res, next) => {
         return next(error);
     } else {
         const token = jwt.sign({ email: existingUser.email }, config.key, {
-            expiresIn: 1440
+            expiresIn: 4320
         });
         res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
     }

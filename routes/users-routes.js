@@ -12,8 +12,8 @@ const router = express.Router();
 router.post('/login', usersControllers.login);
 
 router.get("/currentAlive", auth, async (req, res) => {
-    const user = 'user alive'
-    res.send(user);
+    const { email } = req.body;
+    res.send({alive: true, email: email});
 });
 
 // router.patch('/update/:uid', usersControllers.updateUser);
