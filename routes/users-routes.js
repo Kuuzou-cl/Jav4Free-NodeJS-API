@@ -1,39 +1,17 @@
-const auth = require("../middleware/auth");
-const bcrypt = require("bcrypt");
-const { User, validate } = require("../models/user.model");
-const express = require("express");
+const express = require('express');
+
+const usersControllers = require('../controllers/users-controllers')
+
 const router = express.Router();
 
-router.get("/current", auth, async (req, res) => {
-    const user = await User.findById(req.user._id).select("-password");
-    res.send(user);
-});
+// router.get('/', usersControllers.getUsers);
 
-router.post("/", async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+router.post('/signup', usersControllers.signup);
 
-    let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send("User already registered.");
+router.post('/login', usersControllers.login);
 
-    user = new User({
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email
-    });
-    user.password = await bcrypt.hash(user.password, 10);
-    await user.save();
+// router.patch('/update/:uid', usersControllers.updateUser);
 
-    const token = user.generateAuthToken();
-    res.header("x-auth-token", token).send({
-        _id: user._id,
-        name: user.name,
-        email: user.email
-    });
-});
-
-router.get('/', usersControllers.getUsers);
-
-router.delete('/:uid', usersControllers.deleteUser);
+// router.delete('/:uid', usersControllers.deleteUser);
 
 module.exports = router;
