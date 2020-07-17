@@ -2,20 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors")
 const mongoose = require('mongoose');
-const config = require("config");
+
 const categoriesRoutes = require('./routes/categories-routes');
 const userRoutes = require('./routes/users-routes');
 const idolsRoutes = require('./routes/idols-routes');
 const javsRoutes = require('./routes/javs-routes');
 const uploadsRoutes = require('./routes/uploads-routes');
+
 const HttpError = require('./models/http-error');
 
 const app = express();
-
-if (!config.get("myprivatekey")) {
-    console.error("FATAL ERROR: myprivatekey is not defined.");
-    process.exit(1);
-}
 
 app.use(cors())
 
