@@ -15,6 +15,8 @@ const HttpError = require('./models/http-error');
 
 const app = express();
 
+app.set('key', config.key);
+
 app.use(cors())
 
 app.use(bodyParser.json());
