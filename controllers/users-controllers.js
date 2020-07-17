@@ -34,10 +34,11 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
     const { email, password } = req.body;
 
-    let existingUser
+    let existingUser;
+    let token;
     try {
         existingUser = await User.findOne({ email: email });
-        const token = jwt.sign(payload, app.get('llave'), {
+        token = jwt.sign(payload, app.get('llave'), {
             expiresIn: 1440
         });
     } catch (err) {
@@ -50,7 +51,7 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({ user: existingUser.email, userState: existingUser.admin })
+    res.json({ user: existingUser.email, userState: existingUser.admin, token: token })
 };
 
 const deleteUser = async (req, res, next) => {
