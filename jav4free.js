@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors")
 const mongoose = require('mongoose');
+const config = require('./config/config');
+const jwt = require('jsonwebtoken');
 
 const categoriesRoutes = require('./routes/categories-routes');
 const userRoutes = require('./routes/users-routes');
@@ -13,7 +15,11 @@ const HttpError = require('./models/http-error');
 
 const app = express();
 
+app.set('key', config.key);
+
 app.use(cors())
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
