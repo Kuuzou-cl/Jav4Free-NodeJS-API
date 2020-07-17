@@ -14,7 +14,7 @@ router.post('/login', usersControllers.login);
 router.get("/currentAlive", auth, async (req, res) => {
     const user = 'user alive'
     res.send(user);
-  });
+});
 
 // router.patch('/update/:uid', usersControllers.updateUser);
 
