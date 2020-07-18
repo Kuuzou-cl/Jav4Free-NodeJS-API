@@ -9,7 +9,6 @@ module.exports = function (req, res, next) {
         req.user = decoded;
         next();
     } catch (ex) {
-        const invalidToken = "Invalid Token";
-        res.status(400).send(invalidToken);
+        res.status(400).send({alive: false});
     }
 };
