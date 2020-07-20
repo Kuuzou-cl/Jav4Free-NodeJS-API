@@ -1,5 +1,6 @@
 var aws = require('aws-sdk')
 var express = require('express');
+const auth = require('../middleware/auth');
 var router = express.Router();
 var multer = require('multer')
 var multerS3 = require('multer-s3')
@@ -83,7 +84,7 @@ var uploadCover = multer({
     })
 })
 
-router.post('/upJav', uploadJav.array('file',99), function (req, res, next) {
+router.post('/upJav', auth, uploadJav.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -91,7 +92,7 @@ router.post('/upJav', uploadJav.array('file',99), function (req, res, next) {
     }
 })
 
-router.post('/upIdol', uploadIdol.array('file',99), function (req, res, next) {
+router.post('/upIdol', auth, uploadIdol.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -99,7 +100,7 @@ router.post('/upIdol', uploadIdol.array('file',99), function (req, res, next) {
     }
 })
 
-router.post('/upVtt', uploadVtt.array('file',99), function (req, res, next) {
+router.post('/upVtt', auth, uploadVtt.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -107,7 +108,7 @@ router.post('/upVtt', uploadVtt.array('file',99), function (req, res, next) {
     }
 })
 
-router.post('/upSprite', uploadSprite.array('file',99), function (req, res, next) {
+router.post('/upSprite', auth, uploadSprite.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -115,7 +116,7 @@ router.post('/upSprite', uploadSprite.array('file',99), function (req, res, next
     }
 })
 
-router.post('/upCover', uploadCover.array('file',99), function (req, res, next) {
+router.post('/upCover', auth, uploadCover.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {

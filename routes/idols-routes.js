@@ -1,5 +1,5 @@
 const express = require('express');
-
+const auth = require('../middleware/auth');
 const idolsControllers = require('../controllers/idols-controllers');
 
 const router = express.Router();
@@ -12,10 +12,10 @@ router.get('/:iid', idolsControllers.getIdolById);
 
 router.get('/', idolsControllers.getIdols);
 
-router.post('/newIdol', idolsControllers.createIdol);
+router.post('/newIdol', auth, idolsControllers.createIdol);
 
-router.patch('/:iid', idolsControllers.updateIdol);
+router.patch('/:iid', auth, idolsControllers.updateIdol);
 
-router.delete('/:iid', idolsControllers.deleteIdol);
+router.delete('/:iid', auth, idolsControllers.deleteIdol);
 
 module.exports = router;
