@@ -25,7 +25,7 @@ const getJavs = async (req, res, next) => {
 const getJavsByBatch = async (req, res, next) => {
     const page = req.params.page;
     const { javsBatch } = req.body;
-    
+
     let nextPage;
     let start = 20 * (page - 1);
     let end;
@@ -46,13 +46,13 @@ const getJavsByBatch = async (req, res, next) => {
     let lastPage = 1;
     if ((javsHistory.length % 20) > 0) {
         lastPage = Math.trunc(javsHistory.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (javsHistory.length / 20);
     }
     let dataPage = javsHistory.slice(start, end);
 
     res.status(200).json({ history: dataPage, nextPage: nextPage, lastPage: lastPage });
-     
+
 }
 
 const getJavById = async (req, res, next) => {
@@ -166,7 +166,7 @@ const deleteJav = async (req, res, next) => {
 const getLatestJavs = async (req, res, next) => {
     let javs;
     try {
-        javs = await Jav.find({}).sort({ creation: -1 });
+        javs = await Jav.find({hidden:false}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -181,7 +181,7 @@ const getJavsByIdol = async (req, res, next) => {
     let nextPage;
     let javs;
     try {
-        javs = await Jav.find({}).sort({ creation: -1 });
+        javs = await Jav.find({ hidden: false }).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -206,7 +206,7 @@ const getJavsByIdol = async (req, res, next) => {
     let lastPage = 1;
     if ((data.length % 20) > 0) {
         lastPage = Math.trunc(data.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (data.length / 20);
     }
     let dataPage = data.slice(start, end);
@@ -219,7 +219,7 @@ const getJavsByCategory = async (req, res, next) => {
     let javs;
     let nextPage;
     try {
-        javs = await Jav.find({}).sort({ creation: -1 });
+        javs = await Jav.find({ hidden: false }).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -244,7 +244,7 @@ const getJavsByCategory = async (req, res, next) => {
     let lastPage = 1;
     if ((data.length % 20) > 0) {
         lastPage = Math.trunc(data.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (data.length / 20);
     }
     let dataPage = data.slice(start, end);
@@ -256,7 +256,7 @@ const getJavsByPage = async (req, res, next) => {
     let javs;
     let nextPage;
     try {
-        javs = await Jav.find({}).sort({ creation: -1 });
+        javs = await Jav.find({hidden: false}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -273,7 +273,7 @@ const getJavsByPage = async (req, res, next) => {
     let lastPage = 1;
     if ((javs.length % 20) > 0) {
         lastPage = Math.trunc(javs.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (javs.length / 20);
     }
     let dataPage = javs.slice(start, end);
@@ -296,7 +296,7 @@ const getRelatedJavs = async (req, res, next) => {
 
     let javs;
     try {
-        javs = await Jav.find({});
+        javs = await Jav.find({hidden:false});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -337,11 +337,11 @@ const searchJav = async (req, res, next) => {
     var queries = queryString.split("&");
 
     let resultsRaw = [];
-    let javs = await Jav.find({}).sort({ creation: -1 });
+    let javs = await Jav.find({hidden:false}).sort({ creation: -1 });
 
-    let idols = await Idol.find({}).sort({name:1});
+    let idols = await Idol.find({}).sort({ name: 1 });
     let filteredIdols = [];
-    let categories = await Category.find({}).sort({name: 'asc'});
+    let categories = await Category.find({}).sort({ name: 'asc' });
     let filteredCategories = [];
 
     queries.forEach(query => {
@@ -411,11 +411,11 @@ const searchJav = async (req, res, next) => {
     let lastPage = 1;
     if ((results.length % 20) > 0) {
         lastPage = Math.trunc(results.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (results.length / 20);
     }
     let dataPage = results.slice(start, end);
-    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage , lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols, categories: filteredCategories })
+    res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols, categories: filteredCategories })
 }
 
 exports.getJavs = getJavs;
