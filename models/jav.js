@@ -9,7 +9,7 @@ const javSchema = new Schema({
     duration: { type: String, unique: false },
     imageUrl: { type: String },
     imageIndexUrl: { type: String },
-    hidden: { type: Boolean, default: false, unique: false },
+    hidden: { type: Boolean, default: true, unique: false },
     categories: {
         type: [String], unique: false
     },
