@@ -171,7 +171,7 @@ const getLatestJavs = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    let data = javs.slice(0, 12)
+    let data = javs.slice(0, 16)
     res.status(201).json({ javs: data })
 }
 
