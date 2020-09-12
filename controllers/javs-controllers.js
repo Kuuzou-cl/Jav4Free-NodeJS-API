@@ -104,7 +104,7 @@ const getRecommendJavsByHistory = async (req, res, next) => {
                 points ++;
             }    
         });
-        if (points > 4) {
+        if (points >6) {
             recommended.push(jav)
         }
     });
