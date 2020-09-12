@@ -55,6 +55,35 @@ const getJavsByBatch = async (req, res, next) => {
 
 }
 
+const getRecommendJavsByHistory = async (req, res, next) => {
+    const { javsBatch } = req.body;
+
+    let javsHistory = [];
+
+    for (let index = 0; index < javsBatch.length; index++) {
+        let jav = await Jav.findById(javsBatch[index]);
+        javsHistory.unshift(jav);
+    }
+
+    let categories = [];
+
+    for (let index = 0; index < javsHistory.length; index++) {
+        
+        for (let indexC = 0; indexC < javsHistory[index].categories.length; indexC++) {
+            let catTemp= { "id": javsHistory[index].categories[indexC] , "count": 0 };
+            if (categories.some(item => item.id === catTemp.id)) {
+                item.count++;
+            }else{
+                categories.push(catTemp)
+            }
+        }
+
+    }
+
+    res.status(200).json({ javs: categories });
+
+}
+
 const getJavById = async (req, res, next) => {
     const javId = req.params.jid;
     let jav;
@@ -430,3 +459,4 @@ exports.getJavsByCategory = getJavsByCategory;
 exports.getJavsByPage = getJavsByPage;
 exports.getRelatedJavs = getRelatedJavs;
 exports.searchJav = searchJav;
+exports.getRecommendJavsByHistory = getRecommendJavsByHistory;

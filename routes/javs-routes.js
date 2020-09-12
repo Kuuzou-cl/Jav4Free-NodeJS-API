@@ -22,6 +22,8 @@ router.get('/', javsControllers.getJavs);
 
 router.post('/getJavsByBatch/:page', javsControllers.getJavsByBatch);
 
+router.post('/getRecommendJavsByHistory/', javsControllers.getRecommendJavsByHistory);
+
 router.post('/newJav', auth, javsControllers.createJav);
 
 router.patch('/:jid', auth, javsControllers.updateJav);
