@@ -109,6 +109,10 @@ const getRecommendJavsByHistory = async (req, res, next) => {
         }
     });
 
+    if (recommended.length > 9) {
+        recommended = recommended.slice(0, 8);    
+    }
+
     res.status(200).json({ javs: recommended });
 }
 
