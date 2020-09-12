@@ -82,7 +82,7 @@ const getRecommendJavsByHistory = async (req, res, next) => {
     categories.sort((a, b) => (a.count > b.count) ? -1 : 1);
 
     if (categories.length > 6) {
-        categories.slice(0, 6);    
+        categories = categories.slice(0, 6);    
     }
 
     res.status(200).json({ javs: categories });
