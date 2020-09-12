@@ -72,6 +72,8 @@ const getRecommendJavsByHistory = async (req, res, next) => {
         for (let indexC = 0; indexC < javsHistory[index].categories.length; indexC++) {
             let catTemp= { "id": javsHistory[index].categories[indexC] , "count": 0 };
             if (categories.some(item => item.id === catTemp.id)) {
+                let indexCat = categories.findIndex(i => i.id === catTemp.id);
+                categories[indexCat].count++;
             }else{
                 categories.push(catTemp)
             }
