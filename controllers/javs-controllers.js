@@ -3,6 +3,8 @@ const HttpError = require('../models/http-error')
 const Jav = require('../models/jav');
 const Category = require('../models/category');
 const Idol = require('../models/idol');
+const jav = require('../models/jav');
+const category = require('../models/category');
 
 
 const getJavs = async (req, res, next) => {
@@ -85,7 +87,29 @@ const getRecommendJavsByHistory = async (req, res, next) => {
         categories = categories.slice(0, 6);    
     }
 
-    res.status(200).json({ javs: categories });
+    let javs;
+    try {
+        javs = await Jav.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    let recommended = [];
+
+    javs.forEach(jav => {
+        let points = 0;        
+        jav.categories.forEach(category => {
+            if (categories.some(item => item.id === category)) {
+                points ++;
+            }    
+        });
+        if (points > 4) {
+            recommended.push(jav)
+        }
+    });
+
+    res.status(200).json({ javs: recommended });
 }
 
 const getJavById = async (req, res, next) => {
