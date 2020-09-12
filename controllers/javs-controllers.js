@@ -68,7 +68,6 @@ const getRecommendJavsByHistory = async (req, res, next) => {
     let categories = [];
 
     for (let index = 0; index < javsHistory.length; index++) {
-        
         for (let indexC = 0; indexC < javsHistory[index].categories.length; indexC++) {
             let catTemp= { "id": javsHistory[index].categories[indexC] , "count": 1 };
             if (categories.some(item => item.id === catTemp.id)) {
@@ -78,11 +77,11 @@ const getRecommendJavsByHistory = async (req, res, next) => {
                 categories.push(catTemp)
             }
         }
-
     }
 
-    res.status(200).json({ javs: categories });
+    categories.sort((a, b) => (a.count > b.count) ? 1 : -1);
 
+    res.status(200).json({ javs: categories });
 }
 
 const getJavById = async (req, res, next) => {
