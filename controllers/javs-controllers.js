@@ -89,7 +89,7 @@ const getRecommendJavsByHistory = async (req, res, next) => {
 
     let javs;
     try {
-        javs = await Jav.find({}).sort({ creation: -1 });
+        javs = await Jav.find({hidden:false}).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
