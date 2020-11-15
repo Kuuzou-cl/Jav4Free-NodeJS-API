@@ -2,11 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors")
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
 const categoriesRoutes = require('./routes/categories-routes');
 const userRoutes = require('./routes/users-routes');
 const idolsRoutes = require('./routes/idols-routes');
+const scenesRoutes = require('./routes/scenes-routes');
 const javsRoutes = require('./routes/javs-routes');
 const uploadsRoutes = require('./routes/uploads-routes');
 
@@ -27,6 +27,8 @@ app.use('/jav4free/categories', categoriesRoutes);
 app.use('/jav4free/idols', idolsRoutes);
 
 app.use('/jav4free/javs', javsRoutes);
+
+app.use('/jav4free/scenes', scenesRoutes);
 
 app.use('/jav4free/uploads', uploadsRoutes);
 
