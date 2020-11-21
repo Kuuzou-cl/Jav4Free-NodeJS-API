@@ -64,20 +64,7 @@ const getJavById = async (req, res, next) => {
         }
     }
 
-    let scenes = [];
-    for (let i = 0; i < jav.scenes.length; i++) {
-        let sceneId = jav.scenes[i];
-        let newScene;
-        try {
-            newScene = await Scene.findById(sceneId);
-            scenes.push(newScene);
-        } catch (err) {
-            const error = new HttpError('Something went wrong', 500);
-            return next(error);
-        }
-    }
-
-    res.json({ jav: jav, categories: categories, idols: idols, scenes: scenes });
+    res.json({ jav: jav, categories: categories, idols: idols });
 }
 
 const createJav = async (req, res, next) => {
