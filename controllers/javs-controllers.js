@@ -106,6 +106,22 @@ const updateJav = async (req, res, next) => {
     const { name, code, imageUrl, hidden, scenes, categories, idols } = req.body;
     const javId = req.params.jid;
 
+    for (let i = 0; i < scenes.length; i++) {
+        let sceneId = scenes[i];
+        let scene;
+        try {
+            scene = await Scene.findByIdAndUpdate(sceneId,
+                {
+                    "$set": {
+                        "jav": javId,
+                    }
+                });
+        } catch (err) {
+            const error = new HttpError('Something went wrong, could not update video.', 500);
+            return next(error);
+        }
+    }
+
     let jav;
     try {
         jav = await Jav.findByIdAndUpdate(javId,
