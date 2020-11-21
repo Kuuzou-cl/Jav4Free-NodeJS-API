@@ -1,7 +1,7 @@
 const HttpError = require('../models/http-error');
 
 const Jav = require('../models/jav');
-const Scene = require('../models/jav');
+const Scene = require('../models/scene');
 const Category = require('../models/category');
 const Idol = require('../models/idol');
 
