@@ -189,7 +189,7 @@ const createScene = async (req, res, next) => {
 }
 
 const updateScene = async (req, res, next) => {
-    const { name, jav, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
+    const { name, code, url, duration, imageUrl, imageIndexUrl, hidden, categories, idols } = req.body;
     const sceneId = req.params.sid;
 
     let scene;
@@ -198,7 +198,6 @@ const updateScene = async (req, res, next) => {
             {
                 "$set": {
                     "name": name,
-                    "jav": jav,
                     "code": code,
                     "url": url,
                     "duration": duration,
