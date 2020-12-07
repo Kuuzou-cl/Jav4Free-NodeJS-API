@@ -14,4 +14,6 @@ router.patch('/:jid', auth, javsControllers.updateJav);
 
 router.delete('/:jid', auth, javsControllers.deleteJav);
 
+router.get('/getJavsByPage/:page', javsControllers.getJavsByPage);
+
 module.exports = router;

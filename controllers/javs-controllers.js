@@ -156,8 +156,38 @@ const deleteJav = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
+const getJavsByPage = async (req, res, next) => {
+    const page = req.params.page;
+    let javs;
+    let nextPage;
+    try {
+        javs = await Jav.find({ hidden: false }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let start = 20 * (page - 1);
+    let end;
+    if (javs.length <= (page * 20)) {
+        end = javs.length;
+        nextPage = false;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+    let lastPage = 1;
+    if ((javs.length % 20) > 0) {
+        lastPage = Math.trunc(javs.length / 20) + 1;
+    } else {
+        lastPage = (javs.length / 20);
+    }
+    let dataPage = javs.slice(start, end);
+    res.status(201).json({ javs: dataPage, nextPage: nextPage, lastPage: lastPage })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
 exports.updateJav = updateJav;
 exports.deleteJav = deleteJav;
+exports.getJavsByPage = getJavsByPage;
