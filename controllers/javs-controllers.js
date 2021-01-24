@@ -185,9 +185,47 @@ const getJavsByPage = async (req, res, next) => {
     res.status(201).json({ javs: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
+const getRelatedJavs = async (req, res, next) => {
+    const javId = req.params.jid;
+    let jav;
+    try {
+        jav = await Jav.findById(javId);
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (!jav) {
+        const error = new HttpError('Could not find the Video you are looking for.', 404);;
+        return next(error);
+    }
+
+    let javs;
+    try {
+        javs = await Jav.find({ hidden: false }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    let relatedJavs = [];
+
+    if (jav.idols.length > 0) {
+        for (let indexA = 0; indexA < jav.idols.length; indexA++) {
+            for (let indexB = 0; indexB < javs.length; indexB++) {
+                const javTemp = javs[indexB];
+                if (javTemp.idols.some(item => item.name === jav.idols[indexA].name) && !relatedJavs.some(item => item.code === javTemp.code)) {
+                    relatedJavs.push(javTemp);
+                }
+            }
+        }
+    }
+    res.status(201).json({ relatedJavs: relatedJavs })
+}
+
 exports.getJavs = getJavs;
 exports.getJavById = getJavById;
 exports.createJav = createJav;
 exports.updateJav = updateJav;
 exports.deleteJav = deleteJav;
 exports.getJavsByPage = getJavsByPage;
+exports.getRelatedJavs = getRelatedJavs;

@@ -16,4 +16,6 @@ router.delete('/:jid', auth, javsControllers.deleteJav);
 
 router.get('/getJavsByPage/:page', javsControllers.getJavsByPage);
 
+router.get('/getRelatedJavs/:jid', javsControllers.getRelatedJavs);
+
 module.exports = router;
