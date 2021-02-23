@@ -28,8 +28,8 @@ const getCategoriesNotEmpty = async (req, res, next) => {
     let categoriesNotEmpty = [];
     categories.forEach(category => {
         scenes.forEach(scene => {
-            if (scene.categories.some(item => item === category._id)) {
-                categoriesNotEmpty.push(item);
+            if (scene.categories.some(item => item.name === category.name)) {
+                categoriesNotEmpty.push(category);
             }
         });
     });
