@@ -28,13 +28,13 @@ const getCategoriesNotEmpty = async (req, res, next) => {
     let categoriesNotEmpty = [];
     categories.forEach(category => {
         scenes.forEach(scene => {
-            if (scene.categories.some(item => item.name === category.name)) {
+            if (scene.categories.some(item => item == category.id)) {
                 categoriesNotEmpty.push(category);
             }
         });
     });
 
-    res.json({ categories: scenes });
+    res.json({ categories: categoriesNotEmpty });
 }
 
 const getCategoryById = async (req, res, next) => {
