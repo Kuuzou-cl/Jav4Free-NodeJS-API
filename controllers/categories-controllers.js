@@ -34,7 +34,7 @@ const getCategoriesNotEmpty = async (req, res, next) => {
         });
     });
 
-    res.json({ categories: categoriesNotEmpty });
+    res.json({ categories: scenes });
 }
 
 const getCategoryById = async (req, res, next) => {
