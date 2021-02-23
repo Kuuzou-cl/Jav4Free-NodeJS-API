@@ -143,6 +143,7 @@ const getCountJavs = async (req, res, next) => {
 }
 
 exports.getCategories = getCategories;
+exports.getCategoriesNotEmpty = getCategoriesNotEmpty;
 exports.getCategoryById = getCategoryById;
 exports.createCategory = createCategory;
 exports.updateCategory = updateCategory;

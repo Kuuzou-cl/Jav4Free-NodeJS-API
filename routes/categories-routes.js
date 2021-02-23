@@ -8,6 +8,8 @@ router.get('/countJavs/:cid', categoriesControllers.getCountJavs);
 
 router.get('/getRandomCategory', categoriesControllers.getRandom4JavsCategory);
 
+router.get('/categoriesNotEmpty', categoriesControllers.getCategoriesNotEmpty);
+
 router.get('/:cid', categoriesControllers.getCategoryById);
 
 router.get('/', categoriesControllers.getCategories);
