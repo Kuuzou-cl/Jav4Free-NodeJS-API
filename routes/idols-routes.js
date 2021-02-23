@@ -8,6 +8,8 @@ router.get('/getRandomIdols', idolsControllers.getRandom4Idols);
 
 router.get('/getIdolsByPage/:page', idolsControllers.getIdolsByPage);
 
+router.get('/idolsNotEmpty/:page', idolsControllers.getIdolsNotEmpty);
+
 router.get('/:iid', idolsControllers.getIdolById);
 
 router.get('/', idolsControllers.getIdols);

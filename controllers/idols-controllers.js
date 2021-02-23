@@ -2,7 +2,7 @@ const HttpError = require('../models/http-error')
 
 const Idol = require('../models/idol');
 const Jav = require('../models/jav');
-
+const Scene = require('../models/scene');
 
 const getIdols = async (req, res, next) => {
     let idols;
@@ -27,6 +27,50 @@ const getIdols = async (req, res, next) => {
         idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, javsQ: dataQ, creation: idol.creation })
     });
     res.json({ idols: idolsData });
+}
+
+const getIdolsNotEmpty = async (req, res, next) => {
+    const page = req.params.page;
+    let idols;
+    let scenes;
+    try {
+        idols = await Idol.find({}).sort({ name: 1 });
+        scenes = await Scene.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let idolsData = [];
+    idols.forEach(idol => {
+        let dataQ = 0;
+        scenes.forEach(scene => {
+            scene.idols.forEach(idIdol => {
+                if (idIdol == idol._id) {
+                    dataQ += 1;
+                }
+            });
+        });
+        if (dataQ > 0) {
+            idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, creation: idol.creation })    
+        }
+    });
+    let start = 16 * (page - 1);
+    let end;
+    if (idolsData.length <= (page * 16)) {
+        nextPage = false;
+        end = idolsData.length;
+    } else {
+        nextPage = true;
+        end = page * 16;
+    }
+    let lastPage = 1;
+    if ((idolsData.length % 20) > 0) {
+        lastPage = Math.trunc(idolsData.length / 20) + 1;
+    }else{
+        lastPage = (idolsData.length / 20);
+    }
+    let dataPage = idolsData.slice(start, end);
+    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage:lastPage })
 }
 
 const getIdolById = async (req, res, next) => {
@@ -166,6 +210,7 @@ const getIdolsByPage = async (req, res, next) => {
 }
 
 exports.getIdols = getIdols;
+exports.getIdolsNotEmpty = getIdolsNotEmpty;
 exports.getIdolById = getIdolById;
 exports.createIdol = createIdol;
 exports.updateIdol = updateIdol;
