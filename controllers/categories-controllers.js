@@ -7,20 +7,42 @@ const Scene = require('../models/scene');
 const getCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}).sort({name: 'asc'});
+        categories = await Category.find({}).sort({ name: 'asc' });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ categories:categories.map(category => category.toObject({getters: true}))});
+    res.json({ categories: categories.map(category => category.toObject({ getters: true })) });
+}
+
+const getCategoriesNotEmpty = async (req, res, next) => {
+    let categories;
+    let scenes;
+    try {
+        categories = await Category.find({}).sort({ name: 'asc' });
+        scenes = await Scene.find({ hidden: false }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let categoriesNotEmpty = [];
+    categories.forEach(category => {
+        scenes.forEach(scene => {
+            if (scene.categories.some(item => item._id === category._id)) {
+                categoriesNotEmpty.push(category);
+            }
+        });
+    });
+
+    res.json({ categories: categoriesNotEmpty });
 }
 
 const getCategoryById = async (req, res, next) => {
     const categoryId = req.params.cid;
     let category;
     try {
-        category = await Category.findById(categoryId);    
-    } catch (err) {   
+        category = await Category.findById(categoryId);
+    } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
@@ -38,13 +60,13 @@ const createCategory = async (req, res, next) => {
     });
 
     try {
-        await newCategory.save();    
+        await newCategory.save();
     } catch (err) {
-        const error = new HttpError('Creating category failed',500)
+        const error = new HttpError('Creating category failed', 500)
         return next(error);
     }
 
-    res.status(201).json({category: newCategory})
+    res.status(201).json({ category: newCategory })
 }
 
 const updateCategory = async (req, res, next) => {
@@ -53,13 +75,13 @@ const updateCategory = async (req, res, next) => {
 
     let category;
     try {
-        category = await Category.findByIdAndUpdate(categoryId, { "$set": {"name": name} });    
-    } catch (err) {   
+        category = await Category.findByIdAndUpdate(categoryId, { "$set": { "name": name } });
+    } catch (err) {
         const error = new HttpError('Something went wrong, could not update category.', 500);
         return next(error);
     }
 
-    res.status(200).json({category: category.toObject({getters:true})});
+    res.status(200).json({ category: category.toObject({ getters: true }) });
 }
 
 const deleteCategory = async (req, res, next) => {
@@ -71,13 +93,13 @@ const deleteCategory = async (req, res, next) => {
         const error = new HttpError('Something went wrong, could not delete category.', 500);
         return next(error);
     }
-    res.status(200).json({message: 'Succesful delete action!'});
+    res.status(200).json({ message: 'Succesful delete action!' });
 }
 
-const getRandom4JavsCategory = async (req,res,next) => {
+const getRandom4JavsCategory = async (req, res, next) => {
     let categories;
     try {
-        categories = await Category.find({}).sort({name:-1});
+        categories = await Category.find({}).sort({ name: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
@@ -90,16 +112,16 @@ const getRandom4JavsCategory = async (req,res,next) => {
     }
     let javs;
     try {
-        javs = await Scene.find({categories: category.id, hidden:false }).sort({creation:-1});
-        javs = javs.slice(0,4);
+        javs = await Scene.find({ categories: category.id, hidden: false }).sort({ creation: -1 });
+        javs = javs.slice(0, 4);
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    res.json({ category:category, javs:javs});
+    res.json({ category: category, javs: javs });
 }
 
-const getCountJavs = async (req,res,next) => {
+const getCountJavs = async (req, res, next) => {
     const categoryId = req.params.cid;
     let javs;
     try {
@@ -117,7 +139,7 @@ const getCountJavs = async (req,res,next) => {
         });
     });
     let length = data.length;
-    res.json( {length: length} )
+    res.json({ length: length })
 }
 
 exports.getCategories = getCategories;
