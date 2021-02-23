@@ -370,25 +370,25 @@ const getRelatedScenes = async (req, res, next) => {
     let relatedScenes = [];
 
     for (let index = 0; index < 6; index++) {
-        let random = Math.floor((Math.random() * (scenes.length - 0)) + 0);
+        let random = Math.floor((Math.random() * (scenes.length)));
         let sceneN = scenes[random];
-        if (sceneN.categories.some(item => item.name === scene.categories[0].name) && !relatedScenes.some(item => item.code === javN.code)) {
+        if (sceneN.categories.some(item => item.name === scene.categories[0].name) && !relatedScenes.some(item => item.code === sceneN.code)) {
             relatedScenes.push(sceneN);
         }
     }
 
     for (let index = 0; index < 3; index++) {
-        let random = Math.floor((Math.random() * (scenes.length - 0)) + 0);
+        let random = Math.floor((Math.random() * (scenes.length)));
         let sceneN = scenes[random];
-        if (sceneN.categories.some(item => item.name === scene.categories[1].name) && !relatedScenes.some(item => item.code === javN.code)) {
+        if (sceneN.categories.some(item => item.name === scene.categories[1].name) && !relatedScenes.some(item => item.code === sceneN.code)) {
             relatedScenes.push(sceneN);
         }
     }
 
     for (let index = 0; index < 3; index++) {
-        let random = Math.floor((Math.random() * (scenes.length - 0)) + 0);
+        let random = Math.floor((Math.random() * (scenes.length)));
         let sceneN = scenes[random];
-        if (sceneN.categories.some(item => item.name === scene.categories[2].name) && !relatedScenes.some(item => item.code === javN.code)) {
+        if (sceneN.categories.some(item => item.name === scene.categories[2].name) && !relatedScenes.some(item => item.code === sceneN.code)) {
             relatedScenes.push(sceneN);
         }
     }
