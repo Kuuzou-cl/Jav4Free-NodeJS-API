@@ -70,7 +70,7 @@ var uploadVtt = multer({
     })
 })
 
-var uploadCover = multer({
+var uploadScene = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'javdata/scenes',
@@ -84,7 +84,7 @@ var uploadCover = multer({
     })
 })
 
-var uploadCover = multer({
+var uploadStatic = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'javdata/scenes/static',
@@ -98,7 +98,7 @@ var uploadCover = multer({
     })
 })
 
-var uploadCover = multer({
+var uploadPreview = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'javdata/scenes/preview',
@@ -144,7 +144,7 @@ router.post('/upSprite', auth, uploadSprite.array('file',99), function (req, res
     }
 })
 
-router.post('/upScene', auth, uploadCover.array('file',99), function (req, res, next) {
+router.post('/upScene', auth, uploadScene.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -152,7 +152,7 @@ router.post('/upScene', auth, uploadCover.array('file',99), function (req, res, 
     }
 })
 
-router.post('/upStatic', auth, uploadCover.array('file',99), function (req, res, next) {
+router.post('/upStatic', auth, uploadStatic.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
@@ -160,7 +160,7 @@ router.post('/upStatic', auth, uploadCover.array('file',99), function (req, res,
     }
 })
 
-router.post('/upPreview', auth, uploadCover.array('file',99), function (req, res, next) {
+router.post('/upPreview', auth, uploadPreview.array('file',99), function (req, res, next) {
     try {
         res.status(200).json({ msg: 'successful upload!' })
     } catch (err) {
