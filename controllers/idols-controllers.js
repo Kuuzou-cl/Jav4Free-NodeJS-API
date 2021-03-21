@@ -159,7 +159,7 @@ const getRandom4Idols = async (req, res, next) => {
 
     let idols;
     try {
-        idols = await Idol.find({hidden: false});
+        idols = await Idol.find({hidden: true});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
