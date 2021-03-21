@@ -131,7 +131,7 @@ const updateIdol = async (req, res, next) => {
         idol = await Idol.findByIdAndUpdate(idolId,
             {
                 "$set": {
-                    "name": name, "imageUrl": imageUrl, "hidden": hidden
+                    "name": name, "imageUrl": imageUrl, "hidden": true
                 }
             });
     } catch (err) {
@@ -159,7 +159,7 @@ const getRandom4Idols = async (req, res, next) => {
 
     let idols;
     try {
-        idols = await Idol.find({});
+        idols = await Idol.find({hidden: false});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
