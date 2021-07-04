@@ -10,7 +10,7 @@ router.get('/', javsControllers.getJavs);
 
 router.post('/newJav', auth, javsControllers.createJav);
 
-router.patch('/:jid', auth, javsControllers.updateJav);
+router.patch('/:jid', javsControllers.updateJav);
 
 router.delete('/:jid', auth, javsControllers.deleteJav);
 

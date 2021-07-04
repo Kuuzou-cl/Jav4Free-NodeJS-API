@@ -206,7 +206,7 @@ const createScene = async (req, res, next) => {
         return next(error);
     }
 
-    javOG.scenes.push(sceneOG.code);
+    javOG.scenes.push(sceneOG._id);
 
     const updateJ = { scenes: javOG.scenes };
     
