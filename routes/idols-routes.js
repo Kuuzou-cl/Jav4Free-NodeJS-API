@@ -18,6 +18,8 @@ router.post('/newIdol', auth, idolsControllers.createIdol);
 
 router.patch('/:iid', auth, idolsControllers.updateIdol);
 
+router.delete('/deleteIdolsEmpty', auth, idolsControllers.deleteIdolsEmpty);
+
 router.delete('/:iid', auth, idolsControllers.deleteIdol);
 
 module.exports = router;

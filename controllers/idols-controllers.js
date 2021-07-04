@@ -204,6 +204,45 @@ const getIdolsByPage = async (req, res, next) => {
     res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
+const deleteIdolsEmpty = async (req, res, next) => {
+    const page = req.params.page;
+    let idols;
+    let scenes;
+    try {
+        idols = await Idol.find({}).sort({ name: 1 });
+        scenes = await Scene.find({}).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let idolsData = [];
+    idols.forEach(idol => {
+        let dataQ = 0;
+        scenes.forEach(scene => {
+            scene.idols.forEach(idIdol => {
+                if (idIdol == idol._id) {
+                    dataQ += 1;
+                }
+            });
+        });
+        if (dataQ == 0) {
+            idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, creation: idol.creation })
+        }
+    });
+
+    idolsData.forEach(idolEmpty => {
+        let idol;
+        try {
+            idol = await Idol.findByIdAndDelete(idolEmpty._id);
+        } catch (err) {
+            const error = new HttpError('Something went wrong, could not delete idol.', 500);
+            return next(error);
+        }
+    });
+
+    res.status(200).json({ message: 'Succesful delete action!' });
+}
+
 exports.getIdols = getIdols;
 exports.getIdolsNotEmpty = getIdolsNotEmpty;
 exports.getIdolById = getIdolById;
@@ -212,3 +251,4 @@ exports.updateIdol = updateIdol;
 exports.deleteIdol = deleteIdol;
 exports.getRandom4Idols = getRandom4Idols;
 exports.getIdolsByPage = getIdolsByPage;
+exports.deleteIdolsEmpty = deleteIdolsEmpty;
