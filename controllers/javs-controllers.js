@@ -12,9 +12,9 @@ const getJavs = async (req, res, next) => {
     let javs;
     try {
         if (empty == "false") {
-            javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
-        }else{
-            javs = await Jav.find({}).sort({ creation: -1 });    
+            javs = await Jav.find({ scenes: { $exists: true, $not: { $size: 0 } } }).sort({ creation: -1 });
+        } else {
+            javs = await Jav.find({}).sort({ creation: -1 });
         }
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
@@ -221,6 +221,16 @@ const getRelatedJavs = async (req, res, next) => {
             relatedJavs.push(javN);
         }
     }
+
+    jav.idols.forEach(idol => {
+        for (let index = 0; index < 2; index++) {
+            let random = Math.floor((Math.random() * (javs.length)));
+            let javN = javs[random];
+            if (javN.idols.some(item => item.name === idol.name) && !relatedJavs.some(item => item.code === javN.code)) {
+                relatedJavs.push(javN);
+            }
+        }
+    });
 
     res.status(201).json({ relatedJavs: relatedJavs.slice(0, 12) })
 }
