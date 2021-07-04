@@ -8,9 +8,14 @@ const Idol = require('../models/idol');
 
 const getJavs = async (req, res, next) => {
     const quantity = req.get('quantity');
+    const empty = req.get('empty');
     let javs;
     try {
-        javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
+        if (empty) {
+            javs = await Jav.find({}).sort({ creation: -1 });    
+        }else{
+            javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
+        }
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
