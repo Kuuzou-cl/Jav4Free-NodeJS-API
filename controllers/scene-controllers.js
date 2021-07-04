@@ -218,7 +218,7 @@ const createScene = async (req, res, next) => {
         return next(error);
     }
 
-    const updateS = { jav: javOG };
+    const updateS = { jav: javOG._id };
 
     let sceneUP;
     try {
