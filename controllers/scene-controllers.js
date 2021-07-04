@@ -208,18 +208,27 @@ const createScene = async (req, res, next) => {
 
     javOG.scenes.push(sceneOG.code);
 
-    const update = { scenes: javOG.scenes };
-
+    const updateJ = { scenes: javOG.scenes };
+    
     let javUP;
     try {
-        javUP = await Jav.findOneAndUpdate(filterJ,update);
+        javUP = await Jav.findOneAndUpdate(filterJ,updateJ, { new: true });
     } catch (err) {
         const error = new HttpError('Something went wrong, could not update video.', 500);
         return next(error);
     }
 
+    const updateS = { jav: javUP };
 
-    res.status(201).json({ scene: newScene })
+    let sceneUP;
+    try {
+        sceneUP = await Scene.findOneAndUpdate(filterS,updateS, { new: true });
+    } catch (err) {
+        const error = new HttpError('Something went wrong, could not update video.', 500);
+        return next(error);
+    }
+
+    res.status(201).json({ scene: sceneUP })
 }
 
 const updateScene = async (req, res, next) => {
