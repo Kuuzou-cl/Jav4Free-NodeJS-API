@@ -11,12 +11,10 @@ const getJavs = async (req, res, next) => {
     const empty = req.get('empty');
     let javs;
     try {
-        if (empty == "true") {
-            javs = await Jav.find({}).sort({ creation: -1 });    
+        if (empty == "false") {
+            javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
         }else{
-            if(empty == "false"){
-                javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
-            }
+            javs = await Jav.find({}).sort({ creation: -1 });    
         }
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
