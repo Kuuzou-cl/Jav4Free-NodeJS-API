@@ -218,7 +218,7 @@ const createScene = async (req, res, next) => {
         return next(error);
     }
 
-    const updateS = { jav: javUP };
+    const updateS = { jav: javOG };
 
     let sceneUP;
     try {
