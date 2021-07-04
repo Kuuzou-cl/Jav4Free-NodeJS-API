@@ -230,7 +230,7 @@ const deleteIdolsEmpty = async (req, res, next) => {
         }
     });
 
-    idolsData.forEach(idolEmpty => {
+    idolsData.forEach(async idolEmpty => {
         let idol;
         try {
             idol = await Idol.findByIdAndDelete(idolEmpty._id);
