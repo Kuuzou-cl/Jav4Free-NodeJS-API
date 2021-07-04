@@ -8,34 +8,18 @@ const Idol = require('../models/idol');
 
 const getJavs = async (req, res, next) => {
     const quantity = req.get('quantity');
-    const empty = req.get('empty');
     let javs;
-    if (empty) {
-        try {
-            javs = await Jav.find({}).sort({ creation: -1 });
-        } catch (err) {
-            const error = new HttpError('Something went wrong', 500);
-            return next(error);
-        }
-        if (quantity == 0) {
-            res.json({ javs: javs });
-        } else {
-            let javsQ = javs.slice(0, quantity)
-            res.json({ javs: javsQ });
-        }
+    try {
+        javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (quantity == 0) {
+        res.json({ javs: javs });
     } else {
-        try {
-            javs = await Jav.find({ scenes: { $exists: true, $not: {$size: 0} } }).sort({ creation: -1 });
-        } catch (err) {
-            const error = new HttpError('Something went wrong', 500);
-            return next(error);
-        }
-        if (quantity == 0) {
-            res.json({ javs: javs });
-        } else {
-            let javsQ = javs.slice(0, quantity)
-            res.json({ javs: javsQ });
-        }
+        let javsQ = javs.slice(0, quantity)
+        res.json({ javs: javsQ });
     }
 }
 
