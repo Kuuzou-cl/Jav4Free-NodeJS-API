@@ -222,15 +222,21 @@ const getRelatedJavs = async (req, res, next) => {
         }
     }
 
-    jav.idols.forEach(idol => {
-        for (let index = 0; index < 2; index++) {
-            let random = Math.floor((Math.random() * (javs.length)));
-            let javN = javs[random];
-            if (javN.idols.some(item => item.name === idol.name) && !relatedJavs.some(item => item.code === javN.code)) {
-                relatedJavs.push(javN);
-            }
+    for (let index = 0; index < 3; index++) {
+        let random = Math.floor((Math.random() * (javs.length)));
+        let javN = javs[random];
+        if (javN.categories.some(item => item.name === jav.categories[1].name) && !relatedJavs.some(item => item.code === javN.code)) {
+            relatedJavs.push(javN);
         }
-    });
+    }
+
+    for (let index = 0; index < 3; index++) {
+        let random = Math.floor((Math.random() * (javs.length)));
+        let javN = javs[random];
+        if (javN.categories.some(item => item.name === jav.categories[2].name) && !relatedJavs.some(item => item.code === javN.code)) {
+            relatedJavs.push(javN);
+        }
+    }
 
     res.status(201).json({ relatedJavs: relatedJavs.slice(0, 12) })
 }
