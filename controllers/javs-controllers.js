@@ -224,7 +224,7 @@ const getRelatedJavs = async (req, res, next) => {
             }
         }
     }
-    res.status(201).json({ relatedJavs: relatedJavs })
+    res.status(201).json({ relatedJavs: relatedJavs.slice(0, 18) })
 }
 
 exports.getJavs = getJavs;
