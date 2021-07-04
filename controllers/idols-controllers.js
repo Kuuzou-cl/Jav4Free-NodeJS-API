@@ -51,7 +51,7 @@ const getIdolsNotEmpty = async (req, res, next) => {
             });
         });
         if (dataQ > 0) {
-            idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, creation: idol.creation })    
+            idolsData.push({ _id: idol._id, name: idol.name, imageUrl: idol.imageUrl, hidden: idol.hidden, creation: idol.creation })
         }
     });
     let start = 16 * (page - 1);
@@ -66,11 +66,11 @@ const getIdolsNotEmpty = async (req, res, next) => {
     let lastPage = 1;
     if ((idolsData.length % 20) > 0) {
         lastPage = Math.trunc(idolsData.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (idolsData.length / 20);
     }
     let dataPage = idolsData.slice(start, end);
-    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage:lastPage })
+    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
 const getIdolById = async (req, res, next) => {
@@ -159,23 +159,18 @@ const getRandom4Idols = async (req, res, next) => {
 
     let idols;
     try {
-        idols = await Idol.find({hidden: true});
+        idols = await Idol.find({ hidden: true });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
 
-    const idolIndex1 = Math.floor((Math.random() * (idols.length - 0)) + 0);
-    idolsData.push(idols[idolIndex1]);
-
-    const idolIndex2 = Math.floor((Math.random() * (idols.length - 0)) + 0);
-    idolsData.push(idols[idolIndex2]);
-
-    const idolIndex3 = Math.floor((Math.random() * (idols.length - 0)) + 0);
-    idolsData.push(idols[idolIndex3]);
-
-    const idolIndex4 = Math.floor((Math.random() * (idols.length - 0)) + 0);
-    idolsData.push(idols[idolIndex4]);
+    while (idolsData.length < 4) {
+        const idolIndex = Math.floor((Math.random() * (idols.length - 0)) + 0);
+        if (!idolsData.some(item => item.name === idols[idolIndex].name)) {
+            idolsData.push(idols[idolIndex]);
+        }
+    }
 
     res.json({ idols: idolsData });
 }
@@ -202,11 +197,11 @@ const getIdolsByPage = async (req, res, next) => {
     let lastPage = 1;
     if ((idols.length % 20) > 0) {
         lastPage = Math.trunc(idols.length / 20) + 1;
-    }else{
+    } else {
         lastPage = (idols.length / 20);
     }
     let dataPage = idols.slice(start, end);
-    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage:lastPage })
+    res.status(201).json({ idols: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
 exports.getIdols = getIdols;
