@@ -39,7 +39,7 @@ app.use('/rule34hub/videos', videosR34HRoutes);
 
 app.use('/rule34hub/categories', categoriesR34HRoutes);
 
-app.use('/rule34hub/uploads', uploadsRoutes);
+app.use('/rule34hub/uploads', uploadsR34HRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
