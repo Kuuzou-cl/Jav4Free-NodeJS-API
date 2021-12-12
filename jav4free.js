@@ -8,6 +8,8 @@ const userRoutes = require('./routes/users-routes');
 const idolsRoutes = require('./routes/idols-routes');
 const scenesRoutes = require('./routes/scenes-routes');
 const javsRoutes = require('./routes/javs-routes');
+const categoriesR34HRoutes = require('./routes/categories-r34h-routes');
+const videosR34HRoutes = require('./routes/videos-r34h-routes');
 const uploadsRoutes = require('./routes/uploads-routes');
 
 const HttpError = require('./models/http-error');
@@ -31,6 +33,10 @@ app.use('/jav4free/javs', javsRoutes);
 app.use('/jav4free/scenes', scenesRoutes);
 
 app.use('/jav4free/uploads', uploadsRoutes);
+
+app.use('/rule34hub/videos', videosR34HRoutes);
+
+app.use('/rule34hub/categories', categoriesR34HRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
