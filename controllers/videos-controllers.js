@@ -103,8 +103,47 @@ const deleteVideo = async (req, res, next) => {
     res.status(200).json({ message: 'Succesful delete action!' });
 }
 
+const getVideosByCategory = async (req, res, next) => {
+    const page = req.params.page;
+    const categoryId = req.params.cid;
+    let videos;
+    let nextPage;
+    try {
+        videos = await Video.find({ hidden: false }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let data = [];
+    videos.forEach(video => {
+        video.categories.forEach(category => {
+            if (category == categoryId) {
+                data.push(video);
+            }
+        });
+    });
+    let start = 20 * (page - 1);
+    let end;
+    if (data.length <= (page * 20)) {
+        nextPage = false;
+        end = data.length;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+    let lastPage = 1;
+    if ((data.length % 20) > 0) {
+        lastPage = Math.trunc(data.length / 20) + 1;
+    } else {
+        lastPage = (data.length / 20);
+    }
+    let dataPage = data.slice(start, end);
+    res.status(201).json({ videos: dataPage, nextPage: nextPage, lastPage: lastPage })
+}
+
 exports.getVideos = getVideos;
 exports.getVideoById = getVideoById;
 exports.createVideo = createVideo;
 exports.updateVideo =updateVideo;
 exports.deleteVideo = deleteVideo;
+exports.getVideosByCategory = getVideosByCategory;

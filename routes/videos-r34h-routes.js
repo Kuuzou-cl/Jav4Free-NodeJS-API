@@ -4,6 +4,8 @@ const videosControllers = require('../controllers/videos-controllers');
 
 const router = express.Router();
 
+router.get('/getVideosByCategory/:page/:cid', videosControllers.getVideosByCategory);
+
 router.get('/:sid', videosControllers.getVideoById);
 
 router.get('/', videosControllers.getVideos);
