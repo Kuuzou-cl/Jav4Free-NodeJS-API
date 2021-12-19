@@ -179,11 +179,8 @@ const searchVideos = async (req, res, next) => {
     
 
     for (const query of queries) {
-        let category = await Category.findOne({ name: query });
-        if (!category) {
-            const error = new HttpError('Error searching for category.', 404);;
-            return next(error);
-        } else {
+        let category = await Category.findOne({ name: {$regex: query, $options: 'i'} });
+        if (category) {
             if (!categoriesMatch.some(item => item._id === category._id)) {
                 categoriesMatch.push(category._id);
             }
