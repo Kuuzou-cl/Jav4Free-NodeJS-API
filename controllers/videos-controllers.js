@@ -176,7 +176,7 @@ const searchVideos = async (req, res, next) => {
     var queries = queryString.split("&");
 
     let categoriesMatch = [];
-    let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
+    
 
     for (const query of queries) {
         let category = await Category.findOne({ name: query });
@@ -190,18 +190,7 @@ const searchVideos = async (req, res, next) => {
         }
     }
 
-    let results = [];
-
-    for (const video of videos) {
-        for (const category of categoriesMatch) {
-            if (video.categories.some(item => item === category._id)) {
-                results.push(video);
-            }else{
-                results.push(video);
-            }
-        }
-    }
-
+    let results = await Video.find({ hidden: false, categories: categoriesMatch[0]._id }).sort({ creation: -1 });
     
     let nextPage;
     let start = 20 * (page - 1);
