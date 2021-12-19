@@ -194,7 +194,7 @@ const searchVideos = async (req, res, next) => {
 
     for (const video of videos) {
         for (const category of categoriesMatch) {
-            results.push(video);
+            results.push(category);
         }
     }
 
