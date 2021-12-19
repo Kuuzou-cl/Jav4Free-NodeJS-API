@@ -184,7 +184,19 @@ const searchVideos = async (req, res, next) => {
             const error = new HttpError('Error searching for category.', 404);;
             return next(error);
         } else {
-            categoriesMatch.push(category);
+            if (!categoriesMatch.some(item => item._id === category._id)) {
+                categoriesMatch.push(category);
+            }
+        }
+    }
+
+    let results = [];
+
+    for (const video of videos) {
+        for (const category of categoriesMatch) {
+            if (!video.categories.some(item => item === category._id)) {
+                results.push(video);
+            }
         }
     }
 
@@ -209,7 +221,7 @@ const searchVideos = async (req, res, next) => {
     res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
     */
 
-    res.status(201).json({ result: categoriesMatch })
+    res.status(201).json({ results: results })
 }
 
 exports.getVideos = getVideos;
