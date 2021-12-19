@@ -184,7 +184,7 @@ const searchVideos = async (req, res, next) => {
             const error = new HttpError('Error searching for category.', 404);;
             return next(error);
         } else {
-            categoriesMatch.push(category._id);
+            categoriesMatch.push(category.id);
         }
     }
 
