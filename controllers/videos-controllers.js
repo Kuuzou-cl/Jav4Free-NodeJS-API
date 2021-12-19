@@ -51,7 +51,7 @@ const getVideoById = async (req, res, next) => {
 }
 
 const createVideo = async (req, res, next) => {
-    const { title, url, hidden, categories,  } = req.body;
+    const { title, url, hidden, categories, } = req.body;
     const newVideo = new Video({
         title,
         url,
@@ -69,7 +69,7 @@ const createVideo = async (req, res, next) => {
 }
 
 const updateVideo = async (req, res, next) => {
-    const { title, url, hidden, categories,  } = req.body;
+    const { title, url, hidden, categories, } = req.body;
     const videoId = req.params.sid;
 
     let video;
@@ -141,9 +141,82 @@ const getVideosByCategory = async (req, res, next) => {
     res.status(201).json({ videos: dataPage, nextPage: nextPage, lastPage: lastPage })
 }
 
+const getVideosByPage = async (req, res, next) => {
+    const page = req.params.page;
+    let videos;
+    let nextPage;
+    try {
+        videos = await Video.find({ hidden: false }).sort({ creation: -1 });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    let start = 20 * (page - 1);
+    let end;
+    if (videos.length <= (page * 20)) {
+        end = videos.length;
+        nextPage = false;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+    let lastPage = 1;
+    if ((videos.length % 20) > 0) {
+        lastPage = Math.trunc(videos.length / 20) + 1;
+    } else {
+        lastPage = (videos.length / 20);
+    }
+    let dataPage = videos.slice(start, end);
+    res.status(201).json({ videos: dataPage, nextPage: nextPage, lastPage: lastPage })
+}
+
+const searchVideos = async (req, res, next) => {
+    const page = req.params.page;
+    const queryString = req.params.sid;
+    var queries = queryString.split(" ");
+
+    let categoriesMatch = [];
+    let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
+
+    queries.forEach(query => {
+        let category = await Category.find({ name: { $regex: query, $options: 'i' } });
+        if (!category) {
+            const error = new HttpError('Error searching for category.', 404);;
+            return next(error);
+        } else {
+            categoriesMatch.push(category);
+        }
+    });
+
+    /*
+    let nextPage;
+    let start = 20 * (page - 1);
+    let end;
+    if (results.length <= (page * 20)) {
+        end = results.length;
+        nextPage = false;
+    } else {
+        nextPage = true;
+        end = page * 20;
+    }
+    let lastPage = 1;
+    if ((results.length % 20) > 0) {
+        lastPage = Math.trunc(results.length / 20) + 1;
+    } else {
+        lastPage = (results.length / 20);
+    }
+    let dataPage = results.slice(start, end);
+    res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
+    */
+
+    res.status(201).json({ result: categoriesMatch})
+}
+
 exports.getVideos = getVideos;
 exports.getVideoById = getVideoById;
 exports.createVideo = createVideo;
-exports.updateVideo =updateVideo;
+exports.updateVideo = updateVideo;
 exports.deleteVideo = deleteVideo;
 exports.getVideosByCategory = getVideosByCategory;
+exports.getVideosByPage = getVideosByPage;
+exports.searchVideos = searchVideos;
