@@ -185,12 +185,12 @@ const searchVideos = async (req, res, next) => {
             return next(error);
         } else {
             if (!categoriesMatch.some(item => item._id === category._id)) {
-                categoriesMatch.push(category);
+                categoriesMatch.push(category._id);
             }
         }
     }
 
-    let results = await Video.find({ hidden: false, categories: categoriesMatch[0]._id }).sort({ creation: -1 });
+    let results = await Video.find({ hidden: false, categories: { $in: categoriesMatch._id }}).sort({ creation: -1 });
     
     let nextPage;
     let start = 20 * (page - 1);
