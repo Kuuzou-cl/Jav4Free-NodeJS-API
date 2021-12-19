@@ -178,7 +178,7 @@ const searchVideos = async (req, res, next) => {
     let categoriesMatch = [];
     let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
 
-    queries.forEach(query => {
+    for (const query of queries) {
         let category = await Category.find({ name: { $regex: query, $options: 'i' } });
         if (!category) {
             const error = new HttpError('Error searching for category.', 404);;
@@ -186,7 +186,7 @@ const searchVideos = async (req, res, next) => {
         } else {
             categoriesMatch.push(category);
         }
-    });
+    }
 
     /*
     let nextPage;
@@ -209,7 +209,7 @@ const searchVideos = async (req, res, next) => {
     res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
     */
 
-    res.status(201).json({ result: categoriesMatch})
+    res.status(201).json({ result: categoriesMatch })
 }
 
 exports.getVideos = getVideos;
