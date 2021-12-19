@@ -194,13 +194,13 @@ const searchVideos = async (req, res, next) => {
 
     for (const video of videos) {
         for (const category of categoriesMatch) {
-            if (!video.categories.some(item => item === category._id)) {
+            if (video.categories.some(item => item === category._id) && !results.some(item => item._id === video._id)) {
                 results.push(video);
             }
         }
     }
 
-    /*
+    
     let nextPage;
     let start = 20 * (page - 1);
     let end;
@@ -218,10 +218,7 @@ const searchVideos = async (req, res, next) => {
         lastPage = (results.length / 20);
     }
     let dataPage = results.slice(start, end);
-    res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
-    */
-
-    res.status(201).json({ results: results })
+    res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage})
 }
 
 exports.getVideos = getVideos;
