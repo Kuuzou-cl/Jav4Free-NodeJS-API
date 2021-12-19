@@ -36,7 +36,7 @@ const getVideoById = async (req, res, next) => {
 
     let categories = [];
     for (let i = 0; i < video.categories.length; i++) {
-        let categoryId = scene.categories[i];
+        let categoryId = video.categories[i];
         let newCategory;
         try {
             newCategory = await Category.findById(categoryId);
