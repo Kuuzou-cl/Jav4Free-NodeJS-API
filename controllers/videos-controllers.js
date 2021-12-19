@@ -190,7 +190,7 @@ const searchVideos = async (req, res, next) => {
         }
     }
 
-    let results = await Video.find({ hidden: false, categories: { $in: categoriesMatch._id }}).sort({ creation: -1 });
+    let results = await Video.find({ hidden: false, categories: { $in: categoriesMatch[0]._id }}).sort({ creation: -1 });
     
     let nextPage;
     let start = 20 * (page - 1);
