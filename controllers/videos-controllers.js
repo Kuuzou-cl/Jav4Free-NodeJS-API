@@ -179,7 +179,7 @@ const searchVideos = async (req, res, next) => {
     let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
 
     for (const query of queries) {
-        let category = await Category.find({ name: { $regex: query, $options: 'i' } });
+        let category = await Category.find({ name: query });
         if (!category) {
             const error = new HttpError('Error searching for category.', 404);;
             return next(error);
@@ -218,7 +218,7 @@ const searchVideos = async (req, res, next) => {
         lastPage = (results.length / 20);
     }
     let dataPage = results.slice(start, end);
-    res.status(201).json({ result: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage})
+    res.status(201).json({ result: dataPage, match: categoriesMatch, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage})
 }
 
 exports.getVideos = getVideos;
