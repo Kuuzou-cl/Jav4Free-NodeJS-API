@@ -173,7 +173,7 @@ const getVideosByPage = async (req, res, next) => {
 const searchVideos = async (req, res, next) => {
     const page = req.params.page;
     const queryString = req.params.sid;
-    var queries = queryString.split(" ");
+    var queries = queryString.split("&");
 
     let categoriesMatch = [];
     let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
