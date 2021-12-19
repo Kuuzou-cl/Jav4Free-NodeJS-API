@@ -179,7 +179,7 @@ const searchVideos = async (req, res, next) => {
     let videos = await Video.find({ hidden: false }).sort({ creation: -1 });
 
     for (const query of queries) {
-        let category = await Category.find({ name: query });
+        let category = await Category.findOne({ name: query });
         if (!category) {
             const error = new HttpError('Error searching for category.', 404);;
             return next(error);
