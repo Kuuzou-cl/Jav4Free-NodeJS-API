@@ -185,7 +185,7 @@ const searchVideos = async (req, res, next) => {
             return next(error);
         } else {
             if (!categoriesMatch.some(item => item._id === category._id)) {
-                categoriesMatch.push(category);
+                categoriesMatch.push(category._id);
             }
         }
     }
@@ -194,7 +194,7 @@ const searchVideos = async (req, res, next) => {
 
     for (const video of videos) {
         for (const category of categoriesMatch) {
-            if (video.categories.some(item => item._id === category._id)) {
+            if (video.categories.some(item => item === category._id)) {
                 results.push(video);
             }
         }
