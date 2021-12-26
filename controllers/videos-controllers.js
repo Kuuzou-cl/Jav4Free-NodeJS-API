@@ -233,10 +233,34 @@ const getRelatedVideos = async (req, res, next) => {
 
     let relatedVideos = [];
 
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 7; index++) {
         let random = Math.floor((Math.random() * (videos.length)));
         let videoN = videos[random];
         if (videoN.categories.some(item => item._id === video.categories[0]._id) && !relatedVideos.some(item => item._id === videoN._id)) {
+            relatedVideos.push(videoN);
+        }
+    }
+
+    for (let index = 0; index < 5; index++) {
+        let random = Math.floor((Math.random() * (videos.length)));
+        let videoN = videos[random];
+        if (videoN.categories.some(item => item._id === video.categories[1]._id) && !relatedVideos.some(item => item._id === videoN._id)) {
+            relatedVideos.push(videoN);
+        }
+    }
+
+    for (let index = 0; index < 4; index++) {
+        let random = Math.floor((Math.random() * (videos.length)));
+        let videoN = videos[random];
+        if (videoN.categories.some(item => item._id === video.categories[2]._id) && !relatedVideos.some(item => item._id === videoN._id)) {
+            relatedVideos.push(videoN);
+        }
+    }
+
+    for (let index = 0; index < 4; index++) {
+        let random = Math.floor((Math.random() * (videos.length)));
+        let videoN = videos[random];
+        if (videoN.categories.some(item => item._id === video.categories[3]._id) && !relatedVideos.some(item => item._id === videoN._id)) {
             relatedVideos.push(videoN);
         }
     }
