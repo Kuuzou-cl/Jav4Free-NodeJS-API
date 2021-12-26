@@ -225,13 +225,23 @@ const getRelatedVideos = async (req, res, next) => {
 
     let videos;
     try {
-        videos = await Video.find({ hidden: false, categories: { $in: video.categories } });
+        videos = await Video.find({ hidden: false});
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
 
-    res.status(201).json({ relatedVideos: videos })
+    let relatedVideos = [];
+
+    for (let index = 0; index < 6; index++) {
+        let random = Math.floor((Math.random() * (videos.length)));
+        let videoN = videos[random];
+        if (videoN.categories.some(item => item._id === video.categories[0]._id) && !relatedVideos.some(item => item._id === videoN._id)) {
+            relatedVideos.push(videoN);
+        }
+    }
+
+    res.status(201).json({ relatedVideos: relatedVideos })
 }
 
 exports.getVideos = getVideos;
