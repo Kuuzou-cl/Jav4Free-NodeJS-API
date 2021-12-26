@@ -122,20 +122,20 @@ const getVideosByCategory = async (req, res, next) => {
             }
         });
     });
-    let start = 20 * (page - 1);
+    let start = 16 * (page - 1);
     let end;
-    if (data.length <= (page * 20)) {
+    if (data.length <= (page * 16)) {
         nextPage = false;
         end = data.length;
     } else {
         nextPage = true;
-        end = page * 20;
+        end = page * 16;
     }
     let lastPage = 1;
-    if ((data.length % 20) > 0) {
-        lastPage = Math.trunc(data.length / 20) + 1;
+    if ((data.length % 16) > 0) {
+        lastPage = Math.trunc(data.length / 16) + 1;
     } else {
-        lastPage = (data.length / 20);
+        lastPage = (data.length / 16);
     }
     let dataPage = data.slice(start, end);
     res.status(201).json({ videos: dataPage, nextPage: nextPage, lastPage: lastPage })
@@ -151,20 +151,20 @@ const getVideosByPage = async (req, res, next) => {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
     }
-    let start = 20 * (page - 1);
+    let start = 16 * (page - 1);
     let end;
-    if (videos.length <= (page * 20)) {
+    if (videos.length <= (page * 16)) {
         end = videos.length;
         nextPage = false;
     } else {
         nextPage = true;
-        end = page * 20;
+        end = page * 16;
     }
     let lastPage = 1;
-    if ((videos.length % 20) > 0) {
-        lastPage = Math.trunc(videos.length / 20) + 1;
+    if ((videos.length % 16) > 0) {
+        lastPage = Math.trunc(videos.length / 16) + 1;
     } else {
-        lastPage = (videos.length / 20);
+        lastPage = (videos.length / 16);
     }
     let dataPage = videos.slice(start, end);
     res.status(201).json({ videos: dataPage, nextPage: nextPage, lastPage: lastPage })
