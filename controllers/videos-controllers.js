@@ -209,6 +209,31 @@ const searchVideos = async (req, res, next) => {
     res.status(201).json({ result: dataPage, match: categoriesMatch, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage})
 }
 
+const getRelatedVideos = async (req, res, next) => {
+    const videoId = req.params.sid;
+    let video;
+    try {
+        video = await Video.findById(videoId);
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (!video) {
+        const error = new HttpError('Could not find the Video you are looking for.', 404);;
+        return next(error);
+    }
+
+    let videos;
+    try {
+        videos = await Video.find({ hidden: false, categories: { $in: video.categories } });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+
+    res.status(201).json({ relatedVideos: videos })
+}
+
 exports.getVideos = getVideos;
 exports.getVideoById = getVideoById;
 exports.createVideo = createVideo;
@@ -217,3 +242,4 @@ exports.deleteVideo = deleteVideo;
 exports.getVideosByCategory = getVideosByCategory;
 exports.getVideosByPage = getVideosByPage;
 exports.searchVideos = searchVideos;
+exports.getRelatedVideos = getRelatedVideos;

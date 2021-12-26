@@ -10,6 +10,8 @@ router.get('/getVideosByCategory/:page/:cid', videosControllers.getVideosByCateg
 
 router.get('/getVideosByPage/:page', videosControllers.getVideosByPage);
 
+router.get('/getRelatedVideos/:sid', videosControllers.getRelatedVideos);
+
 router.get('/:sid', videosControllers.getVideoById);
 
 router.get('/', videosControllers.getVideos);
