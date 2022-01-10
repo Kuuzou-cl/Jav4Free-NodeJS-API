@@ -274,7 +274,7 @@ const deleteScene = async (req, res, next) => {
 const getLatestScenes = async (req, res, next) => {
     let scenes;
     try {
-        scenes = await Scene.find({ hidden: false }).select('hidden','name','code','url','duration','imageUrl','imageIndexUrl').sort({ creation: -1 });
+        scenes = await Scene.find({ hidden: false }).sort({ creation: -1 });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
