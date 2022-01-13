@@ -12,7 +12,7 @@ const getJavs = async (req, res, next) => {
     let javs;
     try {
         if (empty == "false") {
-            javs = await Jav.find({ scenes: { $exists: true, $not: { $size: 0 }, $elemMatch: { hidden: false } } }).sort({ creation: -1 });
+            javs = await Jav.find({ scenes: { $exists: true, $not: { $size: 0 } } }).sort({ creation: -1 });
         } else {
             javs = await Jav.find({}).sort({ creation: -1 });
         }
