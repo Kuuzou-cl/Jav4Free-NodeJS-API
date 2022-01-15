@@ -56,6 +56,7 @@ const createVideo = async (req, res, next) => {
         title,
         url,
         hidden,
+        portrait,
         categories
     });
     try {
@@ -69,7 +70,7 @@ const createVideo = async (req, res, next) => {
 }
 
 const updateVideo = async (req, res, next) => {
-    const { title, url, hidden, categories, } = req.body;
+    const { title, url, hidden, portrait, categories, } = req.body;
     const videoId = req.params.sid;
 
     let video;
@@ -80,7 +81,28 @@ const updateVideo = async (req, res, next) => {
                     "title": title,
                     "url": url,
                     "hidden": hidden,
+                    "portrait": portrait,
                     "categories": categories
+                }
+            });
+    } catch (err) {
+        const error = new HttpError('Something went wrong, could not update video.', 500);
+        return next(error);
+    }
+
+    res.status(200).json({ video: video });
+}
+
+const updateViewsVideo = async (req, res, next) => {
+    const { views } = req.body;
+    const videoId = req.params.sid;
+
+    let video;
+    try {
+        video = await Video.findByIdAndUpdate(videoId,
+            {
+                "$set": {
+                    "views": views
                 }
             });
     } catch (err) {
@@ -277,3 +299,4 @@ exports.getVideosByCategory = getVideosByCategory;
 exports.getVideosByPage = getVideosByPage;
 exports.searchVideos = searchVideos;
 exports.getRelatedVideos = getRelatedVideos;
+exports.updateViewsVideo = updateViewsVideo;

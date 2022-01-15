@@ -20,6 +20,8 @@ router.post('/newVideo', auth, videosControllers.createVideo);
 
 router.patch('/:sid', auth, videosControllers.updateVideo);
 
+router.patch('/view/:sid', auth, videosControllers.updateViewsVideo);
+
 router.delete('/:sid', auth, videosControllers.deleteVideo);
 
 module.exports = router;
