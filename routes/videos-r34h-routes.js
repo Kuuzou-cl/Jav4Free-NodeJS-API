@@ -12,7 +12,7 @@ router.get('/getVideosByPage/:page', videosControllers.getVideosByPage);
 
 router.get('/getRelatedVideos/:sid', videosControllers.getRelatedVideos);
 
-router.get('/view/:sid', auth, videosControllers.updateViewsVideo);
+router.get('/view/:sid', videosControllers.updateViewsVideo);
 
 router.get('/:sid', videosControllers.getVideoById);
 
