@@ -12,6 +12,8 @@ router.get('/getVideosByPage/:page', videosControllers.getVideosByPage);
 
 router.get('/getRelatedVideos/:sid', videosControllers.getRelatedVideos);
 
+router.get('/view/:sid', auth, videosControllers.updateViewsVideo);
+
 router.get('/:sid', videosControllers.getVideoById);
 
 router.get('/', videosControllers.getVideos);
@@ -19,8 +21,6 @@ router.get('/', videosControllers.getVideos);
 router.post('/newVideo', auth, videosControllers.createVideo);
 
 router.patch('/:sid', auth, videosControllers.updateVideo);
-
-router.patch('/view/:sid', auth, videosControllers.updateViewsVideo);
 
 router.delete('/:sid', auth, videosControllers.deleteVideo);
 

@@ -94,15 +94,14 @@ const updateVideo = async (req, res, next) => {
 }
 
 const updateViewsVideo = async (req, res, next) => {
-    const { views } = req.body;
     const videoId = req.params.sid;
 
     let video;
     try {
         video = await Video.findByIdAndUpdate(videoId,
             {
-                "$set": {
-                    "views": views
+                "$inc": {
+                    "views": 1
                 }
             });
     } catch (err) {
