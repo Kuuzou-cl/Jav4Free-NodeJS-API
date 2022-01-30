@@ -529,7 +529,7 @@ const getMostViewScenes = async (req, res, next) => {
     const quantity = req.get('quantity');
     let scenes;
     try {
-        scenes = await Scene.find({}).sort({ views: 1 });
+        scenes = await Scene.find({}).sort({ views: 'desc' });
     } catch (err) {
         const error = new HttpError('Something went wrong', 500);
         return next(error);
