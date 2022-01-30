@@ -525,6 +525,23 @@ const updateViews = async (req, res, next) => {
     res.status(200).json({ scene: scene });
 }
 
+const getMostViewScenes = async (req, res, next) => {
+    const quantity = req.get('quantity');
+    let scenes;
+    try {
+        scenes = await Scene.find({}).sort({ views: 'desc' });
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    if (quantity == 0) {
+        res.json({ scenes: scenes });
+    } else {
+        let scenesQ = scenes.slice(0, quantity)
+        res.json({ scenes: scenesQ });
+    }
+}
+
 exports.getScenes = getScenes;
 exports.getScenesByBatch = getScenesByBatch;
 exports.getSceneById = getSceneById;
@@ -539,3 +556,4 @@ exports.getRelatedScenes = getRelatedScenes;
 exports.searchScene = searchScene;
 exports.getRecommendScenesByHistory = getRecommendScenesByHistory;
 exports.updateViews = updateViews;
+exports.getMostViewScenes = getMostViewScenes;
