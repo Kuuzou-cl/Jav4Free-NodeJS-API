@@ -16,6 +16,8 @@ router.get('/getSceneByIdol/:page/:iid', scenesControllers.getScenesByIdol);
 
 router.get('/getScenesByPage/:page', scenesControllers.getScenesByPage);
 
+router.get('/view/:sid', scenesControllers.updateViews);
+
 router.get('/:sid', scenesControllers.getSceneById);
 
 router.get('/', scenesControllers.getScenes);

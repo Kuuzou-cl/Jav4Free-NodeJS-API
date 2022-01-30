@@ -506,6 +506,25 @@ const searchScene = async (req, res, next) => {
     res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
 }
 
+const updateViews = async (req, res, next) => {
+    const sceneId = req.params.sid;
+
+    let scene;
+    try {
+        scene = await Scene.findByIdAndUpdate(sceneId,
+            {
+                "$inc": {
+                    "views": 1
+                }
+            });
+    } catch (err) {
+        const error = new HttpError('Something went wrong, could not update video.', 500);
+        return next(error);
+    }
+
+    res.status(200).json({ scene: scene });
+}
+
 exports.getScenes = getScenes;
 exports.getScenesByBatch = getScenesByBatch;
 exports.getSceneById = getSceneById;
@@ -519,3 +538,4 @@ exports.getScenesByPage = getScenesByPage;
 exports.getRelatedScenes = getRelatedScenes;
 exports.searchScene = searchScene;
 exports.getRecommendScenesByHistory = getRecommendScenesByHistory;
+exports.updateViews = updateViews;
