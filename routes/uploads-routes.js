@@ -10,8 +10,8 @@ const HttpError = require('../models/http-error');
 const spacesEndpoint = new aws.Endpoint('sfo2.digitaloceanspaces.com');
 const s3 = new aws.S3({
     endpoint: spacesEndpoint,
-    accessKeyId: 'DMJFPZFGRYNJJIBZJHLZ',
-    secretAccessKey: '4LMidjQP20kuLkwxXDczG7G/TRb+xKH3yaDKbaqiKLY'
+    accessKeyId: 'AJKDGX5QJN5B4R7OQNB2',
+    secretAccessKey: 'HHvFY0Ruz8UAyizWcaQ4g2zoq9DWfYPRHVRRZQPdeAM'
 });
 
 var uploadJav = multer({
