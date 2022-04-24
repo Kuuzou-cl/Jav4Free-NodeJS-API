@@ -3,6 +3,7 @@ const Scene = require('../models/scene');
 const Jav = require('../models/jav');
 const Category = require('../models/category');
 const Idol = require('../models/idol');
+const View = require('../models/view');
 
 const getScenes = async (req, res, next) => {
     const quantity = req.get('quantity');
@@ -159,6 +160,16 @@ const getSceneById = async (req, res, next) => {
             const error = new HttpError('Something went wrong', 500);
             return next(error);
         }
+    }
+
+    const newView = new View({
+        sceneId
+    });
+    try {
+        await newView.save();
+    } catch (err) {
+        const error = new HttpError('Creating View log failed', 500)
+        return next(error);
     }
 
     res.json({ scene: scene, jav: jav, categories: categories, idols: idols });
@@ -506,42 +517,6 @@ const searchScene = async (req, res, next) => {
     res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
 }
 
-const updateViews = async (req, res, next) => {
-    const sceneId = req.params.sid;
-
-    let scene;
-    try {
-        scene = await Scene.findByIdAndUpdate(sceneId,
-            {
-                "$inc": {
-                    "views": 1
-                }
-            });
-    } catch (err) {
-        const error = new HttpError('Something went wrong, could not update video.', 500);
-        return next(error);
-    }
-
-    res.status(200).json({ scene: scene });
-}
-
-const getMostViewScenes = async (req, res, next) => {
-    const quantity = req.get('quantity');
-    let scenes;
-    try {
-        scenes = await Scene.find({}).sort({ views: 'desc' });
-    } catch (err) {
-        const error = new HttpError('Something went wrong', 500);
-        return next(error);
-    }
-    if (quantity == 0) {
-        res.json({ scenes: scenes });
-    } else {
-        let scenesQ = scenes.slice(0, quantity)
-        res.json({ scenes: scenesQ });
-    }
-}
-
 exports.getScenes = getScenes;
 exports.getScenesByBatch = getScenesByBatch;
 exports.getSceneById = getSceneById;
@@ -555,5 +530,3 @@ exports.getScenesByPage = getScenesByPage;
 exports.getRelatedScenes = getRelatedScenes;
 exports.searchScene = searchScene;
 exports.getRecommendScenesByHistory = getRecommendScenesByHistory;
-exports.updateViews = updateViews;
-exports.getMostViewScenes = getMostViewScenes;

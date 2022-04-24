@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const SceneSchema = new Schema({
     name: { type: String, unique: false },
-    views : { type: Number, default: 0},
     jav: { type: String, unique: false },
     code: { type: String, unique: false },
     url: { type: String },
