@@ -163,7 +163,7 @@ const getSceneById = async (req, res, next) => {
     }
 
     const newView = new View({
-        sceneId
+        video:sceneId
     });
     try {
         await newView.save();
