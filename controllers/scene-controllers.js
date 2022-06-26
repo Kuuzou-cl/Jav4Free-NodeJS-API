@@ -163,7 +163,7 @@ const getSceneById = async (req, res, next) => {
     }
 
     const newView = new View({
-        video:sceneId
+        video: sceneId
     });
     try {
         await newView.save();
@@ -220,10 +220,10 @@ const createScene = async (req, res, next) => {
     javOG.scenes.push(sceneOG._id);
 
     const updateJ = { scenes: javOG.scenes };
-    
+
     let javUP;
     try {
-        javUP = await Jav.findOneAndUpdate(filterJ,updateJ, { new: true });
+        javUP = await Jav.findOneAndUpdate(filterJ, updateJ, { new: true });
     } catch (err) {
         const error = new HttpError('Something went wrong, could not update video.', 500);
         return next(error);
@@ -233,7 +233,7 @@ const createScene = async (req, res, next) => {
 
     let sceneUP;
     try {
-        sceneUP = await Scene.findOneAndUpdate(filterS,updateS, { new: true });
+        sceneUP = await Scene.findOneAndUpdate(filterS, updateS, { new: true });
     } catch (err) {
         const error = new HttpError('Something went wrong, could not update video.', 500);
         return next(error);
@@ -518,17 +518,36 @@ const searchScene = async (req, res, next) => {
 }
 
 const getMostViewed = async (req, res, next) => {
+    const period = req.get('period');
     let views;
     let gteDate;
     try {
         gteDate = new Date(Date.now());
-        gteDate.setMonth(gteDate.getMonth() - 1);
-        views = await View.aggregate( [ { $match : { "creation": { $gte: gteDate } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
+        switch (period) {
+            case "all-time":
+                views = await View.aggregate([{ $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+                break;
+            case "year":
+                gteDate.setFullYear(gteDate.getFullYear() - 1);
+                views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+                break;
+            case "month":
+                gteDate.setMonth(gteDate.getMonth() - 1);
+                views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+                break;
+            case "week":
+                gteDate.setDate(gteDate.getDay() - 1);
+                views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+                break;
+            default:
+                gteDate = new Date(Date.now());
+                break;
+        }
     } catch (err) {
         const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    res.json({ views: views });
+    res.json({ views: views, date: gteDate });
 }
 
 exports.getScenes = getScenes;
