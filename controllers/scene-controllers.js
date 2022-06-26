@@ -522,7 +522,7 @@ const getMostViewed = async (req, res, next) => {
     let gteDate;
     try {
         //views = await View.aggregate( [ { $match : { "creation": { $gte: "2022-06-01" } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
-        gteDate = new Date(Date.now()).toLocaleString().split(',')[0];
+        gteDate = new Date(Date.now());
         gteDate.setMonth(gteDate.getMonth() - 1);
     } catch (err) {
         const error = new HttpError('Something went wrong viewed', 500);
