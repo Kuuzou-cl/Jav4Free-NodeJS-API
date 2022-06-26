@@ -519,7 +519,7 @@ const searchScene = async (req, res, next) => {
 
 const getMostViewed = async (req, res, next) => {
     const period = req.get('period');
-    let scenes;
+    let scenes = [];
     let views;
     let gteDate;
     try {
