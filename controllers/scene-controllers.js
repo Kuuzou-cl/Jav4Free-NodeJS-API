@@ -519,13 +519,15 @@ const searchScene = async (req, res, next) => {
 
 const getMostViewed = async (req, res, next) => {
     let views;
+    let gteDate;
+    gteDate = Date.now;
     try {
         views = await View.aggregate( [ { $match : { "creation": { $gte: "2022-06-01" } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
     } catch (err) {
         const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    res.json({ views: views });
+    res.json({ views: gteDate });
 }
 
 exports.getScenes = getScenes;
