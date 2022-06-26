@@ -519,6 +519,7 @@ const searchScene = async (req, res, next) => {
 
 const getMostViewed = async (req, res, next) => {
     const period = req.get('period');
+    let scenes;
     let views;
     let gteDate;
     try {
@@ -543,11 +544,15 @@ const getMostViewed = async (req, res, next) => {
                 views = await View.aggregate([{ $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
                 break;
         }
+        for (let index = 0; index < views.length; index++) {
+            let scene = await Scene.findById(views[index]._id);
+            scenes.unshift(scene);
+        }
     } catch (err) {
         const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    res.json({ views: views, date: gteDate });
+    res.json({ scenes: scenes, views: views, date: gteDate });
 }
 
 exports.getScenes = getScenes;
