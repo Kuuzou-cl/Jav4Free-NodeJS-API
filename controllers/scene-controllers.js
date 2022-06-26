@@ -520,7 +520,7 @@ const searchScene = async (req, res, next) => {
 const getMostViewed = async (req, res, next) => {
     let views;
     let gteDate;
-    gteDate = new Date(Date.now()).toLocaleString().split(',')[0];
+    gteDate = new Date(Date.now());
     try {
         views = await View.aggregate( [ { $match : { "creation": { $gte: "2022-06-01" } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
     } catch (err) {
