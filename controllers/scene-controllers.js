@@ -517,6 +517,19 @@ const searchScene = async (req, res, next) => {
     res.status(201).json({ dataPage: dataPage, lengthResults: results.length, nextPage: nextPage, lengthDataPage: dataPage.length, lastPage: lastPage, idols: filteredIdols })
 }
 
+const getMostViewed = async (req, res, next) => {
+    let views;
+    try {
+        views = await View.aggregate([
+            {$group:{ _id:{$creation:{format: "%Y-%m-%d", date: "$creation"}, $video:"$video"}, count:{ $sum: 1}}}
+          ]);
+    } catch (err) {
+        const error = new HttpError('Something went wrong', 500);
+        return next(error);
+    }
+    res.json({ scenes: views });
+}
+
 exports.getScenes = getScenes;
 exports.getScenesByBatch = getScenesByBatch;
 exports.getSceneById = getSceneById;
@@ -530,3 +543,4 @@ exports.getScenesByPage = getScenesByPage;
 exports.getRelatedScenes = getRelatedScenes;
 exports.searchScene = searchScene;
 exports.getRecommendScenesByHistory = getRecommendScenesByHistory;
+exports.getMostViewed = getMostViewed;
