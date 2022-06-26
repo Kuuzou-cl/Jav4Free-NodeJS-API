@@ -540,6 +540,10 @@ const getMostViewed = async (req, res, next) => {
                 views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
                 break;
             case "week":
+                gteDate.setDate(gteDate.getDay() - 6);
+                views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+                break;
+            case "day":
                 gteDate.setDate(gteDate.getDay() - 1);
                 views = await View.aggregate([{ $match: { "creation": { $gte: gteDate } } }, { $group: { _id: "$video", count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
                 break;
