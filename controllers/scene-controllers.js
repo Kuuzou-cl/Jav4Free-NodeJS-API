@@ -521,14 +521,14 @@ const getMostViewed = async (req, res, next) => {
     let views;
     let gteDate;
     try {
-        //views = await View.aggregate( [ { $match : { "creation": { $gte: "2022-06-01" } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
         gteDate = new Date(Date.now());
         gteDate.setMonth(gteDate.getMonth() - 1);
+        views = await View.aggregate( [ { $match : { "creation": { $gte: gteDate } } }, { $group : { _id : "$video", count: { $sum: 1 } } }, { $sort : { count: -1 } } ] );
     } catch (err) {
         const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    res.json({ views: gteDate });
+    res.json({ views: views });
 }
 
 exports.getScenes = getScenes;
