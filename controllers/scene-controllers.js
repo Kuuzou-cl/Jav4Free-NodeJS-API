@@ -520,6 +520,8 @@ const searchScene = async (req, res, next) => {
 const getMostViewed = async (req, res, next) => {
     const period = req.get('period');
     const quantity = req.get('quantity');
+    const page = req.params.page;
+    let nextPage;
     let scenes = [];
     let views;
     let gteDate;
@@ -553,13 +555,25 @@ const getMostViewed = async (req, res, next) => {
         const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    if (quantity == 0) {
-        res.json({ scenes: scenes, date: gteDate });
+
+    let start = quantity * (page - 1);
+    let end;
+    if (scenes.length <= (page * quantity)) {
+        end = scenes.length;
+        nextPage = false;
     } else {
-        let scenesQ = scenes.slice(0, quantity)
-        res.json({ scenes: scenesQ, date: gteDate });
+        nextPage = true;
+        end = page * quantity;
     }
-    
+    let lastPage = 1;
+    if ((scenes.length % quantity) > 0) {
+        lastPage = Math.trunc(scenes.length / quantity) + 1;
+    } else {
+        lastPage = (scenes.length / quantity);
+    }
+    let dataPage = scenes.slice(start, end);
+
+    res.status(201).json({ scenes: dataPage, nextPage: nextPage, lastPage: lastPage, date: gteDate })
 }
 
 exports.getScenes = getScenes;
