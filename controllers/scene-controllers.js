@@ -520,14 +520,13 @@ const searchScene = async (req, res, next) => {
 const getMostViewed = async (req, res, next) => {
     let views;
     try {
-        views = await View.aggregate([
-            {$group:{ _id:{$video:"$video"}, count:{ $sum: 1}}}
-          ]);
+        views = await View.find({}).sort({ creation: -1 });
+        //views = await View.aggregate( [ { $group : { _id : "$video" } } ] );
     } catch (err) {
-        const error = new HttpError('Something went wrong', 500);
+        const error = new HttpError('Something went wrong viewed', 500);
         return next(error);
     }
-    res.json({ scenes: views });
+    res.json({ views: views });
 }
 
 exports.getScenes = getScenes;
